@@ -1,0 +1,37 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "backend/**"
+      - "src/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "backend/**"
+      - "src/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
+          pip install -r backend/requirements-dev.txt
+          pip install -e .
+      - name: Run tests
+        env:
+          ENVIRONMENT: testing
+          DATABASE_URL: sqlite+aiosqlite:///:memory:
+          DEBUG: "False"
+          SECRET_KEY: test_secret_key_ci
+        run: |
+          pytest backend/tests

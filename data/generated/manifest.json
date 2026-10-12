@@ -1,0 +1,556 @@
+{
+  "description": "Labelled trial balance corpus for FYP-Module-3.",
+  "base_ledger": {
+    "total_debits": 2280000.0,
+    "total_credits": 2280000.0,
+    "total_assets": 1300000.0,
+    "net_profit": 120000.0
+  },
+  "cases": [
+    {
+      "file": "layout_01_four_column.xlsx",
+      "dimension": "layout",
+      "description": "Canonical 4-column sheet: code, name, debit, credit, with a grand total row.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_02_three_column.xlsx",
+      "dimension": "layout",
+      "description": "3-column sheet with no account codes.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_03_no_header_row.xlsx",
+      "dimension": "layout",
+      "description": "No header row at all. Column positions must be inferred without mistaking the numeric account-code column for money.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_04_codes_inside_names.xlsx",
+      "dimension": "layout",
+      "description": "Account codes embedded in the description: '1001 - Capital Account'.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_05_name_column_holds_codes.xlsx",
+      "dimension": "layout",
+      "description": "The column headed 'Account Name' holds codes; descriptions sit in an unlabelled neighbour. Trusting the header loses every name.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_06_multiple_amount_pairs.xlsx",
+      "dimension": "layout",
+      "description": "Branch and adjusted debit/credit pairs side by side. Reading the leftmost pair reports one branch as though it were the ledger.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "layout_07_formatted_amounts.xlsx",
+      "dimension": "layout",
+      "description": "Amounts as text: thousands separators, currency prefixes, Dr/Cr suffixes, dashes for nil.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "sheet_01_many_tabs.xlsx",
+      "dimension": "sheet-selection",
+      "description": "Mapping, grouping and chart-of-accounts tabs precede the real trial balance; the compiler must not parse a lookup table.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "sheet_02_tb_not_first.xlsx",
+      "dimension": "sheet-selection",
+      "description": "A plausible but non-ledger tab sits first; the TB tab is named explicitly.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "noise_01_section_headers_and_subtotals.xlsx",
+      "dimension": "row-noise",
+      "description": "Section captions, mid-table subtotals, a narrative row and a grand total. Subtotals must not be ingested as accounts.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital Account": "sofp.eq.capitalaccount",
+          "Plant and Machinery": "sofp.nca.ppe",
+          "Accumulated Depreciation": "sofp.nca.accdep",
+          "Stock in Trade": "sofp.ca.stock",
+          "Trade Debtors": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Trade Creditors": "sofp.cl.payables",
+          "Sales": "pl.revenue",
+          "Purchases": "pl.cos"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "noise_02_account_named_total.xlsx",
+      "dimension": "row-noise",
+      "description": "'Total Quality Management Fees' is a real expense account. Treating any row containing 'total' as end-of-table truncates the ledger.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 12,
+        "total_debits": 2340000.0,
+        "total_credits": 2340000.0,
+        "total_assets": 1360000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Total Quality Management Fees": "sofp.ca.suspense"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "noise_03_nil_balance_accounts.xlsx",
+      "dimension": "row-noise",
+      "description": "Dormant accounts with nil balances are skipped and counted as noise.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "naming_01_abbreviations_and_typos.xlsx",
+      "dimension": "naming",
+      "description": "Abbreviations (A/C, PPE, Accum. Dep.) and common misspellings.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2280000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Capital A/C": "sofp.eq.capitalaccount",
+          "Accum. Dep.": "sofp.nca.accdep",
+          "Trade Recievable": "sofp.ca.debtors",
+          "Cash in Hand": "sofp.ca.cash",
+          "Sundry Creditors": "sofp.cl.payables"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "naming_02_contra_accounts.xlsx",
+      "dimension": "naming",
+      "description": "Drawings, accumulated depreciation, an ECL allowance and sales returns - each must reduce the section it belongs to.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 12,
+        "total_debits": 2500000.0,
+        "total_credits": 2500000.0,
+        "total_assets": 1030000.0,
+        "net_profit": -250000.0,
+        "classifications": {
+          "Drawings": "sofp.eq.drawings",
+          "Allowance for Doubtful Debts": "sofp.ca.allowance_ecl",
+          "Sales Returns": "pl.salesreturns"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "naming_03_party_subledger_accounts.xlsx",
+      "dimension": "naming",
+      "description": "Personal and trading-name sub-ledger accounts cannot be classified from the title and must reach suspense, not administrative expenses.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 8,
+        "total_debits": 2080000.0,
+        "total_credits": 2080000.0,
+        "total_assets": 980000.0,
+        "net_profit": -200000.0,
+        "classifications": {
+          "MR ADNAN": "sofp.ca.suspense",
+          "Al-Karam Traders": "sofp.ca.suspense"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": false
+      }
+    },
+    {
+      "file": "balance_01_transposition_with_paisa.xlsx",
+      "dimension": "balance",
+      "description": "Cash keyed as 510,000.75 instead of 150,000.75. The variance of 360,000 is divisible by 9 and the digits are a transposition.",
+      "expect": {
+        "status": "RECOVERED_WARNING",
+        "accounts": 11,
+        "total_debits": 2640000.75,
+        "total_credits": 2280000.75,
+        "total_assets": 1300000.75,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": "Heuristic 2"
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "balance_02_inverted_entry.xlsx",
+      "dimension": "balance",
+      "description": "Rent expense posted to the credit side. Only an account holding half the variance, on the side that closes it, can be the cause.",
+      "expect": {
+        "status": "RECOVERED_WARNING",
+        "accounts": 11,
+        "total_debits": 2200000.0,
+        "total_credits": 2360000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {
+          "Rent Expense": "pl.admin"
+        },
+        "message_contains": "Heuristic 1"
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "balance_03_two_sided_rows.xlsx",
+      "dimension": "balance",
+      "description": "Cash shows both a debit and a credit in one row; the net is what the statements and the disclosure note must both use.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 11,
+        "total_debits": 2380000.0,
+        "total_credits": 2380000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "balance_04_unexplained_residual.xlsx",
+      "dimension": "balance",
+      "description": "A 47,000 residual that no heuristic explains. It must be reported, not capitalised into working capital.",
+      "expect": {
+        "status": "FAILED_CRITICAL",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2233000.0,
+        "total_assets": null,
+        "net_profit": null,
+        "classifications": {},
+        "message_contains": "does not balance"
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "balance_05_residual_plug_opted_in.xlsx",
+      "dimension": "balance",
+      "description": "The same residual with the plug explicitly enabled: compiles, but must be reported as an unsupported balancing entry.",
+      "expect": {
+        "status": "RECOVERED_WARNING",
+        "accounts": 11,
+        "total_debits": 2280000.0,
+        "total_credits": 2233000.0,
+        "total_assets": null,
+        "net_profit": 120000.0,
+        "classifications": {},
+        "message_contains": "unsupported"
+      },
+      "options": {
+        "allow_working_capital_plug": true,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "balance_06_preclosed_profit_summary.xlsx",
+      "dimension": "balance",
+      "description": "The result has already been appropriated to equity and the P&L accounts are closed, so net profit for the period is nil.",
+      "expect": {
+        "status": "SUCCESS",
+        "accounts": 8,
+        "total_debits": 1500000.0,
+        "total_credits": 1500000.0,
+        "total_assets": 1300000.0,
+        "net_profit": 0.0,
+        "classifications": {
+          "Current Year Profit": "sofp.eq.cy_profit_summary"
+        },
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "corrupt_01_ref_errors.xlsx",
+      "dimension": "corruption",
+      "description": "Broken formulas left #REF! in amount cells. Those rows cannot be read, so the file must be refused rather than silently short.",
+      "expect": {
+        "status": "FAILED_CRITICAL",
+        "accounts": 8,
+        "total_debits": null,
+        "total_credits": null,
+        "total_assets": null,
+        "net_profit": null,
+        "classifications": {},
+        "message_contains": "corrupted"
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "corrupt_02_single_sided_extract.xlsx",
+      "dimension": "corruption",
+      "description": "A bank credit schedule, not a double-entry trial balance.",
+      "expect": {
+        "status": "FAILED_CRITICAL",
+        "accounts": null,
+        "total_debits": null,
+        "total_credits": null,
+        "total_assets": null,
+        "net_profit": null,
+        "classifications": {},
+        "message_contains": "Single-sided"
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    },
+    {
+      "file": "corrupt_03_narrative_only.xlsx",
+      "dimension": "corruption",
+      "description": "A meeting-notes sheet with no ledger structure at all.",
+      "expect": {
+        "status": "FAILED_CRITICAL",
+        "accounts": null,
+        "total_debits": null,
+        "total_credits": null,
+        "total_assets": null,
+        "net_profit": null,
+        "classifications": {},
+        "message_contains": null
+      },
+      "options": {
+        "allow_working_capital_plug": false,
+        "enforce_health_gate": true
+      }
+    }
+  ]
+}

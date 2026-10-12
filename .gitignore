@@ -1,0 +1,35 @@
+# Virtual environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Excel generated test/run output
+output_*.xlsx
+*_compiled.xlsx
+*_Compiled_*.xlsx
+*.tmp
+
+# IDE / OS files
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Frontend local environment and generated files
+frontend/.env.local
+frontend/.next/
+frontend/node_modules/

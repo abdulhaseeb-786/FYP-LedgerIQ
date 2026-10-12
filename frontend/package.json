@@ -1,0 +1,17 @@
+{
+  "name": "ledgeriq-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LedgerIQ - Financial Statements & Accounting Web Application Frontend",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "^14.2.5"
+  }
+}

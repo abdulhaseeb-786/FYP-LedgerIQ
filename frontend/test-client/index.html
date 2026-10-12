@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LedgerIQ - API Testing Workbench</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/test-assets/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased">
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2.5">
+          <div class="h-8 w-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-lg">
+            LQ
+          </div>
+          <div>
+            <h1 class="text-base font-bold text-slate-100 leading-none tracking-tight">LedgerIQ</h1>
+            <span class="text-xs text-slate-400 font-mono">Phase 2 Testing Workbench</span>
+          </div>
+        </div>
+        <div class="hidden sm:flex items-center space-x-2 pl-4 border-l border-slate-800">
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300 border border-slate-700">
+            FastAPI v1
+          </span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-blue-950 text-blue-300 border border-blue-800">
+            PostgreSQL + Redis
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div id="healthBadge" class="flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700">
+          <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span id="healthText">Connecting...</span>
+        </div>
+        <div id="userHeaderSection" class="flex items-center space-x-3">
+          <button id="openAuthModalBtn" class="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-emerald-600 hover:bg-emerald-500 text-white transition">
+            Login / Register
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="lg:col-span-5 space-y-6">
+      <!-- 1. Auth Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <h2 class="text-sm font-semibold text-slate-200">👤 Authentication & Credits</h2>
+          <span id="authStatusPill" class="text-xs px-2 py-0.5 rounded font-mono bg-slate-800 text-slate-400 border border-slate-700">
+            Anonymous Mode
+          </span>
+        </div>
+        <div id="authDetails" class="mt-4 space-y-3 text-xs">
+          <p class="text-slate-400">
+            Compile anonymously or authenticate to test multi-tenancy, projects, and credit quotas.
+          </p>
+          <div class="flex items-center space-x-2">
+            <button id="quickLoginModalBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-200 font-medium transition">
+              Manage Credentials
+            </button>
+            <button id="refreshAuthBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 font-mono transition">
+              ↻ Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Projects Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <h2 class="text-sm font-semibold text-slate-200">📁 Projects & Storage Quotas</h2>
+          <span id="quotaBadge" class="text-xs px-2 py-0.5 rounded font-mono bg-slate-800 text-slate-400 border border-slate-700">
+            Quota: -- / --
+          </span>
+        </div>
+        <div class="mt-4 space-y-4">
+          <form id="createProjectForm" class="space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="newProjectName" placeholder="Project Name" required
+                class="px-2.5 py-1.5 text-xs bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+              <input type="text" id="newProjectEntity" placeholder="Entity (e.g. Acme)"
+                class="px-2.5 py-1.5 text-xs bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+            </div>
+            <button type="submit" id="createProjectBtn" class="w-full py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-200 transition">
+              + Create Project (Quota Controlled)
+            </button>
+          </form>
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span>Active Workspace Projects:</span>
+              <button id="reloadProjectsBtn" class="text-emerald-400 hover:underline font-mono">Refresh</button>
+            </div>
+            <div id="projectsList" class="max-h-40 overflow-y-auto space-y-1.5 pr-1 text-xs font-mono">
+              <div class="text-slate-500 py-2 text-center">Login to view or create projects.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Compiler Workbench -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <h2 class="text-sm font-semibold text-slate-200">⚡ Statement Compiler Workbench</h2>
+          <span class="text-xs px-2 py-0.5 rounded font-mono bg-emerald-950 text-emerald-300 border border-emerald-800">
+            IFRS & Companies Act 2017
+          </span>
+        </div>
+        <form id="compileForm" class="mt-4 space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">
+              Trial Balance Excel Workbook (.xlsx, .xlsm) <span class="text-emerald-400">*</span>
+            </label>
+            <div id="dropzone" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 bg-slate-950/60 rounded-lg p-5 text-center cursor-pointer transition">
+              <svg class="mx-auto h-8 w-8 text-slate-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <div id="dropzoneLabel" class="text-xs text-slate-400">
+                <span class="text-emerald-400 font-semibold">Click to select</span> or drag & drop TB file
+              </div>
+              <input type="file" id="fileInput" accept=".xlsx,.xlsm" class="hidden">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Entity Name</label>
+              <input type="text" id="entityNameInput" placeholder="e.g. Acme Corp Ltd"
+                class="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Reporting Period</label>
+              <input type="text" id="periodInput" placeholder="e.g. June 30, 2025"
+                class="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Sheet Name (Optional)</label>
+              <input type="text" id="sheetInput" placeholder="Auto-detect if blank"
+                class="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Link to Project</label>
+              <select id="projectSelect" class="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+                <option value="">None (Ad-hoc run)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-2 border-t border-slate-800/80 text-xs">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="healthGateCheckbox" checked class="rounded border-slate-700 bg-slate-950 text-emerald-500 focus:ring-0">
+              <span class="text-slate-300">Run Pre-Flight Data Health Gate (Rejects corrupt TBs)</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="workingCapitalCheckbox" class="rounded border-slate-700 bg-slate-950 text-amber-500 focus:ring-0">
+              <span class="text-slate-400">Allow Working Capital Absorption Plug (Force Parity)</span>
+            </label>
+          </div>
+
+          <button type="submit" id="compileBtn"
+            class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+            <span id="compileBtnText">⚡ Compile Statutory Financial Statements</span>
+            <span id="compileSpinner" class="hidden">...</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Column: Audit Results -->
+    <div class="lg:col-span-7 space-y-6">
+      <div id="emptyResultPlaceholder" class="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center text-slate-500 space-y-3">
+        <div class="h-12 w-12 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-slate-400 text-xl font-mono">
+          📊
+        </div>
+        <h3 class="text-sm font-semibold text-slate-300">Ready for Compilation</h3>
+        <p class="text-xs text-slate-400 max-w-md mx-auto">
+          Upload a 3-to-4 column Trial Balance workbook on the left to compile statutory financial statements, dynamic disclosure notes, and perform OpenXML formula audits.
+        </p>
+      </div>
+
+      <div id="resultsContainer" class="hidden space-y-6">
+        <div id="statusBanner" class="border rounded-xl p-5 flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-3">
+              <span id="statusBadge" class="px-2.5 py-1 rounded text-xs font-mono font-bold tracking-wide uppercase">
+                SUCCESS
+              </span>
+              <span id="resultEntityName" class="text-sm font-bold text-slate-100"></span>
+            </div>
+            <p id="resultSummaryMessage" class="text-xs text-slate-400"></p>
+          </div>
+          <div id="downloadContainer">
+            <a id="downloadWorkbookBtn" href="#" target="_blank"
+              class="inline-flex items-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow transition">
+              <span>Download .xlsx</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
+          <div class="flex border-b border-slate-800 bg-slate-950/40 text-xs font-medium">
+            <button class="tab-btn px-4 py-3 text-emerald-400 border-b-2 border-emerald-500 transition" data-tab="tabHealth">
+              1. Data Health
+            </button>
+            <button class="tab-btn px-4 py-3 text-slate-400 hover:text-slate-200 transition" data-tab="tabVerification">
+              2. Statement Verification
+            </button>
+            <button class="tab-btn px-4 py-3 text-slate-400 hover:text-slate-200 transition" data-tab="tabWorkbook">
+              3. Formula Audit
+            </button>
+            <button class="tab-btn px-4 py-3 text-slate-400 hover:text-slate-200 transition" data-tab="tabRaw">
+              4. Full JSON Payload
+            </button>
+          </div>
+
+          <div id="tabHealth" class="tab-content p-5 space-y-4">
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Processable</span>
+                <div id="healthProcessable" class="text-sm font-bold text-slate-200 mt-1">--</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Row Count</span>
+                <div id="healthRowCount" class="text-sm font-bold text-slate-200 mt-1">--</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Unbalanced Δ</span>
+                <div id="healthVariance" class="text-sm font-bold text-slate-200 mt-1 font-mono">--</div>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-300 mb-2">Detected Issues & Heuristics</h4>
+              <div id="healthIssuesList" class="bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono max-h-48 overflow-y-auto space-y-1 text-slate-400">
+                No pre-flight issues detected.
+              </div>
+            </div>
+          </div>
+
+          <div id="tabVerification" class="tab-content hidden p-5 space-y-4">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs font-mono">
+              <div id="bsCheckCard" class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
+                <span class="text-[11px] text-slate-400">Balance Sheet</span>
+                <div id="bsCheckVal" class="text-xs font-bold mt-1">--</div>
+              </div>
+              <div id="cfCheckCard" class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
+                <span class="text-[11px] text-slate-400">Cash Flow</span>
+                <div id="cfCheckVal" class="text-xs font-bold mt-1">--</div>
+              </div>
+              <div id="eqCheckCard" class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
+                <span class="text-[11px] text-slate-400">Equity</span>
+                <div id="eqCheckVal" class="text-xs font-bold mt-1">--</div>
+              </div>
+              <div id="notesCheckCard" class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
+                <span class="text-[11px] text-slate-400">Notes 4–12</span>
+                <div id="notesCheckVal" class="text-xs font-bold mt-1">--</div>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-300 mb-2">Verification Diagnostics</h4>
+              <div id="verificationDiagnosticsList" class="bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono max-h-48 overflow-y-auto space-y-1 text-slate-400">
+                All statutory balances verified.
+              </div>
+            </div>
+          </div>
+
+          <div id="tabWorkbook" class="tab-content hidden p-5 space-y-4">
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Workbook Audit</span>
+                <div id="auditPassedVal" class="text-sm font-bold text-slate-200 mt-1">--</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Formulas Audited</span>
+                <div id="auditChecksCount" class="text-sm font-bold text-slate-200 mt-1">--</div>
+              </div>
+              <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-center">
+                <span class="text-[11px] text-slate-400 uppercase font-mono">Formula Failures</span>
+                <div id="auditFailuresCount" class="text-sm font-bold text-slate-200 mt-1">--</div>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-slate-300 mb-2">Audited Statements & Balance Proofs</h4>
+              <div id="auditSummaryDetails" class="bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono max-h-48 overflow-y-auto text-slate-400 whitespace-pre-wrap">
+                No failures.
+              </div>
+            </div>
+          </div>
+
+          <div id="tabRaw" class="tab-content hidden p-5">
+            <pre id="rawJsonResponse" class="bg-slate-950 border border-slate-800 rounded p-4 text-xs font-mono text-emerald-400 max-h-96 overflow-auto"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="authModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl max-w-md w-full p-6 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-sm font-bold text-slate-200">Authentication & Workspace Management</h3>
+        <button id="closeAuthModalBtn" class="text-slate-500 hover:text-slate-300 font-bold">✕</button>
+      </div>
+      <div class="flex rounded bg-slate-950 p-1 border border-slate-800 text-xs">
+        <button id="authTabLogin" class="flex-1 py-1.5 rounded font-semibold bg-emerald-600 text-white transition">
+          Login
+        </button>
+        <button id="authTabRegister" class="flex-1 py-1.5 rounded font-semibold text-slate-400 hover:text-slate-200 transition">
+          Register Workspace
+        </button>
+      </div>
+      <form id="authForm" class="space-y-3 text-xs">
+        <div id="fullNameGroup" class="hidden">
+          <label class="block text-slate-400 mb-1">Full Name</label>
+          <input type="text" id="authFullName" placeholder="e.g. Ehtisham"
+            class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div id="orgNameGroup" class="hidden">
+          <label class="block text-slate-400 mb-1">Organization / Firm Name</label>
+          <input type="text" id="authOrgName" placeholder="e.g. Acme Audit Associates"
+            class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Email Address</label>
+          <input type="email" id="authEmail" placeholder="accountant@example.com" required
+            class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Password</label>
+          <input type="password" id="authPassword" placeholder="••••••••" required
+            class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div id="authErrorMessage" class="hidden p-2.5 rounded bg-rose-950/60 border border-rose-800 text-rose-300 text-xs"></div>
+        <button type="submit" id="authSubmitBtn" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded text-xs transition">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden max-w-sm px-4 py-3 rounded-lg shadow-lg text-xs font-mono transition-all transform duration-300"></div>
+
+  <script src="/test-assets/app.js"></script>
+</body>
+</html>
