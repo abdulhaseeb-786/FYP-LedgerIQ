@@ -1,6 +1,6 @@
 """Multi-Tab Dynamic OpenXML Workbook Compiler (Module 9 Exporter)."""
 
-from typing import List
+from typing import List, Optional, Any
 import openpyxl
 
 from fyp_module3.core.models import StandardizedAccountRecord, AuditEntry, CompiledNote
@@ -12,9 +12,10 @@ from fyp_module3.statements.cash_flow import CashFlowStatement
 from fyp_module3.statements.formulas import tb_row_amount
 from fyp_module3.exporter.styles import (
     FONT_COMPANY, FONT_TITLE, FONT_SUBTITLE, FONT_TH, FONT_REGULAR, FONT_BOLD,
-    FONT_SECTION, FILL_TH, FILL_SECTION,
+    FONT_SECTION, FONT_CHECK_PASS, FONT_ALERT_HIGH, FONT_ALERT_MED,
+    FILL_TH, FILL_SECTION, FILL_SUBTOTAL, FILL_ZEBRA, FILL_ALERT_HIGH, FILL_ALERT_MED, FILL_ALERT_PASS,
     BORDER_TH, BORDER_SUBTOTAL, BORDER_GRAND_TOTAL, BORDER_CHECK,
-    ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, ACCOUNTING_NUMBER_FORMAT,
+    ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, ACCOUNTING_NUMBER_FORMAT, INTEGER_NUMBER_FORMAT, PERCENTAGE_FORMAT,
     autofit_columns
 )
 
@@ -30,7 +31,8 @@ class ExcelWorkbookCompiler:
         self,
         accounts: List[StandardizedAccountRecord],
         audit_trail: List[AuditEntry],
-        output_file: str
+        output_file: str,
+        audit_risk_report: Optional[Any] = None
     ) -> str:
         """Compile and save the multi-tab linked workbook."""
         wb = openpyxl.Workbook()
@@ -99,6 +101,8 @@ class ExcelWorkbookCompiler:
         self._write_cash_flow_sheet(wb, cf_rows)
         self._write_notes_sheet(wb, compiled_notes)
         self._write_audit_sheet(wb, accounts, audit_trail)
+        if audit_risk_report is not None:
+            self._write_analytics_sheet(wb, audit_risk_report)
         # Force Excel to recalculate all formula cells on file open
         wb.calculation.fullCalcOnLoad = True
         wb.calculation.forceFullCalculation = True
@@ -432,6 +436,246 @@ class ExcelWorkbookCompiler:
                 ws.cell(row=r, column=4, value=f"{entry.before_dr:,.2f} / {entry.before_cr:,.2f}")
                 ws.cell(row=r, column=5, value=f"{entry.after_dr:,.2f} / {entry.after_cr:,.2f}")
                 ws.cell(row=r, column=6, value=entry.explanation)
+                r += 1
+
+        autofit_columns(ws)
+
+    def _write_analytics_sheet(self, wb, report: Any):
+        """Generate dynamic audit analytics and anomaly detection tab (ISA 520 / ISA 240)."""
+        ws = wb.create_sheet(title="Audit Analytics")
+        self._write_sheet_header(ws, "AUDIT ANALYTICAL PROCEDURES & ANOMALY VERIFICATION (ISA 520 / ISA 240)")
+
+        # Section 1: Executive Summary KPI Card
+        r = 5
+        ws.cell(row=r, column=1, value="EXECUTIVE AUDIT RISK ASSESSMENT").font = FONT_SECTION
+        ws.cell(row=r, column=1).fill = FILL_SECTION
+        for col_idx in range(2, 9):
+            ws.cell(row=r, column=col_idx).fill = FILL_SECTION
+        r += 1
+
+        ws.cell(row=r, column=1, value="Entity Evaluated:").font = FONT_BOLD
+        ws.cell(row=r, column=2, value=str(getattr(report, "entity_name", self.entity_name)))
+        ws.cell(row=r, column=4, value="Audit Reporting Period:").font = FONT_BOLD
+        ws.cell(row=r, column=5, value=str(getattr(report, "reporting_period", self.period)))
+        r += 1
+
+        risk_score = float(getattr(report, "overall_risk_score", 0.0))
+        classification = str(getattr(report, "risk_classification", "LOW_RISK"))
+        ws.cell(row=r, column=1, value="Composite Audit Risk Score:").font = FONT_BOLD
+        score_cell = ws.cell(row=r, column=2, value=f"{risk_score:.1f} / 100.0")
+        score_cell.font = FONT_BOLD
+
+        ws.cell(row=r, column=4, value="Statutory Risk Classification:").font = FONT_BOLD
+        class_cell = ws.cell(row=r, column=5, value=classification)
+        class_cell.font = FONT_BOLD
+
+        if risk_score >= 60.0 or "HIGH" in classification:
+            score_cell.font = FONT_ALERT_HIGH
+            class_cell.font = FONT_ALERT_HIGH
+            class_cell.fill = FILL_ALERT_HIGH
+        elif risk_score >= 30.0 or "MODERATE" in classification:
+            score_cell.font = FONT_ALERT_MED
+            class_cell.font = FONT_ALERT_MED
+            class_cell.fill = FILL_ALERT_MED
+        else:
+            score_cell.font = FONT_CHECK_PASS
+            class_cell.font = FONT_CHECK_PASS
+            class_cell.fill = FILL_ALERT_PASS
+        r += 1
+
+        benford = getattr(report, "benford_analysis", None)
+        if benford:
+            ws.cell(row=r, column=1, value="Benford Conformity (ISA 240):").font = FONT_BOLD
+            b_cell = ws.cell(row=r, column=2, value=f"{benford.conformity_status} (MAD: {benford.mad:.4f})")
+            if getattr(benford, "is_suspicious", False):
+                b_cell.font = FONT_ALERT_HIGH
+            else:
+                b_cell.font = FONT_CHECK_PASS
+
+        ml = getattr(report, "ml_anomalies", None)
+        if ml:
+            ws.cell(row=r, column=4, value="ML Journal Anomalies:").font = FONT_BOLD
+            tot_flag = getattr(ml, "total_flagged", 0)
+            tot_eval = getattr(ml, "total_evaluated", 0)
+            contam = getattr(ml, "contamination_rate", 0.0)
+            ml_cell = ws.cell(row=r, column=5, value=f"{tot_flag} of {tot_eval} entries flagged ({contam*100:.1f}%)")
+            if tot_flag > 0:
+                ml_cell.font = FONT_ALERT_HIGH if tot_flag > 5 else FONT_ALERT_MED
+        r += 1
+
+        key_findings = getattr(report, "key_findings", [])
+        if key_findings:
+            r += 1
+            ws.cell(row=r, column=1, value="Key Audit Findings & Red Flags:").font = FONT_BOLD
+            r += 1
+            for finding in key_findings:
+                ws.cell(row=r, column=1, value=f"•  {finding}").alignment = ALIGN_LEFT
+                r += 1
+
+        # Section 2: Benford's Law First-Digit Analysis
+        if benford and getattr(benford, "digits", None):
+            r += 2
+            ws.cell(row=r, column=1, value="1. ISA 240 BENFORD'S LAW FIRST-DIGIT DISTRIBUTION").font = FONT_SECTION
+            r += 1
+
+            headers_b = ["Leading Digit", "Observed Count", "Observed Frequency", "Expected Benford Freq", "Variance (Abs)", "Z-Score", "Audit Status"]
+            for col_idx, h in enumerate(headers_b, 1):
+                cell = ws.cell(row=r, column=col_idx, value=h)
+                cell.font = FONT_TH
+                cell.fill = FILL_TH
+                cell.alignment = ALIGN_CENTER if col_idx in (1, 7) else ALIGN_RIGHT
+                cell.border = BORDER_TH
+            r += 1
+
+            first_benford_row = r
+            for d in benford.digits:
+                ws.cell(row=r, column=1, value=d.digit).alignment = ALIGN_CENTER
+                
+                c_cnt = ws.cell(row=r, column=2, value=d.observed_count)
+                c_cnt.number_format = INTEGER_NUMBER_FORMAT
+                c_cnt.alignment = ALIGN_RIGHT
+
+                c_obs = ws.cell(row=r, column=3, value=d.observed_freq)
+                c_obs.number_format = PERCENTAGE_FORMAT
+                c_obs.alignment = ALIGN_RIGHT
+
+                c_exp = ws.cell(row=r, column=4, value=d.expected_freq)
+                c_exp.number_format = PERCENTAGE_FORMAT
+                c_exp.alignment = ALIGN_RIGHT
+
+                c_diff = ws.cell(row=r, column=5, value=abs(d.difference))
+                c_diff.number_format = PERCENTAGE_FORMAT
+                c_diff.alignment = ALIGN_RIGHT
+
+                c_z = ws.cell(row=r, column=6, value=round(d.z_score, 2))
+                c_z.number_format = "0.00"
+                c_z.alignment = ALIGN_RIGHT
+
+                status_cell = ws.cell(row=r, column=7, value="ANOMALY (Z > 1.96)" if d.is_anomaly else "Conforming")
+                status_cell.alignment = ALIGN_CENTER
+                if d.is_anomaly:
+                    status_cell.font = FONT_ALERT_HIGH
+                    status_cell.fill = FILL_ALERT_HIGH
+                else:
+                    status_cell.font = FONT_REGULAR
+                r += 1
+
+            last_benford_row = r - 1
+            # Benford Totals Row with Formulas
+            ws.cell(row=r, column=1, value="Total / Sum").font = FONT_BOLD
+            
+            c_tot_cnt = ws.cell(row=r, column=2, value=f"=SUM(B{first_benford_row}:B{last_benford_row})")
+            c_tot_cnt.font = FONT_BOLD
+            c_tot_cnt.number_format = INTEGER_NUMBER_FORMAT
+            c_tot_cnt.border = BORDER_SUBTOTAL
+            c_tot_cnt.alignment = ALIGN_RIGHT
+
+            c_tot_obs = ws.cell(row=r, column=3, value=f"=SUM(C{first_benford_row}:C{last_benford_row})")
+            c_tot_obs.font = FONT_BOLD
+            c_tot_obs.number_format = PERCENTAGE_FORMAT
+            c_tot_obs.border = BORDER_SUBTOTAL
+            c_tot_obs.alignment = ALIGN_RIGHT
+
+            c_tot_exp = ws.cell(row=r, column=4, value=f"=SUM(D{first_benford_row}:D{last_benford_row})")
+            c_tot_exp.font = FONT_BOLD
+            c_tot_exp.number_format = PERCENTAGE_FORMAT
+            c_tot_exp.border = BORDER_SUBTOTAL
+            c_tot_exp.alignment = ALIGN_RIGHT
+
+            for col_idx in (1, 5, 6, 7):
+                ws.cell(row=r, column=col_idx).border = BORDER_SUBTOTAL
+
+        # Section 3: ISA 520 Analytical Procedures (Financial Ratios)
+        ratios_rep = getattr(report, "isa_520_ratios", None)
+        if ratios_rep and getattr(ratios_rep, "ratios", None):
+            r += 2
+            ws.cell(row=r, column=1, value="2. ISA 520 FINANCIAL RATIOS & COMPARATIVE VARIANCE ANALYSIS").font = FONT_SECTION
+            r += 1
+
+            headers_r = ["Code", "Ratio Name", "Category", "Current Period", "Prior Period", "YoY Delta", "Benchmark", "Audit Verdict"]
+            for col_idx, h in enumerate(headers_r, 1):
+                cell = ws.cell(row=r, column=col_idx, value=h)
+                cell.font = FONT_TH
+                cell.fill = FILL_TH
+                cell.alignment = ALIGN_CENTER if col_idx in (1, 3, 8) else (ALIGN_RIGHT if col_idx in (4, 5, 6) else ALIGN_LEFT)
+                cell.border = BORDER_TH
+            r += 1
+
+            for ratio in ratios_rep.ratios:
+                ws.cell(row=r, column=1, value=ratio.code).alignment = ALIGN_CENTER
+                ws.cell(row=r, column=2, value=ratio.name).alignment = ALIGN_LEFT
+                ws.cell(row=r, column=3, value=ratio.category).alignment = ALIGN_CENTER
+
+                c_curr = ws.cell(row=r, column=4, value=round(ratio.current_value, 2) if ratio.current_value is not None else "-")
+                c_curr.alignment = ALIGN_RIGHT
+                if ratio.current_value is not None:
+                    c_curr.number_format = "0.00"
+
+                c_prior = ws.cell(row=r, column=5, value=round(ratio.prior_value, 2) if ratio.prior_value is not None else "-")
+                c_prior.alignment = ALIGN_RIGHT
+                if ratio.prior_value is not None:
+                    c_prior.number_format = "0.00"
+
+                c_delta = ws.cell(row=r, column=6, value=f"{ratio.delta_percentage:+.1f}%" if ratio.delta_percentage is not None else "-")
+                c_delta.alignment = ALIGN_RIGHT
+
+                bench_text = f"[{ratio.benchmark_min or ''} - {ratio.benchmark_max or ''}]" if (ratio.benchmark_min or ratio.benchmark_max) else "N/A"
+                ws.cell(row=r, column=7, value=bench_text).alignment = ALIGN_CENTER
+
+                verdict_cell = ws.cell(row=r, column=8, value="ALERT" if ratio.is_alert else "Acceptable")
+                verdict_cell.alignment = ALIGN_CENTER
+                if ratio.is_alert:
+                    verdict_cell.font = FONT_ALERT_HIGH
+                    verdict_cell.fill = FILL_ALERT_HIGH
+                else:
+                    verdict_cell.font = FONT_CHECK_PASS
+                r += 1
+
+        # Section 4: Isolation Forest Journal ML Anomalies
+        if ml and getattr(ml, "high_risk_entries", None):
+            r += 2
+            ws.cell(row=r, column=1, value="3. ISA 240 JOURNAL ENTRY ANOMALIES & AUDIT RED FLAGS").font = FONT_SECTION
+            r += 1
+
+            headers_ml = ["Voucher No", "Posting Date", "Account", "Amount (PKR)", "Score", "Risk Level", "Red Flag Audit Findings"]
+            for col_idx, h in enumerate(headers_ml, 1):
+                cell = ws.cell(row=r, column=col_idx, value=h)
+                cell.font = FONT_TH
+                cell.fill = FILL_TH
+                cell.alignment = ALIGN_CENTER if col_idx in (1, 2, 6) else (ALIGN_RIGHT if col_idx in (4, 5) else ALIGN_LEFT)
+                cell.border = BORDER_TH
+            r += 1
+
+            for entry in ml.high_risk_entries:
+                ws.cell(row=r, column=1, value=entry.voucher_no).alignment = ALIGN_CENTER
+                date_str = entry.date.strftime("%Y-%m-%d") if hasattr(entry.date, "strftime") else str(entry.date)
+                ws.cell(row=r, column=2, value=date_str).alignment = ALIGN_CENTER
+                
+                acc_label = f"[{entry.account_code}] {entry.account_name}" if entry.account_code else entry.account_name
+                ws.cell(row=r, column=3, value=acc_label).alignment = ALIGN_LEFT
+
+                c_amt = ws.cell(row=r, column=4, value=entry.amount)
+                c_amt.number_format = ACCOUNTING_NUMBER_FORMAT
+                c_amt.alignment = ALIGN_RIGHT
+
+                c_score = ws.cell(row=r, column=5, value=round(entry.anomaly_score, 4))
+                c_score.number_format = "0.0000"
+                c_score.alignment = ALIGN_RIGHT
+
+                risk_cell = ws.cell(row=r, column=6, value=entry.risk_level)
+                risk_cell.alignment = ALIGN_CENTER
+                if entry.risk_level in ("CRITICAL", "HIGH"):
+                    risk_cell.font = FONT_ALERT_HIGH
+                    risk_cell.fill = FILL_ALERT_HIGH
+                elif entry.risk_level == "MEDIUM":
+                    risk_cell.font = FONT_ALERT_MED
+                    risk_cell.fill = FILL_ALERT_MED
+                else:
+                    risk_cell.font = FONT_CHECK_PASS
+                    risk_cell.fill = FILL_ALERT_PASS
+
+                reasons_text = " | ".join(entry.reasons) if entry.reasons else "Statistical outlier"
+                ws.cell(row=r, column=7, value=reasons_text).alignment = ALIGN_LEFT
                 r += 1
 
         autofit_columns(ws)
