@@ -5,6 +5,7 @@ from app.modules.users.router import router as auth_router
 from app.modules.projects.router import router as projects_router
 from app.modules.financial_statements.router import router as statements_router
 from app.modules.audit_analytics.router import router as analytics_router
+from app.modules.document_digitizer.router import router as digitizer_router
 
 api_router = APIRouter(prefix=settings.API_V1_PREFIX)
 
@@ -26,3 +27,4 @@ api_router.include_router(auth_router)
 api_router.include_router(projects_router)
 api_router.include_router(statements_router)
 api_router.include_router(analytics_router)
+api_router.include_router(digitizer_router)
