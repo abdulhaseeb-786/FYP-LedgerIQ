@@ -1,0 +1,554 @@
+{
+  "corpus_version": "1.0.0",
+  "description": "Realistic enterprise document templates (CORD, FBR CPR)",
+  "documents": [
+    {
+      "file_name": "cord_retail_receipt_01.png",
+      "benchmark_source": "CORD_FORMAT",
+      "merchant": "STARBUCKS COFFEE PAKISTAN",
+      "date": "2025-06-18",
+      "subtotal": 4750.0,
+      "tax": 760.0,
+      "total": 5510.0,
+      "is_arithmetically_balanced": true,
+      "tokens": [
+        {
+          "text": "STARBUCKS COFFEE PAKISTAN",
+          "bbox_pixels": [
+            170,
+            32,
+            315,
+            40
+          ],
+          "bbox_normalized": [
+            0.04,
+            0.2833,
+            0.05,
+            0.525
+          ]
+        },
+        {
+          "text": "STORE #0412 - GULBERG III",
+          "bbox_pixels": [
+            200,
+            52,
+            326,
+            60
+          ],
+          "bbox_normalized": [
+            0.065,
+            0.3333,
+            0.075,
+            0.5433
+          ]
+        },
+        {
+          "text": "POS-01  TRANS-90412",
+          "bbox_pixels": [
+            230,
+            72,
+            333,
+            80
+          ],
+          "bbox_normalized": [
+            0.09,
+            0.3833,
+            0.1,
+            0.555
+          ]
+        },
+        {
+          "text": "2025-06-18 09:45 AM",
+          "bbox_pixels": [
+            220,
+            92,
+            319,
+            100
+          ],
+          "bbox_normalized": [
+            0.115,
+            0.3667,
+            0.125,
+            0.5317
+          ]
+        },
+        {
+          "text": "QTY  ITEM",
+          "bbox_pixels": [
+            40,
+            127,
+            87,
+            136
+          ],
+          "bbox_normalized": [
+            0.1588,
+            0.0667,
+            0.17,
+            0.145
+          ]
+        },
+        {
+          "text": "TOTAL",
+          "bbox_pixels": [
+            480,
+            127,
+            511,
+            135
+          ],
+          "bbox_normalized": [
+            0.1588,
+            0.8,
+            0.1688,
+            0.8517
+          ]
+        },
+        {
+          "text": "1  Caffe Latte Grande",
+          "bbox_pixels": [
+            40,
+            161,
+            136,
+            170
+          ],
+          "bbox_normalized": [
+            0.2013,
+            0.0667,
+            0.2125,
+            0.2267
+          ]
+        },
+        {
+          "text": "1,350.00",
+          "bbox_pixels": [
+            490,
+            162,
+            530,
+            171
+          ],
+          "bbox_normalized": [
+            0.2025,
+            0.8167,
+            0.2137,
+            0.8833
+          ]
+        },
+        {
+          "text": "2  Butter Croissant",
+          "bbox_pixels": [
+            40,
+            192,
+            123,
+            200
+          ],
+          "bbox_normalized": [
+            0.24,
+            0.0667,
+            0.25,
+            0.205
+          ]
+        },
+        {
+          "text": "1,100.00",
+          "bbox_pixels": [
+            490,
+            192,
+            530,
+            201
+          ],
+          "bbox_normalized": [
+            0.24,
+            0.8167,
+            0.2512,
+            0.8833
+          ]
+        },
+        {
+          "text": "1  Iced Caramel Macchiato",
+          "bbox_pixels": [
+            40,
+            222,
+            160,
+            230
+          ],
+          "bbox_normalized": [
+            0.2775,
+            0.0667,
+            0.2875,
+            0.2667
+          ]
+        },
+        {
+          "text": "1,650.00",
+          "bbox_pixels": [
+            490,
+            222,
+            530,
+            231
+          ],
+          "bbox_normalized": [
+            0.2775,
+            0.8167,
+            0.2888,
+            0.8833
+          ]
+        },
+        {
+          "text": "1  Blueberry Muffin",
+          "bbox_pixels": [
+            40,
+            251,
+            131,
+            262
+          ],
+          "bbox_normalized": [
+            0.3137,
+            0.0667,
+            0.3275,
+            0.2183
+          ]
+        },
+        {
+          "text": "650.00",
+          "bbox_pixels": [
+            490,
+            252,
+            522,
+            260
+          ],
+          "bbox_normalized": [
+            0.315,
+            0.8167,
+            0.325,
+            0.87
+          ]
+        },
+        {
+          "text": "SUBTOTAL:",
+          "bbox_pixels": [
+            340,
+            307,
+            392,
+            315
+          ],
+          "bbox_normalized": [
+            0.3837,
+            0.5667,
+            0.3937,
+            0.6533
+          ]
+        },
+        {
+          "text": "4,750.00",
+          "bbox_pixels": [
+            490,
+            307,
+            530,
+            316
+          ],
+          "bbox_normalized": [
+            0.3837,
+            0.8167,
+            0.395,
+            0.8833
+          ]
+        },
+        {
+          "text": "PRA SALES TAX (16%):",
+          "bbox_pixels": [
+            340,
+            331,
+            440,
+            341
+          ],
+          "bbox_normalized": [
+            0.4138,
+            0.5667,
+            0.4263,
+            0.7333
+          ]
+        },
+        {
+          "text": "760.00",
+          "bbox_pixels": [
+            490,
+            332,
+            522,
+            340
+          ],
+          "bbox_normalized": [
+            0.415,
+            0.8167,
+            0.425,
+            0.87
+          ]
+        },
+        {
+          "text": "TOTAL DUE (PKR):",
+          "bbox_pixels": [
+            340,
+            361,
+            422,
+            371
+          ],
+          "bbox_normalized": [
+            0.4512,
+            0.5667,
+            0.4637,
+            0.7033
+          ]
+        },
+        {
+          "text": "5,510.00",
+          "bbox_pixels": [
+            485,
+            362,
+            525,
+            371
+          ],
+          "bbox_normalized": [
+            0.4525,
+            0.8083,
+            0.4637,
+            0.875
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "fbr_cpr_tax_challan.png",
+      "benchmark_source": "FBR_CPR_PAKISTAN",
+      "cpr_number": "ST-202506-0044-1190",
+      "taxpayer": "NISHAT PACKAGING MILLS LTD",
+      "date": "2025-06-25",
+      "total": 405000.0,
+      "is_arithmetically_balanced": true,
+      "tokens": [
+        {
+          "text": "FEDERAL BOARD OF REVENUE - GOVERNMENT OF PAKISTAN",
+          "bbox_pixels": [
+            180,
+            42,
+            459,
+            50
+          ],
+          "bbox_normalized": [
+            0.0467,
+            0.24,
+            0.0556,
+            0.612
+          ]
+        },
+        {
+          "text": "COMPUTERIZED PAYMENT RECEIPT (CPR) - ANNEX-C",
+          "bbox_pixels": [
+            220,
+            66,
+            467,
+            76
+          ],
+          "bbox_normalized": [
+            0.0733,
+            0.2933,
+            0.0844,
+            0.6227
+          ]
+        },
+        {
+          "text": "CPR Number: ST-202506-0044-1190",
+          "bbox_pixels": [
+            50,
+            117,
+            220,
+            125
+          ],
+          "bbox_normalized": [
+            0.13,
+            0.0667,
+            0.1389,
+            0.2933
+          ]
+        },
+        {
+          "text": "Payment Date: 2025-06-25",
+          "bbox_pixels": [
+            420,
+            117,
+            542,
+            127
+          ],
+          "bbox_normalized": [
+            0.13,
+            0.56,
+            0.1411,
+            0.7227
+          ]
+        },
+        {
+          "text": "Taxpayer: NISHAT PACKAGING MILLS LTD",
+          "bbox_pixels": [
+            50,
+            142,
+            244,
+            152
+          ],
+          "bbox_normalized": [
+            0.1578,
+            0.0667,
+            0.1689,
+            0.3253
+          ]
+        },
+        {
+          "text": "STRN: 03-01-4819-001-88",
+          "bbox_pixels": [
+            50,
+            167,
+            170,
+            175
+          ],
+          "bbox_normalized": [
+            0.1856,
+            0.0667,
+            0.1944,
+            0.2267
+          ]
+        },
+        {
+          "text": "Tax Period: June 2025",
+          "bbox_pixels": [
+            420,
+            167,
+            524,
+            175
+          ],
+          "bbox_normalized": [
+            0.1856,
+            0.56,
+            0.1944,
+            0.6987
+          ]
+        },
+        {
+          "text": "Head of Account / Tax Particulars",
+          "bbox_pixels": [
+            50,
+            236,
+            199,
+            246
+          ],
+          "bbox_normalized": [
+            0.2622,
+            0.0667,
+            0.2733,
+            0.2653
+          ]
+        },
+        {
+          "text": "Amount (PKR)",
+          "bbox_pixels": [
+            540,
+            236,
+            604,
+            246
+          ],
+          "bbox_normalized": [
+            0.2622,
+            0.72,
+            0.2733,
+            0.8053
+          ]
+        },
+        {
+          "text": "0200000 - Sales Tax Domestic Supplies (18%)",
+          "bbox_pixels": [
+            50,
+            271,
+            256,
+            282
+          ],
+          "bbox_normalized": [
+            0.3011,
+            0.0667,
+            0.3133,
+            0.3413
+          ]
+        },
+        {
+          "text": "360,000.00",
+          "bbox_pixels": [
+            550,
+            272,
+            602,
+            281
+          ],
+          "bbox_normalized": [
+            0.3022,
+            0.7333,
+            0.3122,
+            0.8027
+          ]
+        },
+        {
+          "text": "0210000 - Withholding Sales Tax by Withholding Agent",
+          "bbox_pixels": [
+            50,
+            300,
+            308,
+            310
+          ],
+          "bbox_normalized": [
+            0.3333,
+            0.0667,
+            0.3444,
+            0.4107
+          ]
+        },
+        {
+          "text": "45,000.00",
+          "bbox_pixels": [
+            550,
+            300,
+            596,
+            309
+          ],
+          "bbox_normalized": [
+            0.3333,
+            0.7333,
+            0.3433,
+            0.7947
+          ]
+        },
+        {
+          "text": "TOTAL TAX DEPOSITED (PKR):",
+          "bbox_pixels": [
+            50,
+            347,
+            186,
+            357
+          ],
+          "bbox_normalized": [
+            0.3856,
+            0.0667,
+            0.3967,
+            0.248
+          ]
+        },
+        {
+          "text": "405,000.00",
+          "bbox_pixels": [
+            540,
+            348,
+            592,
+            357
+          ],
+          "bbox_normalized": [
+            0.3867,
+            0.72,
+            0.3967,
+            0.7893
+          ]
+        }
+      ]
+    }
+  ]
+}
