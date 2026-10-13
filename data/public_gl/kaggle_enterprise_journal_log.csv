@@ -1,0 +1,501 @@
+Transaction ID,Date,Account Code,Account Name,Memo / Narration,Debit,Credit,Operator
+TRX-2024-00001,2025-02-01,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0001 - ref 5223,0.00,"17,478.37",user_4
+TRX-2024-00002,2025-05-22,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0002 - ref 9257,"111,130.70",0.00,user_1
+TRX-2024-00003,2025-04-01,108,Merchandise Inventory,Invoice payment / journal voucher batch #0003 - ref 3916,0.00,"32,148.62",user_8
+TRX-2024-00004,2024-07-10,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0004 - ref 9143,"156,918.46",0.00,user_8
+TRX-2024-00005,2024-11-22,108,Merchandise Inventory,Invoice payment / journal voucher batch #0005 - ref 8729,0.00,"148,484.64",user_6
+TRX-2024-00006,2024-08-08,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0006 - ref 4329,0.00,"68,716.50",user_5
+TRX-2024-00007,2025-03-13,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0007 - ref 8829,0.00,"6,670.43",user_8
+TRX-2024-00008,2024-10-22,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0008 - ref 7169,"158,145.48",0.00,user_6
+TRX-2024-00009,2024-08-23,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0009 - ref 9698,"36,646.38",0.00,user_4
+TRX-2024-00010,2024-09-27,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0010 - ref 4065,0.00,"76,350.82",user_2
+TRX-2024-00011,2024-07-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0011 - ref 2341,"103,515.99",0.00,user_1
+TRX-2024-00012,2024-12-15,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0012 - ref 6697,0.00,"75,332.14",user_5
+TRX-2024-00013,2025-02-25,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0013 - ref 3966,0.00,"71,820.91",user_2
+TRX-2024-00014,2025-02-07,103,Accounts Receivable,Invoice payment / journal voucher batch #0014 - ref 1881,0.00,"67,224.55",user_1
+TRX-2024-00015,2025-01-25,108,Merchandise Inventory,Invoice payment / journal voucher batch #0015 - ref 2653,0.00,"112,317.02",user_4
+TRX-2024-00016,2024-12-06,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0016 - ref 3657,"109,035.00",0.00,user_5
+TRX-2024-00017,2025-04-01,108,Merchandise Inventory,Invoice payment / journal voucher batch #0017 - ref 9996,0.00,"96,400.44",user_1
+TRX-2024-00018,2024-12-02,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0018 - ref 2049,"52,640.02",0.00,user_1
+TRX-2024-00019,2024-12-31,103,Accounts Receivable,Invoice payment / journal voucher batch #0019 - ref 9864,0.00,"174,494.94",user_4
+TRX-2024-00020,2024-07-23,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0020 - ref 5345,"95,957.23",0.00,user_6
+TRX-2024-00021,2025-04-06,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0021 - ref 4119,"50,469.18",0.00,user_4
+TRX-2024-00022,2025-04-22,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0022 - ref 3768,"180,545.17",0.00,user_5
+TRX-2024-00023,2025-01-29,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0023 - ref 9512,"9,782.18",0.00,user_1
+TRX-2024-00024,2024-10-10,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0024 - ref 6831,0.00,"24,954.79",user_6
+TRX-2024-00025,2024-12-13,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0025 - ref 1767,0.00,"160,879.34",user_2
+TRX-2024-00026,2025-05-24,108,Merchandise Inventory,Invoice payment / journal voucher batch #0026 - ref 4121,"167,582.49",0.00,user_6
+TRX-2024-00027,2025-06-07,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0027 - ref 4682,0.00,"87,462.92",user_6
+TRX-2024-00028,2025-06-17,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0028 - ref 7953,"141,334.79",0.00,user_6
+TRX-2024-00029,2025-03-10,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0029 - ref 2659,0.00,"158,011.80",user_7
+TRX-2024-00030,2025-04-10,108,Merchandise Inventory,Invoice payment / journal voucher batch #0030 - ref 9087,"98,522.08",0.00,user_2
+TRX-2024-00031,2024-11-18,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0031 - ref 9090,"21,883.23",0.00,user_6
+TRX-2024-00032,2024-09-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0032 - ref 4518,0.00,"130,353.57",user_6
+TRX-2024-00033,2024-08-09,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0033 - ref 8072,0.00,"20,574.68",user_1
+TRX-2024-00034,2025-02-11,108,Merchandise Inventory,Invoice payment / journal voucher batch #0034 - ref 1983,0.00,"95,349.98",user_4
+TRX-2024-00035,2025-03-25,108,Merchandise Inventory,Invoice payment / journal voucher batch #0035 - ref 1069,0.00,"33,300.25",user_3
+TRX-2024-00036,2024-08-30,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0036 - ref 4853,"62,638.03",0.00,user_8
+TRX-2024-00037,2025-01-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0037 - ref 8030,"34,142.11",0.00,user_4
+TRX-2024-00038,2025-03-23,103,Accounts Receivable,Invoice payment / journal voucher batch #0038 - ref 2062,0.00,"150,428.82",user_2
+TRX-2024-00039,2024-07-10,103,Accounts Receivable,Invoice payment / journal voucher batch #0039 - ref 8194,0.00,"64,941.02",user_7
+TRX-2024-00040,2025-02-18,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0040 - ref 3722,"9,761.07",0.00,user_1
+TRX-2024-00041,2025-01-16,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0041 - ref 2345,0.00,"38,794.04",user_5
+TRX-2024-00042,2025-05-04,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0042 - ref 8527,0.00,"74,208.22",user_8
+TRX-2024-00043,2024-12-07,103,Accounts Receivable,Invoice payment / journal voucher batch #0043 - ref 4842,"24,631.24",0.00,user_2
+TRX-2024-00044,2025-05-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0044 - ref 6354,"64,939.01",0.00,user_6
+TRX-2024-00045,2024-09-07,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0045 - ref 7254,"19,043.54",0.00,user_2
+TRX-2024-00046,2025-02-24,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0046 - ref 9032,"99,535.98",0.00,user_2
+TRX-2024-00047,2025-04-10,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0047 - ref 7656,"166,257.84",0.00,user_7
+TRX-2024-00048,2025-02-16,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0048 - ref 9344,0.00,"57,141.98",user_8
+TRX-2024-00049,2024-10-24,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0049 - ref 5523,"62,238.46",0.00,user_6
+TRX-2024-00050,2024-10-30,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0050 - ref 6592,0.00,"142,365.67",user_7
+TRX-2024-00051,2024-07-20,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0051 - ref 6447,"140,058.58",0.00,user_1
+TRX-2024-00052,2024-07-02,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0052 - ref 9463,"8,710.80",0.00,user_3
+TRX-2024-00053,2024-12-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0053 - ref 3207,0.00,"165,415.85",user_2
+TRX-2024-00054,2024-09-16,103,Accounts Receivable,Invoice payment / journal voucher batch #0054 - ref 9448,0.00,"66,630.97",user_4
+TRX-2024-00055,2025-05-09,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0055 - ref 4482,"156,720.15",0.00,user_2
+TRX-2024-00056,2024-11-27,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0056 - ref 5455,0.00,"26,047.57",user_1
+TRX-2024-00057,2024-08-19,103,Accounts Receivable,Invoice payment / journal voucher batch #0057 - ref 1866,"41,374.06",0.00,user_4
+TRX-2024-00058,2024-09-04,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0058 - ref 2063,0.00,"120,528.78",user_6
+TRX-2024-00059,2025-02-05,103,Accounts Receivable,Invoice payment / journal voucher batch #0059 - ref 9969,"53,695.89",0.00,user_4
+TRX-2024-00060,2024-09-27,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0060 - ref 7113,0.00,"123,049.01",user_6
+TRX-2024-00061,2025-04-23,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0061 - ref 9489,"77,949.91",0.00,user_2
+TRX-2024-00062,2024-07-10,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0062 - ref 5147,"54,911.76",0.00,user_7
+TRX-2024-00063,2024-09-20,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0063 - ref 3287,"63,438.70",0.00,user_3
+TRX-2024-00064,2025-05-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0064 - ref 7773,0.00,"57,282.91",user_8
+TRX-2024-00065,2025-03-28,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0065 - ref 9456,0.00,"151,054.00",user_6
+TRX-2024-00066,2024-11-08,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0066 - ref 4959,0.00,"139,045.35",user_1
+TRX-2024-00067,2025-01-08,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0067 - ref 1718,0.00,"32,419.57",user_3
+TRX-2024-00068,2025-05-26,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0068 - ref 4660,"12,565.83",0.00,user_8
+TRX-2024-00069,2024-09-21,103,Accounts Receivable,Invoice payment / journal voucher batch #0069 - ref 9778,0.00,"149,633.04",user_1
+TRX-2024-00070,2024-07-08,108,Merchandise Inventory,Invoice payment / journal voucher batch #0070 - ref 4637,"31,805.90",0.00,user_4
+TRX-2024-00071,2025-03-12,108,Merchandise Inventory,Invoice payment / journal voucher batch #0071 - ref 8788,0.00,"155,934.19",user_6
+TRX-2024-00072,2024-11-01,103,Accounts Receivable,Invoice payment / journal voucher batch #0072 - ref 7824,0.00,"122,487.95",user_6
+TRX-2024-00073,2024-12-20,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0073 - ref 9319,"11,088.97",0.00,user_5
+TRX-2024-00074,2025-04-15,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0074 - ref 9714,0.00,"49,465.23",user_6
+TRX-2024-00075,2025-06-17,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0075 - ref 4940,"135,476.11",0.00,user_8
+TRX-2024-00076,2024-11-11,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0076 - ref 1340,"156,148.03",0.00,user_3
+TRX-2024-00077,2025-02-13,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0077 - ref 9402,0.00,"88,213.81",user_3
+TRX-2024-00078,2025-02-01,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0078 - ref 8776,0.00,"109,035.40",user_6
+TRX-2024-00079,2024-12-19,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0079 - ref 9643,"132,420.07",0.00,user_6
+TRX-2024-00080,2025-04-06,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0080 - ref 7246,0.00,"96,663.26",user_4
+TRX-2024-00081,2025-04-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0081 - ref 4034,"110,052.36",0.00,user_6
+TRX-2024-00082,2024-08-19,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0082 - ref 2339,0.00,"131,220.53",user_5
+TRX-2024-00083,2024-12-12,103,Accounts Receivable,Invoice payment / journal voucher batch #0083 - ref 3597,0.00,"48,526.44",user_5
+TRX-2024-00084,2024-12-31,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0084 - ref 6803,0.00,"87,984.96",user_3
+TRX-2024-00085,2025-01-26,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0085 - ref 7816,0.00,"161,106.78",user_2
+TRX-2024-00086,2025-03-28,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0086 - ref 4334,"30,164.02",0.00,user_5
+TRX-2024-00087,2025-03-01,103,Accounts Receivable,Invoice payment / journal voucher batch #0087 - ref 1041,0.00,"128,510.93",user_8
+TRX-2024-00088,2025-05-15,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0088 - ref 8314,"90,657.74",0.00,user_4
+TRX-2024-00089,2025-05-27,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0089 - ref 5776,"171,028.01",0.00,user_7
+TRX-2024-00090,2025-01-26,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0090 - ref 7102,"48,879.88",0.00,user_5
+TRX-2024-00091,2024-11-18,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0091 - ref 8913,"41,883.06",0.00,user_2
+TRX-2024-00092,2024-12-01,108,Merchandise Inventory,Invoice payment / journal voucher batch #0092 - ref 2293,0.00,"168,067.26",user_8
+TRX-2024-00093,2024-08-19,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0093 - ref 2191,"181,424.35",0.00,user_4
+TRX-2024-00094,2025-04-17,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0094 - ref 4315,"64,308.55",0.00,user_7
+TRX-2024-00095,2025-02-21,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0095 - ref 9095,0.00,"163,419.12",user_4
+TRX-2024-00096,2025-02-04,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0096 - ref 7443,"80,712.44",0.00,user_8
+TRX-2024-00097,2024-11-27,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0097 - ref 9238,"23,314.89",0.00,user_8
+TRX-2024-00098,2025-03-23,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0098 - ref 9701,"55,409.08",0.00,user_5
+TRX-2024-00099,2025-03-07,103,Accounts Receivable,Invoice payment / journal voucher batch #0099 - ref 5276,"61,769.32",0.00,user_1
+TRX-2024-00100,2024-07-27,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0100 - ref 5001,"124,950.86",0.00,user_4
+TRX-2024-00101,2025-03-30,103,Accounts Receivable,Invoice payment / journal voucher batch #0101 - ref 1889,0.00,"27,154.42",user_4
+TRX-2024-00102,2025-02-23,103,Accounts Receivable,Invoice payment / journal voucher batch #0102 - ref 2935,0.00,"85,288.79",user_6
+TRX-2024-00103,2025-02-11,108,Merchandise Inventory,Invoice payment / journal voucher batch #0103 - ref 1569,"14,068.12",0.00,user_6
+TRX-2024-00104,2024-09-26,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0104 - ref 4150,0.00,"49,896.39",user_6
+TRX-2024-00105,2024-08-06,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0105 - ref 2763,0.00,"92,037.47",user_4
+TRX-2024-00106,2025-06-08,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0106 - ref 8140,"140,513.79",0.00,user_4
+TRX-2024-00107,2024-08-12,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0107 - ref 4720,"21,238.37",0.00,user_5
+TRX-2024-00108,2024-08-08,108,Merchandise Inventory,Invoice payment / journal voucher batch #0108 - ref 7150,"117,672.56",0.00,user_7
+TRX-2024-00109,2024-09-15,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0109 - ref 6565,"53,273.72",0.00,user_4
+TRX-2024-00110,2025-03-10,108,Merchandise Inventory,Invoice payment / journal voucher batch #0110 - ref 6150,"85,205.96",0.00,user_6
+TRX-2024-00111,2024-07-30,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0111 - ref 5461,0.00,"159,718.28",user_5
+TRX-2024-00112,2025-01-20,108,Merchandise Inventory,Invoice payment / journal voucher batch #0112 - ref 1740,0.00,"45,576.41",user_3
+TRX-2024-00113,2025-03-31,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0113 - ref 4731,"31,170.50",0.00,user_8
+TRX-2024-00114,2024-12-22,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0114 - ref 8351,"91,936.00",0.00,user_6
+TRX-2024-00115,2025-02-28,103,Accounts Receivable,Invoice payment / journal voucher batch #0115 - ref 2980,0.00,"49,404.08",user_4
+TRX-2024-00116,2025-03-27,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0116 - ref 4770,0.00,"9,205.67",user_4
+TRX-2024-00117,2025-02-01,103,Accounts Receivable,Invoice payment / journal voucher batch #0117 - ref 1204,0.00,"134,714.37",user_8
+TRX-2024-00118,2025-05-21,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0118 - ref 5203,0.00,"166,610.77",user_1
+TRX-2024-00119,2024-12-16,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0119 - ref 7758,0.00,"45,450.35",user_5
+TRX-2024-00120,2025-05-20,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0120 - ref 5546,"69,433.28",0.00,user_3
+TRX-2024-00121,2024-09-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0121 - ref 9691,"21,798.63",0.00,user_6
+TRX-2024-00122,2024-09-23,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0122 - ref 8772,"104,234.38",0.00,user_1
+TRX-2024-00123,2025-04-23,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0123 - ref 4565,0.00,"176,237.39",user_7
+TRX-2024-00124,2025-02-18,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0124 - ref 5895,"5,492.65",0.00,user_3
+TRX-2024-00125,2025-04-14,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0125 - ref 7837,0.00,"76,129.44",user_3
+TRX-2024-00126,2024-11-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0126 - ref 2696,0.00,"117,503.21",user_1
+TRX-2024-00127,2024-12-12,103,Accounts Receivable,Invoice payment / journal voucher batch #0127 - ref 5148,"11,340.53",0.00,user_1
+TRX-2024-00128,2024-08-02,103,Accounts Receivable,Invoice payment / journal voucher batch #0128 - ref 7525,0.00,"118,587.71",user_3
+TRX-2024-00129,2025-01-21,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0129 - ref 6931,0.00,"112,882.97",user_1
+TRX-2024-00130,2024-12-12,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0130 - ref 3279,0.00,"146,636.10",user_6
+TRX-2024-00131,2024-07-07,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0131 - ref 5750,0.00,"146,710.60",user_3
+TRX-2024-00132,2024-08-02,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0132 - ref 4388,0.00,"65,720.18",user_7
+TRX-2024-00133,2025-04-10,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0133 - ref 1715,0.00,"134,253.18",user_7
+TRX-2024-00134,2024-08-30,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0134 - ref 7386,"140,717.09",0.00,user_4
+TRX-2024-00135,2024-08-18,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0135 - ref 3984,0.00,"82,265.06",user_5
+TRX-2024-00136,2024-12-14,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0136 - ref 5249,0.00,"122,456.41",user_4
+TRX-2024-00137,2024-07-12,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0137 - ref 4358,0.00,"17,543.92",user_8
+TRX-2024-00138,2024-08-18,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0138 - ref 6038,0.00,"175,603.06",user_6
+TRX-2024-00139,2025-02-06,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0139 - ref 3204,"34,525.40",0.00,user_4
+TRX-2024-00140,2025-03-09,108,Merchandise Inventory,Invoice payment / journal voucher batch #0140 - ref 3130,0.00,"4,388.56",user_4
+TRX-2024-00141,2024-10-24,108,Merchandise Inventory,Invoice payment / journal voucher batch #0141 - ref 2247,"108,138.12",0.00,user_5
+TRX-2024-00142,2024-07-26,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0142 - ref 2850,"40,040.95",0.00,user_5
+TRX-2024-00143,2024-07-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0143 - ref 4683,"49,191.67",0.00,user_8
+TRX-2024-00144,2025-02-01,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0144 - ref 1511,0.00,"39,505.80",user_8
+TRX-2024-00145,2025-06-22,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0145 - ref 1729,"143,825.06",0.00,user_5
+TRX-2024-00146,2025-06-26,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0146 - ref 3976,"184,289.99",0.00,user_4
+TRX-2024-00147,2024-11-03,108,Merchandise Inventory,Invoice payment / journal voucher batch #0147 - ref 7720,"22,091.76",0.00,user_5
+TRX-2024-00148,2024-12-25,103,Accounts Receivable,Invoice payment / journal voucher batch #0148 - ref 2608,"22,322.82",0.00,user_4
+TRX-2024-00149,2024-11-25,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0149 - ref 2980,"146,286.14",0.00,user_5
+TRX-2024-00150,2025-02-14,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0150 - ref 8255,"79,568.05",0.00,user_3
+TRX-2024-00151,2024-09-12,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0151 - ref 2096,0.00,"89,008.84",user_8
+TRX-2024-00152,2024-07-11,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0152 - ref 7616,"11,025.85",0.00,user_1
+TRX-2024-00153,2025-04-14,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0153 - ref 3448,"12,720.72",0.00,user_8
+TRX-2024-00154,2024-09-06,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0154 - ref 4890,"38,899.78",0.00,user_7
+TRX-2024-00155,2025-03-19,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0155 - ref 1300,0.00,"108,639.77",user_3
+TRX-2024-00156,2024-08-18,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0156 - ref 1857,"39,573.71",0.00,user_8
+TRX-2024-00157,2025-05-17,108,Merchandise Inventory,Invoice payment / journal voucher batch #0157 - ref 9068,"93,056.04",0.00,user_4
+TRX-2024-00158,2025-04-02,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0158 - ref 2004,0.00,"133,011.15",user_1
+TRX-2024-00159,2024-07-16,103,Accounts Receivable,Invoice payment / journal voucher batch #0159 - ref 9156,"68,709.19",0.00,user_3
+TRX-2024-00160,2024-09-20,108,Merchandise Inventory,Invoice payment / journal voucher batch #0160 - ref 4133,"71,283.09",0.00,user_3
+TRX-2024-00161,2025-02-13,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0161 - ref 7141,0.00,"170,496.62",user_1
+TRX-2024-00162,2024-08-20,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0162 - ref 3408,0.00,"70,064.63",user_7
+TRX-2024-00163,2024-12-22,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0163 - ref 5916,"177,406.50",0.00,user_5
+TRX-2024-00164,2024-12-14,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0164 - ref 1812,970.51,0.00,user_2
+TRX-2024-00165,2025-01-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0165 - ref 9509,0.00,"15,559.55",user_2
+TRX-2024-00166,2024-09-13,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0166 - ref 4543,"168,708.98",0.00,user_8
+TRX-2024-00167,2024-10-23,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0167 - ref 8822,0.00,"81,177.70",user_8
+TRX-2024-00168,2024-10-17,103,Accounts Receivable,Invoice payment / journal voucher batch #0168 - ref 3557,"177,425.49",0.00,user_5
+TRX-2024-00169,2024-12-28,103,Accounts Receivable,Invoice payment / journal voucher batch #0169 - ref 7742,0.00,"97,758.76",user_5
+TRX-2024-00170,2025-01-31,103,Accounts Receivable,Invoice payment / journal voucher batch #0170 - ref 9261,"112,328.22",0.00,user_7
+TRX-2024-00171,2024-10-03,108,Merchandise Inventory,Invoice payment / journal voucher batch #0171 - ref 2522,0.00,"87,541.10",user_1
+TRX-2024-00172,2024-12-04,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0172 - ref 6214,"160,690.57",0.00,user_8
+TRX-2024-00173,2024-12-11,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0173 - ref 4205,"31,113.26",0.00,user_1
+TRX-2024-00174,2024-08-01,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0174 - ref 1847,"177,556.84",0.00,user_7
+TRX-2024-00175,2025-03-02,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0175 - ref 7538,"75,959.38",0.00,user_5
+TRX-2024-00176,2024-07-03,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0176 - ref 3748,0.00,"167,703.39",user_3
+TRX-2024-00177,2025-04-19,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0177 - ref 1529,0.00,"103,687.18",user_3
+TRX-2024-00178,2024-12-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0178 - ref 4877,"120,971.55",0.00,user_6
+TRX-2024-00179,2025-02-17,103,Accounts Receivable,Invoice payment / journal voucher batch #0179 - ref 7757,"146,847.86",0.00,user_7
+TRX-2024-00180,2024-11-16,103,Accounts Receivable,Invoice payment / journal voucher batch #0180 - ref 4217,0.00,"8,622.04",user_8
+TRX-2024-00181,2024-07-25,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0181 - ref 3291,"5,834.83",0.00,user_2
+TRX-2024-00182,2025-02-02,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0182 - ref 5503,0.00,"19,260.49",user_8
+TRX-2024-00183,2024-07-08,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0183 - ref 2217,"85,213.08",0.00,user_1
+TRX-2024-00184,2025-06-14,108,Merchandise Inventory,Invoice payment / journal voucher batch #0184 - ref 4597,"123,232.12",0.00,user_6
+TRX-2024-00185,2024-08-14,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0185 - ref 7519,"74,138.70",0.00,user_2
+TRX-2024-00186,2024-08-30,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0186 - ref 4207,"59,566.32",0.00,user_8
+TRX-2024-00187,2025-05-25,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0187 - ref 3531,"30,464.37",0.00,user_2
+TRX-2024-00188,2025-01-12,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0188 - ref 4832,0.00,"143,373.95",user_2
+TRX-2024-00189,2024-11-10,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0189 - ref 5783,0.00,"21,471.22",user_4
+TRX-2024-00190,2024-10-22,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0190 - ref 5828,"100,403.18",0.00,user_1
+TRX-2024-00191,2025-06-05,108,Merchandise Inventory,Invoice payment / journal voucher batch #0191 - ref 6926,"171,024.59",0.00,user_4
+TRX-2024-00192,2025-05-08,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0192 - ref 9802,"52,040.62",0.00,user_5
+TRX-2024-00193,2025-06-16,103,Accounts Receivable,Invoice payment / journal voucher batch #0193 - ref 6465,"126,066.81",0.00,user_5
+TRX-2024-00194,2025-01-15,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0194 - ref 8101,0.00,"12,729.04",user_2
+TRX-2024-00195,2024-10-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0195 - ref 1336,0.00,"184,289.77",user_1
+TRX-2024-00196,2025-03-11,103,Accounts Receivable,Invoice payment / journal voucher batch #0196 - ref 8511,"50,004.27",0.00,user_1
+TRX-2024-00197,2025-02-28,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0197 - ref 7227,0.00,"151,843.22",user_1
+TRX-2024-00198,2025-02-05,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0198 - ref 5627,0.00,"131,006.87",user_3
+TRX-2024-00199,2025-03-18,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0199 - ref 6480,"60,091.86",0.00,user_5
+TRX-2024-00200,2024-09-13,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0200 - ref 3250,"148,432.30",0.00,user_1
+TRX-2024-00201,2024-08-06,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0201 - ref 1224,"76,426.63",0.00,user_2
+TRX-2024-00202,2025-01-21,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0202 - ref 7363,"76,033.28",0.00,user_1
+TRX-2024-00203,2025-02-26,103,Accounts Receivable,Invoice payment / journal voucher batch #0203 - ref 1344,"131,689.00",0.00,user_2
+TRX-2024-00204,2025-01-10,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0204 - ref 5340,"43,015.45",0.00,user_6
+TRX-2024-00205,2025-02-24,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0205 - ref 7901,0.00,"97,695.55",user_7
+TRX-2024-00206,2025-01-09,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0206 - ref 8381,0.00,"121,902.23",user_1
+TRX-2024-00207,2024-09-20,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0207 - ref 8439,"32,073.54",0.00,user_2
+TRX-2024-00208,2025-04-24,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0208 - ref 1445,0.00,"128,828.96",user_1
+TRX-2024-00209,2025-06-14,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0209 - ref 2681,"21,792.73",0.00,user_6
+TRX-2024-00210,2024-12-26,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0210 - ref 2535,"45,917.14",0.00,user_8
+TRX-2024-00211,2024-11-02,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0211 - ref 2765,0.00,"142,840.66",user_8
+TRX-2024-00212,2024-09-25,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0212 - ref 4104,0.00,"32,960.78",user_7
+TRX-2024-00213,2025-05-15,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0213 - ref 2471,0.00,"110,062.07",user_4
+TRX-2024-00214,2025-05-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0214 - ref 1988,0.00,"101,933.29",user_6
+TRX-2024-00215,2025-03-30,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0215 - ref 8620,"140,873.26",0.00,user_6
+TRX-2024-00216,2024-09-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0216 - ref 5817,"107,024.47",0.00,user_8
+TRX-2024-00217,2024-11-15,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0217 - ref 1595,"85,084.41",0.00,user_4
+TRX-2024-00218,2025-04-05,103,Accounts Receivable,Invoice payment / journal voucher batch #0218 - ref 3848,0.00,"36,627.70",user_6
+TRX-2024-00219,2025-01-26,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0219 - ref 6037,"27,913.26",0.00,user_6
+TRX-2024-00220,2024-09-11,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0220 - ref 8620,"62,136.39",0.00,user_5
+TRX-2024-00221,2025-03-12,103,Accounts Receivable,Invoice payment / journal voucher batch #0221 - ref 3068,0.00,"33,052.98",user_3
+TRX-2024-00222,2024-08-02,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0222 - ref 4031,"122,263.86",0.00,user_1
+TRX-2024-00223,2025-01-16,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0223 - ref 4306,"58,588.29",0.00,user_4
+TRX-2024-00224,2025-01-06,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0224 - ref 9245,0.00,"27,004.52",user_2
+TRX-2024-00225,2024-09-08,108,Merchandise Inventory,Invoice payment / journal voucher batch #0225 - ref 8939,0.00,"70,884.60",user_3
+TRX-2024-00226,2025-02-15,103,Accounts Receivable,Invoice payment / journal voucher batch #0226 - ref 5714,0.00,"107,026.91",user_1
+TRX-2024-00227,2025-06-23,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0227 - ref 5842,"8,411.35",0.00,user_5
+TRX-2024-00228,2024-11-09,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0228 - ref 3630,"180,094.76",0.00,user_8
+TRX-2024-00229,2024-10-13,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0229 - ref 6277,0.00,"65,509.74",user_7
+TRX-2024-00230,2024-11-19,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0230 - ref 2179,"31,937.28",0.00,user_8
+TRX-2024-00231,2024-11-27,103,Accounts Receivable,Invoice payment / journal voucher batch #0231 - ref 2214,"144,657.03",0.00,user_3
+TRX-2024-00232,2024-12-06,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0232 - ref 4866,0.00,"52,558.97",user_6
+TRX-2024-00233,2025-03-23,103,Accounts Receivable,Invoice payment / journal voucher batch #0233 - ref 2041,"28,653.55",0.00,user_2
+TRX-2024-00234,2025-01-10,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0234 - ref 1623,"75,644.01",0.00,user_7
+TRX-2024-00235,2024-09-29,108,Merchandise Inventory,Invoice payment / journal voucher batch #0235 - ref 2971,0.00,"63,283.41",user_7
+TRX-2024-00236,2025-02-22,103,Accounts Receivable,Invoice payment / journal voucher batch #0236 - ref 7848,0.00,"73,457.92",user_5
+TRX-2024-00237,2025-05-04,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0237 - ref 4192,0.00,"53,584.28",user_8
+TRX-2024-00238,2024-12-29,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0238 - ref 2919,"100,170.56",0.00,user_5
+TRX-2024-00239,2024-07-09,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0239 - ref 3819,"149,545.68",0.00,user_4
+TRX-2024-00240,2024-11-27,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0240 - ref 5416,"114,202.06",0.00,user_8
+TRX-2024-00241,2025-02-03,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0241 - ref 5649,0.00,"93,640.45",user_4
+TRX-2024-00242,2025-04-28,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0242 - ref 1193,"155,129.66",0.00,user_8
+TRX-2024-00243,2025-03-09,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0243 - ref 4116,0.00,"11,198.39",user_8
+TRX-2024-00244,2024-07-07,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0244 - ref 5555,"62,639.56",0.00,user_4
+TRX-2024-00245,2025-05-10,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0245 - ref 8601,"142,048.84",0.00,user_2
+TRX-2024-00246,2024-10-07,108,Merchandise Inventory,Invoice payment / journal voucher batch #0246 - ref 7371,"94,084.82",0.00,user_2
+TRX-2024-00247,2025-05-02,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0247 - ref 5378,0.00,"139,042.81",user_4
+TRX-2024-00248,2024-09-29,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0248 - ref 3936,0.00,"168,521.94",user_8
+TRX-2024-00249,2024-07-26,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0249 - ref 8780,0.00,"179,226.84",user_8
+TRX-2024-00250,2024-07-07,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0250 - ref 2182,"9,389.14",0.00,user_4
+TRX-2024-00251,2024-07-12,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0251 - ref 1605,0.00,"21,519.97",user_1
+TRX-2024-00252,2024-08-13,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0252 - ref 9697,0.00,"58,461.78",user_1
+TRX-2024-00253,2025-03-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0253 - ref 9678,"38,020.80",0.00,user_7
+TRX-2024-00254,2024-08-28,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0254 - ref 9295,0.00,"165,245.83",user_1
+TRX-2024-00255,2024-07-09,108,Merchandise Inventory,Invoice payment / journal voucher batch #0255 - ref 3743,"81,033.57",0.00,user_2
+TRX-2024-00256,2024-12-27,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0256 - ref 3459,"105,600.82",0.00,user_5
+TRX-2024-00257,2024-07-13,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0257 - ref 1272,0.00,"47,714.47",user_8
+TRX-2024-00258,2024-12-23,103,Accounts Receivable,Invoice payment / journal voucher batch #0258 - ref 7873,0.00,"18,974.76",user_1
+TRX-2024-00259,2025-06-01,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0259 - ref 5426,"150,796.69",0.00,user_2
+TRX-2024-00260,2024-08-29,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0260 - ref 5781,0.00,"19,386.84",user_4
+TRX-2024-00261,2025-05-27,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0261 - ref 2725,0.00,"40,542.85",user_2
+TRX-2024-00262,2024-10-26,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0262 - ref 2665,"99,830.14",0.00,user_1
+TRX-2024-00263,2025-05-03,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0263 - ref 8176,"174,943.61",0.00,user_1
+TRX-2024-00264,2025-01-09,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0264 - ref 2721,0.00,"175,415.80",user_8
+TRX-2024-00265,2025-02-10,108,Merchandise Inventory,Invoice payment / journal voucher batch #0265 - ref 1297,"23,724.22",0.00,user_5
+TRX-2024-00266,2024-12-20,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0266 - ref 3001,0.00,"18,205.09",user_8
+TRX-2024-00267,2025-03-11,103,Accounts Receivable,Invoice payment / journal voucher batch #0267 - ref 1193,0.00,"118,587.28",user_2
+TRX-2024-00268,2024-12-16,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0268 - ref 4442,"66,399.80",0.00,user_3
+TRX-2024-00269,2024-12-09,108,Merchandise Inventory,Invoice payment / journal voucher batch #0269 - ref 4897,"82,238.40",0.00,user_3
+TRX-2024-00270,2024-11-01,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0270 - ref 5220,"40,004.82",0.00,user_4
+TRX-2024-00271,2024-11-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0271 - ref 1992,"86,544.52",0.00,user_8
+TRX-2024-00272,2024-09-20,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0272 - ref 5530,"141,109.59",0.00,user_7
+TRX-2024-00273,2024-09-13,108,Merchandise Inventory,Invoice payment / journal voucher batch #0273 - ref 5963,"85,719.40",0.00,user_6
+TRX-2024-00274,2024-07-13,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0274 - ref 2342,0.00,"138,180.33",user_5
+TRX-2024-00275,2024-07-19,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0275 - ref 1957,"135,141.84",0.00,user_3
+TRX-2024-00276,2024-12-22,103,Accounts Receivable,Invoice payment / journal voucher batch #0276 - ref 3412,0.00,"25,011.16",user_8
+TRX-2024-00277,2024-09-15,103,Accounts Receivable,Invoice payment / journal voucher batch #0277 - ref 9820,"183,427.63",0.00,user_8
+TRX-2024-00278,2025-03-29,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0278 - ref 1123,"58,614.25",0.00,user_6
+TRX-2024-00279,2024-10-02,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0279 - ref 8516,0.00,"138,188.31",user_1
+TRX-2024-00280,2024-08-21,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0280 - ref 9312,"45,703.29",0.00,user_1
+TRX-2024-00281,2025-02-05,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0281 - ref 8594,"114,660.44",0.00,user_7
+TRX-2024-00282,2024-08-02,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0282 - ref 8248,0.00,"56,290.61",user_3
+TRX-2024-00283,2025-03-28,108,Merchandise Inventory,Invoice payment / journal voucher batch #0283 - ref 9801,"166,218.44",0.00,user_5
+TRX-2024-00284,2024-11-16,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0284 - ref 6239,0.00,"167,864.31",user_7
+TRX-2024-00285,2025-06-21,103,Accounts Receivable,Invoice payment / journal voucher batch #0285 - ref 6658,"177,573.82",0.00,user_1
+TRX-2024-00286,2025-03-09,108,Merchandise Inventory,Invoice payment / journal voucher batch #0286 - ref 8187,"55,826.19",0.00,user_2
+TRX-2024-00287,2024-12-30,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0287 - ref 8281,0.00,"35,149.41",user_7
+TRX-2024-00288,2025-01-31,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0288 - ref 3068,0.00,"4,679.40",user_2
+TRX-2024-00289,2024-09-12,108,Merchandise Inventory,Invoice payment / journal voucher batch #0289 - ref 8816,"172,137.42",0.00,user_8
+TRX-2024-00290,2025-03-09,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0290 - ref 2597,0.00,"86,866.22",user_1
+TRX-2024-00291,2024-11-28,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0291 - ref 8229,"43,989.91",0.00,user_7
+TRX-2024-00292,2024-11-08,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0292 - ref 7136,0.00,"121,008.16",user_8
+TRX-2024-00293,2024-08-12,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0293 - ref 7201,"57,764.90",0.00,user_7
+TRX-2024-00294,2024-07-24,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0294 - ref 1962,"106,772.78",0.00,user_7
+TRX-2024-00295,2025-04-18,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0295 - ref 5234,0.00,"100,838.53",user_4
+TRX-2024-00296,2025-05-29,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0296 - ref 3117,0.00,"29,303.73",user_5
+TRX-2024-00297,2024-08-02,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0297 - ref 3051,"24,267.38",0.00,user_5
+TRX-2024-00298,2024-10-30,103,Accounts Receivable,Invoice payment / journal voucher batch #0298 - ref 5053,"28,692.20",0.00,user_2
+TRX-2024-00299,2024-09-16,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0299 - ref 2346,"96,248.83",0.00,user_1
+TRX-2024-00300,2025-05-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0300 - ref 2251,0.00,"108,874.63",user_1
+TRX-2024-00301,2024-09-17,103,Accounts Receivable,Invoice payment / journal voucher batch #0301 - ref 9035,0.00,"169,132.68",user_5
+TRX-2024-00302,2025-04-18,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0302 - ref 3504,"25,460.98",0.00,user_3
+TRX-2024-00303,2024-07-19,108,Merchandise Inventory,Invoice payment / journal voucher batch #0303 - ref 2517,"134,350.16",0.00,user_2
+TRX-2024-00304,2024-08-20,108,Merchandise Inventory,Invoice payment / journal voucher batch #0304 - ref 9727,0.00,"137,851.21",user_3
+TRX-2024-00305,2024-12-31,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0305 - ref 6436,"117,061.14",0.00,user_7
+TRX-2024-00306,2024-09-10,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0306 - ref 3352,"20,508.44",0.00,user_7
+TRX-2024-00307,2025-01-05,103,Accounts Receivable,Invoice payment / journal voucher batch #0307 - ref 4368,"82,388.78",0.00,user_4
+TRX-2024-00308,2024-09-13,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0308 - ref 8164,0.00,"70,954.33",user_4
+TRX-2024-00309,2025-02-03,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0309 - ref 7307,0.00,"157,813.04",user_8
+TRX-2024-00310,2025-01-22,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0310 - ref 4444,"128,905.77",0.00,user_6
+TRX-2024-00311,2024-07-06,103,Accounts Receivable,Invoice payment / journal voucher batch #0311 - ref 1428,"119,553.00",0.00,user_7
+TRX-2024-00312,2025-01-02,108,Merchandise Inventory,Invoice payment / journal voucher batch #0312 - ref 4343,0.00,"42,431.46",user_2
+TRX-2024-00313,2025-02-23,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0313 - ref 6723,"49,603.38",0.00,user_5
+TRX-2024-00314,2024-11-10,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0314 - ref 7135,"27,281.34",0.00,user_5
+TRX-2024-00315,2024-08-20,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0315 - ref 9727,"41,494.11",0.00,user_6
+TRX-2024-00316,2024-12-15,103,Accounts Receivable,Invoice payment / journal voucher batch #0316 - ref 8178,0.00,"140,115.50",user_7
+TRX-2024-00317,2024-12-21,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0317 - ref 2688,0.00,"150,919.76",user_4
+TRX-2024-00318,2024-09-11,103,Accounts Receivable,Invoice payment / journal voucher batch #0318 - ref 7999,"15,018.89",0.00,user_1
+TRX-2024-00319,2024-11-23,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0319 - ref 2787,0.00,"68,326.08",user_4
+TRX-2024-00320,2025-01-18,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0320 - ref 8888,"34,348.05",0.00,user_8
+TRX-2024-00321,2025-03-21,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0321 - ref 8412,"93,960.43",0.00,user_6
+TRX-2024-00322,2025-05-20,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0322 - ref 5798,"131,944.90",0.00,user_6
+TRX-2024-00323,2025-01-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0323 - ref 1326,"95,784.48",0.00,user_3
+TRX-2024-00324,2024-10-20,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0324 - ref 7077,"182,904.06",0.00,user_5
+TRX-2024-00325,2024-09-05,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0325 - ref 6303,"164,958.59",0.00,user_2
+TRX-2024-00326,2025-02-10,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0326 - ref 8113,0.00,"71,858.45",user_1
+TRX-2024-00327,2024-11-26,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0327 - ref 4194,0.00,"38,489.37",user_6
+TRX-2024-00328,2024-12-08,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0328 - ref 3116,"174,890.99",0.00,user_2
+TRX-2024-00329,2024-08-10,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0329 - ref 2689,0.00,"165,049.27",user_4
+TRX-2024-00330,2024-07-25,103,Accounts Receivable,Invoice payment / journal voucher batch #0330 - ref 1238,"53,969.69",0.00,user_4
+TRX-2024-00331,2025-01-06,108,Merchandise Inventory,Invoice payment / journal voucher batch #0331 - ref 7506,0.00,"81,124.01",user_2
+TRX-2024-00332,2024-07-24,103,Accounts Receivable,Invoice payment / journal voucher batch #0332 - ref 5654,235.80,0.00,user_2
+TRX-2024-00333,2024-12-14,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0333 - ref 9165,"134,024.94",0.00,user_3
+TRX-2024-00334,2024-11-25,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0334 - ref 2482,0.00,"135,259.38",user_1
+TRX-2024-00335,2025-06-15,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0335 - ref 8806,"103,538.65",0.00,user_1
+TRX-2024-00336,2024-09-28,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0336 - ref 2951,0.00,"46,577.92",user_7
+TRX-2024-00337,2024-10-20,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0337 - ref 9608,"168,769.92",0.00,user_5
+TRX-2024-00338,2025-02-25,103,Accounts Receivable,Invoice payment / journal voucher batch #0338 - ref 8117,0.00,"33,121.32",user_1
+TRX-2024-00339,2025-01-20,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0339 - ref 8301,0.00,"158,502.10",user_8
+TRX-2024-00340,2025-05-08,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0340 - ref 3214,0.00,"97,707.49",user_1
+TRX-2024-00341,2025-06-15,103,Accounts Receivable,Invoice payment / journal voucher batch #0341 - ref 9334,0.00,"131,245.31",user_7
+TRX-2024-00342,2024-11-04,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0342 - ref 3675,"80,161.80",0.00,user_4
+TRX-2024-00343,2025-02-25,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0343 - ref 8592,"73,534.71",0.00,user_7
+TRX-2024-00344,2024-07-22,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0344 - ref 7623,0.00,"96,079.77",user_3
+TRX-2024-00345,2024-10-19,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0345 - ref 1382,"34,918.51",0.00,user_8
+TRX-2024-00346,2024-12-16,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0346 - ref 1837,0.00,"32,675.69",user_1
+TRX-2024-00347,2024-09-03,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0347 - ref 5367,"98,387.11",0.00,user_7
+TRX-2024-00348,2024-09-29,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0348 - ref 2634,"9,427.15",0.00,user_3
+TRX-2024-00349,2025-02-16,108,Merchandise Inventory,Invoice payment / journal voucher batch #0349 - ref 7688,"97,363.66",0.00,user_6
+TRX-2024-00350,2024-11-27,108,Merchandise Inventory,Invoice payment / journal voucher batch #0350 - ref 7064,"102,280.08",0.00,user_3
+TRX-2024-00351,2024-12-18,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0351 - ref 8058,"38,625.24",0.00,user_5
+TRX-2024-00352,2024-08-09,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0352 - ref 3678,"128,999.99",0.00,user_1
+TRX-2024-00353,2025-01-12,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0353 - ref 8338,"140,377.02",0.00,user_8
+TRX-2024-00354,2024-07-01,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0354 - ref 6210,0.00,"131,651.37",user_6
+TRX-2024-00355,2024-12-20,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0355 - ref 5294,"157,162.42",0.00,user_4
+TRX-2024-00356,2025-02-19,108,Merchandise Inventory,Invoice payment / journal voucher batch #0356 - ref 5944,0.00,"65,549.38",user_4
+TRX-2024-00357,2025-05-26,108,Merchandise Inventory,Invoice payment / journal voucher batch #0357 - ref 5979,"137,612.82",0.00,user_2
+TRX-2024-00358,2024-12-25,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0358 - ref 3613,0.00,"32,071.26",user_4
+TRX-2024-00359,2024-12-31,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0359 - ref 2278,"138,924.50",0.00,user_5
+TRX-2024-00360,2024-08-26,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0360 - ref 4752,0.00,"17,795.82",user_1
+TRX-2024-00361,2024-07-26,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0361 - ref 2666,"150,876.81",0.00,user_4
+TRX-2024-00362,2025-03-11,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0362 - ref 8192,"37,830.18",0.00,user_5
+TRX-2024-00363,2024-07-02,108,Merchandise Inventory,Invoice payment / journal voucher batch #0363 - ref 3810,"173,479.09",0.00,user_2
+TRX-2024-00364,2024-12-21,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0364 - ref 1029,"60,908.50",0.00,user_1
+TRX-2024-00365,2025-01-30,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0365 - ref 1365,0.00,"48,051.87",user_4
+TRX-2024-00366,2025-04-29,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0366 - ref 3116,0.00,"171,824.32",user_2
+TRX-2024-00367,2024-09-22,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0367 - ref 4542,"72,017.21",0.00,user_6
+TRX-2024-00368,2025-03-13,103,Accounts Receivable,Invoice payment / journal voucher batch #0368 - ref 7102,517.49,0.00,user_3
+TRX-2024-00369,2024-10-29,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0369 - ref 6760,"125,338.30",0.00,user_3
+TRX-2024-00370,2025-06-14,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0370 - ref 8836,"9,374.05",0.00,user_5
+TRX-2024-00371,2025-04-11,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0371 - ref 4657,"22,225.95",0.00,user_4
+TRX-2024-00372,2024-08-08,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0372 - ref 2501,"149,262.89",0.00,user_5
+TRX-2024-00373,2024-12-10,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0373 - ref 1617,0.00,"48,270.16",user_8
+TRX-2024-00374,2024-08-17,108,Merchandise Inventory,Invoice payment / journal voucher batch #0374 - ref 6586,"27,947.41",0.00,user_7
+TRX-2024-00375,2025-02-17,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0375 - ref 7128,0.00,"15,115.83",user_6
+TRX-2024-00376,2024-11-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0376 - ref 4554,"169,836.57",0.00,user_8
+TRX-2024-00377,2025-04-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0377 - ref 7436,"151,512.50",0.00,user_4
+TRX-2024-00378,2025-01-28,103,Accounts Receivable,Invoice payment / journal voucher batch #0378 - ref 1396,"8,208.63",0.00,user_4
+TRX-2024-00379,2024-12-04,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0379 - ref 3207,0.00,"161,326.84",user_6
+TRX-2024-00380,2024-09-19,103,Accounts Receivable,Invoice payment / journal voucher batch #0380 - ref 1246,0.00,"4,823.92",user_2
+TRX-2024-00381,2024-11-24,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0381 - ref 3933,"73,824.42",0.00,user_2
+TRX-2024-00382,2024-11-20,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0382 - ref 9178,"29,440.41",0.00,user_1
+TRX-2024-00383,2024-11-05,108,Merchandise Inventory,Invoice payment / journal voucher batch #0383 - ref 2075,"181,602.30",0.00,user_7
+TRX-2024-00384,2024-11-25,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0384 - ref 6608,0.00,"35,389.94",user_3
+TRX-2024-00385,2024-09-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0385 - ref 4037,0.00,"58,837.65",user_4
+TRX-2024-00386,2024-10-24,108,Merchandise Inventory,Invoice payment / journal voucher batch #0386 - ref 2107,"85,649.98",0.00,user_6
+TRX-2024-00387,2024-07-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0387 - ref 5099,"116,143.41",0.00,user_3
+TRX-2024-00388,2024-10-20,103,Accounts Receivable,Invoice payment / journal voucher batch #0388 - ref 7017,0.00,"73,786.89",user_3
+TRX-2024-00389,2025-04-17,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0389 - ref 6147,0.00,"175,024.36",user_5
+TRX-2024-00390,2025-05-19,108,Merchandise Inventory,Invoice payment / journal voucher batch #0390 - ref 4987,0.00,"139,966.65",user_5
+TRX-2024-00391,2025-06-04,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0391 - ref 8227,"67,337.69",0.00,user_6
+TRX-2024-00392,2025-01-18,108,Merchandise Inventory,Invoice payment / journal voucher batch #0392 - ref 5672,"184,810.11",0.00,user_5
+TRX-2024-00393,2025-04-12,108,Merchandise Inventory,Invoice payment / journal voucher batch #0393 - ref 9844,"153,110.78",0.00,user_8
+TRX-2024-00394,2025-06-23,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0394 - ref 8730,0.00,"40,154.72",user_3
+TRX-2024-00395,2024-07-30,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0395 - ref 6155,0.00,"155,614.15",user_7
+TRX-2024-00396,2024-08-30,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0396 - ref 6885,"133,629.22",0.00,user_2
+TRX-2024-00397,2025-06-02,108,Merchandise Inventory,Invoice payment / journal voucher batch #0397 - ref 2759,"93,143.06",0.00,user_1
+TRX-2024-00398,2025-03-08,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0398 - ref 6875,"39,607.73",0.00,user_6
+TRX-2024-00399,2024-12-22,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0399 - ref 5149,"84,929.89",0.00,user_8
+TRX-2024-00400,2025-06-04,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0400 - ref 2938,0.00,"42,912.52",user_7
+TRX-2024-00401,2024-12-05,103,Accounts Receivable,Invoice payment / journal voucher batch #0401 - ref 1902,"109,566.06",0.00,user_7
+TRX-2024-00402,2024-12-01,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0402 - ref 4676,"110,888.45",0.00,user_8
+TRX-2024-00403,2025-04-02,108,Merchandise Inventory,Invoice payment / journal voucher batch #0403 - ref 1073,"158,197.46",0.00,user_4
+TRX-2024-00404,2024-09-23,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0404 - ref 8451,"101,473.50",0.00,user_5
+TRX-2024-00405,2024-10-07,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0405 - ref 8091,0.00,"151,174.61",user_3
+TRX-2024-00406,2024-10-19,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0406 - ref 6764,"46,537.41",0.00,user_8
+TRX-2024-00407,2025-06-25,108,Merchandise Inventory,Invoice payment / journal voucher batch #0407 - ref 6528,0.00,"26,213.86",user_6
+TRX-2024-00408,2025-03-26,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0408 - ref 6081,"125,597.73",0.00,user_5
+TRX-2024-00409,2025-05-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0409 - ref 4744,"117,670.43",0.00,user_1
+TRX-2024-00410,2024-12-04,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0410 - ref 1617,"54,662.90",0.00,user_3
+TRX-2024-00411,2025-06-16,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0411 - ref 3871,"37,340.32",0.00,user_5
+TRX-2024-00412,2025-01-11,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0412 - ref 2307,"71,539.08",0.00,user_7
+TRX-2024-00413,2024-10-07,108,Merchandise Inventory,Invoice payment / journal voucher batch #0413 - ref 8449,0.00,"171,237.93",user_7
+TRX-2024-00414,2024-10-25,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0414 - ref 7069,"182,775.54",0.00,user_7
+TRX-2024-00415,2024-11-12,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0415 - ref 6129,0.00,"127,646.77",user_1
+TRX-2024-00416,2025-02-24,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0416 - ref 2533,"136,254.04",0.00,user_3
+TRX-2024-00417,2024-07-31,108,Merchandise Inventory,Invoice payment / journal voucher batch #0417 - ref 2292,"18,508.76",0.00,user_1
+TRX-2024-00418,2025-02-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0418 - ref 1544,"78,182.52",0.00,user_2
+TRX-2024-00419,2025-05-23,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0419 - ref 6030,"29,524.75",0.00,user_4
+TRX-2024-00420,2025-04-03,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0420 - ref 3552,0.00,"84,578.36",user_2
+TRX-2024-00421,2025-01-12,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0421 - ref 2799,0.00,"138,287.92",user_3
+TRX-2024-00422,2024-10-01,103,Accounts Receivable,Invoice payment / journal voucher batch #0422 - ref 7752,"144,694.01",0.00,user_5
+TRX-2024-00423,2024-07-21,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0423 - ref 5597,"70,290.65",0.00,user_5
+TRX-2024-00424,2025-03-23,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0424 - ref 9448,0.00,"118,319.86",user_1
+TRX-2024-00425,2024-11-04,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0425 - ref 4441,"31,755.67",0.00,user_5
+TRX-2024-00426,2025-02-22,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0426 - ref 3051,"157,585.92",0.00,user_4
+TRX-2024-00427,2025-04-04,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0427 - ref 4255,"109,086.63",0.00,user_6
+TRX-2024-00428,2024-07-15,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0428 - ref 3259,"169,816.27",0.00,user_1
+TRX-2024-00429,2024-09-06,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0429 - ref 8726,0.00,"128,458.18",user_8
+TRX-2024-00430,2025-01-25,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0430 - ref 8988,0.00,"175,247.47",user_5
+TRX-2024-00431,2025-06-24,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0431 - ref 7073,0.00,"153,422.63",user_4
+TRX-2024-00432,2025-05-21,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0432 - ref 8330,"105,310.39",0.00,user_6
+TRX-2024-00433,2025-05-20,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0433 - ref 3101,0.00,"129,811.29",user_2
+TRX-2024-00434,2024-10-02,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0434 - ref 8288,"156,282.44",0.00,user_1
+TRX-2024-00435,2025-02-24,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0435 - ref 7591,0.00,"1,531.88",user_2
+TRX-2024-00436,2025-01-07,108,Merchandise Inventory,Invoice payment / journal voucher batch #0436 - ref 5541,"130,798.53",0.00,user_2
+TRX-2024-00437,2024-12-23,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0437 - ref 7660,0.00,"143,861.14",user_8
+TRX-2024-00438,2025-04-06,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0438 - ref 8088,"150,052.85",0.00,user_5
+TRX-2024-00439,2024-08-11,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0439 - ref 4504,"40,157.21",0.00,user_3
+TRX-2024-00440,2024-09-23,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0440 - ref 7964,0.00,"75,108.01",user_6
+TRX-2024-00441,2025-04-29,103,Accounts Receivable,Invoice payment / journal voucher batch #0441 - ref 6612,"10,741.65",0.00,user_4
+TRX-2024-00442,2025-02-06,103,Accounts Receivable,Invoice payment / journal voucher batch #0442 - ref 8739,"105,595.54",0.00,user_7
+TRX-2024-00443,2025-01-09,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0443 - ref 9151,"155,747.70",0.00,user_5
+TRX-2024-00444,2024-12-31,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0444 - ref 3305,0.00,"151,938.06",user_2
+TRX-2024-00445,2024-09-17,103,Accounts Receivable,Invoice payment / journal voucher batch #0445 - ref 3127,0.00,"170,572.05",user_4
+TRX-2024-00446,2024-07-13,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0446 - ref 3046,"6,327.05",0.00,user_2
+TRX-2024-00447,2024-09-21,103,Accounts Receivable,Invoice payment / journal voucher batch #0447 - ref 8048,"140,537.51",0.00,user_5
+TRX-2024-00448,2024-11-20,108,Merchandise Inventory,Invoice payment / journal voucher batch #0448 - ref 6235,0.00,"119,052.96",user_2
+TRX-2024-00449,2024-12-13,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0449 - ref 2874,"57,030.66",0.00,user_3
+TRX-2024-00450,2024-10-09,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0450 - ref 9014,0.00,"183,319.74",user_7
+TRX-2024-00451,2025-06-20,103,Accounts Receivable,Invoice payment / journal voucher batch #0451 - ref 1210,"149,549.26",0.00,user_6
+TRX-2024-00452,2025-03-14,108,Merchandise Inventory,Invoice payment / journal voucher batch #0452 - ref 4217,"19,173.94",0.00,user_5
+TRX-2024-00453,2024-08-12,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0453 - ref 1295,0.00,"41,093.97",user_5
+TRX-2024-00454,2024-07-04,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0454 - ref 6860,"85,233.54",0.00,user_8
+TRX-2024-00455,2024-07-07,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0455 - ref 3661,"37,485.97",0.00,user_3
+TRX-2024-00456,2025-05-08,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0456 - ref 9005,0.00,"142,756.48",user_3
+TRX-2024-00457,2024-07-16,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0457 - ref 1525,0.00,"50,737.35",user_8
+TRX-2024-00458,2025-04-01,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0458 - ref 6535,"88,638.12",0.00,user_3
+TRX-2024-00459,2025-05-15,108,Merchandise Inventory,Invoice payment / journal voucher batch #0459 - ref 3757,0.00,"136,317.61",user_8
+TRX-2024-00460,2024-09-18,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0460 - ref 2096,0.00,"166,591.57",user_4
+TRX-2024-00461,2024-11-01,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0461 - ref 8641,"165,807.43",0.00,user_5
+TRX-2024-00462,2025-03-03,108,Merchandise Inventory,Invoice payment / journal voucher batch #0462 - ref 6329,"40,613.47",0.00,user_8
+TRX-2024-00463,2025-04-27,108,Merchandise Inventory,Invoice payment / journal voucher batch #0463 - ref 4467,"36,615.06",0.00,user_8
+TRX-2024-00464,2025-05-29,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0464 - ref 2576,"41,520.01",0.00,user_3
+TRX-2024-00465,2025-05-08,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0465 - ref 6146,"64,694.40",0.00,user_6
+TRX-2024-00466,2025-02-20,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0466 - ref 5581,0.00,"30,508.26",user_1
+TRX-2024-00467,2025-05-17,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0467 - ref 8791,0.00,"14,423.18",user_1
+TRX-2024-00468,2025-01-25,108,Merchandise Inventory,Invoice payment / journal voucher batch #0468 - ref 2767,0.00,"72,002.06",user_3
+TRX-2024-00469,2025-01-21,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0469 - ref 4071,"129,429.95",0.00,user_4
+TRX-2024-00470,2024-11-27,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0470 - ref 9327,"111,259.66",0.00,user_2
+TRX-2024-00471,2025-02-22,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0471 - ref 5042,"26,793.84",0.00,user_4
+TRX-2024-00472,2025-04-14,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0472 - ref 6922,"55,386.26",0.00,user_1
+TRX-2024-00473,2025-01-17,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0473 - ref 8131,0.00,"149,653.49",user_2
+TRX-2024-00474,2024-09-20,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0474 - ref 6180,"87,758.51",0.00,user_2
+TRX-2024-00475,2025-02-18,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0475 - ref 6226,"105,923.18",0.00,user_7
+TRX-2024-00476,2024-10-04,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0476 - ref 6958,0.00,"119,565.44",user_4
+TRX-2024-00477,2024-09-05,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0477 - ref 4403,"79,882.33",0.00,user_6
+TRX-2024-00478,2025-02-18,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0478 - ref 2143,"136,248.61",0.00,user_4
+TRX-2024-00479,2024-10-04,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0479 - ref 7648,"181,212.83",0.00,user_4
+TRX-2024-00480,2025-06-10,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0480 - ref 2150,"123,459.28",0.00,user_6
+TRX-2024-00481,2024-09-28,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0481 - ref 2840,"121,019.30",0.00,user_6
+TRX-2024-00482,2024-10-25,103,Accounts Receivable,Invoice payment / journal voucher batch #0482 - ref 2801,0.00,"163,171.79",user_7
+TRX-2024-00483,2024-08-01,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0483 - ref 6434,"98,764.06",0.00,user_2
+TRX-2024-00484,2024-07-09,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0484 - ref 8992,0.00,"158,013.27",user_8
+TRX-2024-00485,2025-02-09,103,Accounts Receivable,Invoice payment / journal voucher batch #0485 - ref 1291,0.00,"2,072.49",user_1
+TRX-2024-00486,2024-12-23,201,Accounts Payable - Trade,Invoice payment / journal voucher batch #0486 - ref 7508,"153,590.80",0.00,user_8
+TRX-2024-00487,2024-07-08,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0487 - ref 5963,0.00,"160,252.40",user_7
+TRX-2024-00488,2024-12-03,103,Accounts Receivable,Invoice payment / journal voucher batch #0488 - ref 7520,0.00,"7,613.80",user_5
+TRX-2024-00489,2024-12-03,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0489 - ref 6079,"124,916.55",0.00,user_7
+TRX-2024-00490,2024-07-29,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0490 - ref 6986,"182,823.85",0.00,user_2
+TRX-2024-00491,2024-12-04,103,Accounts Receivable,Invoice payment / journal voucher batch #0491 - ref 4573,0.00,"90,637.28",user_4
+TRX-2024-00492,2024-10-13,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0492 - ref 4932,"158,244.51",0.00,user_1
+TRX-2024-00493,2025-05-30,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0493 - ref 5600,"168,489.47",0.00,user_5
+TRX-2024-00494,2024-08-05,509,Bank Profit & Charges,Invoice payment / journal voucher batch #0494 - ref 9438,"166,787.66",0.00,user_1
+TRX-2024-00495,2024-10-26,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0495 - ref 1588,"62,578.24",0.00,user_2
+TRX-2024-00496,2024-07-11,401,Commercial Sales Revenue,Invoice payment / journal voucher batch #0496 - ref 1501,"182,692.75",0.00,user_4
+TRX-2024-00497,2024-08-31,502,Salaries & Employee Allowances,Invoice payment / journal voucher batch #0497 - ref 2051,"50,305.70",0.00,user_5
+TRX-2024-00498,2024-12-08,101,Cash and Cash Equivalents,Invoice payment / journal voucher batch #0498 - ref 3853,"158,274.73",0.00,user_3
+TRX-2024-00499,2024-09-16,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0499 - ref 1573,0.00,"148,879.17",user_1
+TRX-2024-00500,2024-07-01,505,Rent and Facilities Expense,Invoice payment / journal voucher batch #0500 - ref 1802,"21,326.35",0.00,user_6

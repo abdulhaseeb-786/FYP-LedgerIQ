@@ -1,9 +1,13 @@
 import asyncio
 import os
+import sys
+from pathlib import Path
 from typing import AsyncGenerator
 import pytest
-from httpx import ASGITransport, AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
+BACKEND_DIR = str(Path(__file__).resolve().parent.parent)
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
 
 os.environ["ENVIRONMENT"] = "testing"
 os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"

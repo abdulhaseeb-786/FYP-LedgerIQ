@@ -1,14 +1,18 @@
-"""Pytest fixtures for FYP-Module-3 test suite."""
-
+import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
 
 import openpyxl
 import pytest
 
+REPO_ROOT = Path(__file__).parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+if str(REPO_ROOT / "backend") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "backend"))
+
 from fyp_module3.core.models import StandardizedAccountRecord
 
-REPO_ROOT = Path(__file__).parent.parent
 SAMPLE_DIR = REPO_ROOT / "data" / "sample_tbs"
 SYNTHETIC_DIR = REPO_ROOT / "data" / "synthetic_tbs"
 
