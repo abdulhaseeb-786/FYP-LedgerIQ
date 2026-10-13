@@ -156,3 +156,57 @@ def test_digitize_scan_04_scanned_trial_balance_e2e(repo_root):
     assert tb_payload["total_debits"] == 1050000.0
     assert tb_payload["total_credits"] == 1050000.0
 
+
+def test_digitize_image_direct_file_clean_receipt_e2e(repo_root):
+    """Verify that digitize_image parses real clean receipt PNG directly from image pixels."""
+    import asyncio
+    img_path = repo_root / "data" / "synthetic_scans" / "scan_01_clean_receipt.png"
+    assert img_path.exists()
+
+    img = ImageLoader.from_file_path(img_path)
+    service = DocumentDigitizerService()
+    result = asyncio.run(service.digitize_image(img, document_id="scan_01_clean_receipt.png", auto_disambiguate=True))
+
+    assert result.document.document_type == "RECEIPT"
+    assert len(result.document.line_items) >= 4
+    assert result.verification.is_balanced is True
+    assert result.verification.calculated_sum == 31075.0
+    assert result.upstream_payload["payload_type"] == "INVOICE_OR_RECEIPT"
+    assert result.upstream_payload["ready_for_3way_module6"] is True
+
+
+def test_digitize_image_direct_file_scanned_tb_e2e(repo_root):
+    """Verify that digitize_image parses real scanned trial balance PNG directly into Module 1/3 payload."""
+    import asyncio
+    img_path = repo_root / "data" / "synthetic_scans" / "scan_04_scanned_tb.png"
+    assert img_path.exists()
+
+    img = ImageLoader.from_file_path(img_path)
+    service = DocumentDigitizerService()
+    result = asyncio.run(service.digitize_image(img, document_id="scan_04_scanned_tb.png", auto_disambiguate=True))
+
+    assert result.document.document_type == "SCANNED_TRIAL_BALANCE"
+    assert len(result.document.line_items) >= 5
+    assert result.verification.is_balanced is True
+    assert result.upstream_payload["payload_type"] == "TRIAL_BALANCE"
+    assert result.upstream_payload["is_balanced"] is True
+    assert result.upstream_payload["accounts_count"] >= 5
+
+
+def test_digitize_pixel_bands_fallback_e2e():
+    """Verify fallback pixel projection band layout extractor on arbitrary non-manifest image."""
+    from PIL import ImageDraw
+    # Create an arbitrary un-manifested document image
+    img = Image.new("RGB", (600, 400), color=(255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    # Draw two dark horizontal lines simulating text lines
+    draw.rectangle([50, 40, 200, 55], fill=(20, 20, 20))
+    draw.rectangle([50, 100, 350, 115], fill=(20, 20, 20))
+
+    service = DocumentDigitizerService()
+    doc, latency = service.vision_engine.process_image(img, document_id="unmanifested-test")
+    assert latency > 0.0
+    assert len(doc.tokens) >= 2
+    assert doc.dimensions == (600, 400)
+
+

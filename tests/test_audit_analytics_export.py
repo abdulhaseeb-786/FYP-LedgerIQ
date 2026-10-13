@@ -196,3 +196,28 @@ def test_export_with_analytics_sheet(tmp_path, sample_accounts, mock_audit_repor
     val = evaluator.evaluate("Audit Analytics", ws.cell(row=sum_cell[0], column=2).value)
     assert val > 0, "Benford sum formula evaluated to zero or error"
 
+
+def test_pipeline_run_compilation_with_audit_analytics(tmp_path, mock_audit_report):
+    """Verify that run_compilation passes audit_risk_report through to final exported workbook."""
+    from fyp_module3.core.pipeline import run_compilation, PipelineOptions
+    tb_file = "data/sample_tbs/TB 1.xlsx"
+    if not os.path.exists(tb_file):
+        pytest.skip("Sample TB file not found")
+
+    out_file = str(tmp_path / "compiled_with_analytics.xlsx")
+    options = PipelineOptions(
+        output_file=out_file,
+        entity_name="Pipeline Analytics Test Co.",
+        period="June 30, 2025",
+        audit_risk_report=mock_audit_report,
+    )
+    outcome = run_compilation(tb_file, options)
+    assert outcome.result.status in ("SUCCESS", "RECOVERED_WARNING")
+    assert outcome.result.audit_risk_report is not None
+    assert outcome.result.audit_risk_report.overall_risk_score == 72.5
+
+    wb = openpyxl.load_workbook(outcome.result.output_file, data_only=False)
+    assert "Audit Analytics" in wb.sheetnames
+    assert len(wb.sheetnames) == 8
+
+

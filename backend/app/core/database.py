@@ -14,13 +14,18 @@ connect_args = {}
 if "sqlite" in settings.DATABASE_URL:
     connect_args = {"check_same_thread": False}
 
+engine_kwargs = {
+    "echo": settings.DB_ECHO,
+    "future": True,
+    "connect_args": connect_args,
+}
+if "sqlite" not in settings.DATABASE_URL:
+    engine_kwargs["pool_size"] = settings.DB_POOL_SIZE
+    engine_kwargs["max_overflow"] = settings.DB_MAX_OVERFLOW
+
 engine = create_async_engine(
     settings.DATABASE_URL,
-    echo=settings.DB_ECHO,
-    future=True,
-    pool_size=settings.DB_POOL_SIZE if "sqlite" not in settings.DATABASE_URL else None,
-    max_overflow=settings.DB_MAX_OVERFLOW if "sqlite" not in settings.DATABASE_URL else None,
-    connect_args=connect_args,
+    **engine_kwargs,
 )
 
 AsyncSessionLocal = async_sessionmaker(

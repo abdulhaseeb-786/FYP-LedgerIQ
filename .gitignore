@@ -33,3 +33,6 @@ Thumbs.db
 frontend/.env.local
 frontend/.next/
 frontend/node_modules/
+
+# Local file storage uploads
+uploads/

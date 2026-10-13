@@ -43,3 +43,34 @@ def test_classifier_side_disambiguation():
     assert res_dr.line_item_id == "sofp.ca.advances"
     assert res_dr.statement == "SOFP"
 
+
+def test_classifier_pluggable_neural_adapter():
+    """Verify that pluggable neural adapter scores semantic matches while enforcing accounting polarity."""
+    from fyp_module3.core.classifier import SemanticModelAdapter
+
+    class MockTransformerAdapter(SemanticModelAdapter):
+        def __init__(self):
+            super().__init__()
+            self.is_loaded = True
+
+        def score_similarity(self, account_name: str, candidates: list[str]) -> dict[str, float]:
+            if "Factory Heavy Power Charges" in account_name:
+                return {"Cost of sales": 0.94}
+            return {}
+
+    adapter = MockTransformerAdapter()
+    classifier = AccountClassifier(semantic_adapter=adapter)
+
+    # 1. Debit expense with unseen colloquial phrasing matches via neural adapter
+    acc_dr = StandardizedAccountRecord(account_name="Factory Heavy Power Charges", debit=85000.0, credit=0.0)
+    res_dr = classifier.classify_account(acc_dr)
+    assert res_dr.source == "neural"
+    assert res_dr.line_item_id == "pl.cos"
+    assert res_dr.confidence == 0.94
+
+    # 2. Accounting Polarity Invariant: A credit balance must never be mapped to expense even if neural score is high!
+    acc_cr = StandardizedAccountRecord(account_name="Factory Heavy Power Charges", debit=0.0, credit=85000.0)
+    res_cr = classifier.classify_account(acc_cr)
+    assert res_cr.source != "neural", "Polarity guard must prevent mapping credit balance to DR expense"
+
+

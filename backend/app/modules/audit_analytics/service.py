@@ -1,7 +1,9 @@
 """Business Service Layer for General Ledger Audit Analytics."""
 
+import asyncio
 from pathlib import Path
 from typing import Optional, Dict, Any
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,6 +11,7 @@ from app.core.exceptions import AppException
 from app.modules.financial_statements.infrastructure.file_storage import FileStorageAdapter
 from app.modules.users.models import User
 from app.modules.users.service import UserService
+from app.modules.projects.models import Project
 from app.modules.audit_analytics.domain.models import AuditRiskReport
 from app.modules.audit_analytics.domain.pipeline import AuditAnalyticsPipeline
 from app.modules.audit_analytics.infrastructure.gl_parser import GeneralLedgerParser, GLParserException
@@ -48,9 +51,9 @@ class AuditAnalyticsService:
             if not has_credits:
                 raise AuditAnalyticsException("Insufficient credits to execute audit analytics.")
 
-        # Ingestion
+        # Ingestion (CPU-bound: run in worker thread)
         try:
-            transactions = self.parser.parse_file(input_file_path)
+            transactions = await asyncio.to_thread(self.parser.parse_file, input_file_path)
         except GLParserException as err:
             raise AuditAnalyticsException(f"Failed to parse General Ledger: {str(err)}")
         except Exception as exc:
@@ -59,9 +62,10 @@ class AuditAnalyticsService:
         entity_name = options.entity_name or Path(input_filename).stem.replace("-", " ").replace("_", " ").title()
         period = options.reporting_period or "FY2024-25"
 
-        # Execution
+        # Execution (CPU-bound: Isolation Forest + Benford in worker thread)
         pipeline = AuditAnalyticsPipeline(ml_contamination=options.contamination_rate)
-        report: AuditRiskReport = pipeline.execute_audit(
+        report: AuditRiskReport = await asyncio.to_thread(
+            pipeline.execute_audit,
             transactions=transactions,
             entity_name=entity_name,
             reporting_period=period,
@@ -104,12 +108,37 @@ class AuditAnalyticsService:
             summary_message=summary_msg,
         )
 
-    async def get_run_by_id(self, run_id: int) -> AuditAnalyticsRunResponse:
+    async def get_run_by_id(
+        self, run_id: int, current_user: Optional[User] = None
+    ) -> AuditAnalyticsRunResponse:
         stmt = select(AuditAnalyticsRun).where(AuditAnalyticsRun.id == run_id)
         result = await self.db.execute(stmt)
         record = result.scalars().first()
         if not record:
             raise AuditAnalyticsException(f"Audit run #{run_id} not found.")
+
+        # IDOR Protection: Enforce tenant and owner isolation
+        if record.user_id is not None or record.project_id is not None:
+            if not current_user:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Authentication required to access this audit run.",
+                )
+            if record.user_id and record.user_id != current_user.id:
+                if record.project_id:
+                    stmt_proj = select(Project).where(Project.id == record.project_id)
+                    proj_res = await self.db.execute(stmt_proj)
+                    proj = proj_res.scalars().first()
+                    if not proj or proj.organization_id != current_user.organization_id:
+                        raise HTTPException(
+                            status_code=status.HTTP_403_FORBIDDEN,
+                            detail="You do not have permission to access this audit run.",
+                        )
+                else:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="You do not have permission to access this audit run.",
+                    )
 
         return AuditAnalyticsRunResponse(
             id=record.id,

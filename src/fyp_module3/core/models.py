@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional, Literal
+from typing import Any, List, Optional, Literal
 from pydantic import BaseModel, Field
 
 
@@ -53,7 +53,7 @@ class ClassificationResult(BaseModel):
     label: str
     note_number: Optional[int] = None
     confidence: float
-    source: Literal["exact", "fuzzy", "heuristic", "manual", "default"] = "exact"
+    source: Literal["exact", "fuzzy", "heuristic", "neural", "manual", "default"] = "exact"
     # Set only when `source` is "default": why nothing matched.
     unclassified_reason: Optional[str] = None
 
@@ -171,5 +171,6 @@ class DesktopPipelineResult(BaseModel):
     workbook_audit: Optional[WorkbookAuditResult] = None
     output_file: Optional[str] = None
     audit_trail: List[AuditEntry] = Field(default_factory=list)
+    audit_risk_report: Optional[Any] = None
 
 

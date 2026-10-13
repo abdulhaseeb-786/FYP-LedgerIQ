@@ -10,6 +10,7 @@ class PipelineOptionsSchema(BaseModel):
     run_health_gate: bool = Field(True, description="Enforce pre-flight data sanity checks")
     allow_working_capital_plug: bool = Field(False, description="Permit unsupported balancing plug")
     export_excel: bool = Field(True, description="Generate recalculating OpenXML workbook")
+    gl_file_path: Optional[str] = Field(None, description="Optional General Ledger path for ISA 520 analytics")
 
 
 class DataHealthResponse(BaseModel):
@@ -44,6 +45,7 @@ class CompilationResponse(BaseModel):
     data_health: Optional[Dict[str, Any]] = None
     verification: Optional[Dict[str, Any]] = None
     workbook_audit: Optional[Dict[str, Any]] = None
+    audit_analytics: Optional[Dict[str, Any]] = None
     summary_message: str
 
 

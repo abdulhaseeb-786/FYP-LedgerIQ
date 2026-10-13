@@ -8,7 +8,7 @@ pre-flight health gate entirely.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, List, Optional
+from typing import Any, Callable, List, Optional
 
 from fyp_module3.core.models import (
     StandardizedAccountRecord, UpstreamModulePayload, AuditEntry,
@@ -40,6 +40,9 @@ class PipelineOptions:
     allow_working_capital_plug: bool = False
     # Accounts the user has re-mapped by hand, keyed by account name.
     overrides: dict = field(default_factory=dict)
+    # Optional General Ledger file path or pre-computed audit report for Module 8 integration
+    gl_file_path: Optional[str] = None
+    audit_risk_report: Optional[Any] = None
 
 
 @dataclass
@@ -50,6 +53,7 @@ class CompilationOutcome:
     accounts: List[StandardizedAccountRecord] = field(default_factory=list)
     audit_trail: List[AuditEntry] = field(default_factory=list)
     exporter: Optional[ExcelWorkbookCompiler] = None
+    audit_risk_report: Optional[Any] = None
 
 
 TOTAL_STEPS = 7
@@ -180,14 +184,44 @@ def run_compilation(
                    and verification_report.notes_reconciled)
     target_file = output_file if verified_ok else _unverified_path(output_file)
 
+    # Optional Module 8 Audit Analytics integration (ISA 520 / ISA 240)
+    audit_report = opts.audit_risk_report
+    if audit_report is None and opts.gl_file_path:
+        try:
+            from app.modules.audit_analytics.infrastructure.gl_parser import GeneralLedgerParser
+            from app.modules.audit_analytics.domain.pipeline import AuditAnalyticsPipeline
+            gl_records = GeneralLedgerParser().parse_file(opts.gl_file_path)
+            tb_curr = {
+                "total_assets": verification_report.total_assets,
+                "total_liabilities": verification_report.total_non_current_liabilities + verification_report.total_current_liabilities,
+                "total_equity": verification_report.total_equity,
+                "current_assets": verification_report.total_assets,
+                "current_liabilities": verification_report.total_current_liabilities,
+                "net_profit": verification_report.net_profit,
+            }
+            audit_report = AuditAnalyticsPipeline().execute_audit(
+                transactions=gl_records,
+                entity_name=entity_name,
+                reporting_period=opts.period,
+                current_tb_balances=tb_curr,
+            )
+        except Exception:
+            pass
+
     exporter = ExcelWorkbookCompiler(entity_name=entity_name, period=opts.period)
     try:
-        final_path = exporter.export_workbook(verified_accounts, audit_trail, target_file)
+        final_path = exporter.export_workbook(
+            verified_accounts,
+            audit_trail,
+            target_file,
+            audit_risk_report=audit_report,
+        )
     except Exception as exc:
         return CompilationOutcome(
             result=_failed(f"Workbook generation failed: {exc}", health_report,
                            verification_report=verification_report),
             payload=payload, accounts=verified_accounts, audit_trail=audit_trail,
+            audit_risk_report=audit_report,
         )
 
     # ---------------------------------------------------------------- 7
@@ -201,6 +235,7 @@ def run_compilation(
     result = _build_result(
         health_report, verification_report, workbook_audit,
         final_path, audit_trail, balancer)
+    result.audit_risk_report = audit_report
 
     # The audit is the authority on whether the delivered file is sound, so a
     # failure there renames the artefact even if the in-memory check passed.
@@ -218,6 +253,7 @@ def run_compilation(
         accounts=verified_accounts,
         audit_trail=audit_trail,
         exporter=exporter,
+        audit_risk_report=audit_report,
     )
 
 

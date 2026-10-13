@@ -63,9 +63,10 @@ async def execute_general_ledger_audit(
 @router.get("/runs/{run_id}", response_model=ApiResponse[AuditAnalyticsRunResponse])
 async def get_audit_run(
     run_id: int,
+    current_user: Optional[User] = Depends(get_current_user_optional),
     db: AsyncSession = Depends(get_db),
 ):
     """Retrieve report and metrics of a previous General Ledger audit run."""
     service = AuditAnalyticsService(db)
-    result = await service.get_run_by_id(run_id)
+    result = await service.get_run_by_id(run_id, current_user=current_user)
     return ApiResponse.ok(data=result)

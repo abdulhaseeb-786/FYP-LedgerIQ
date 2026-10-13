@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 from typing import Optional
 from sqlalchemy import func, select
@@ -54,10 +55,13 @@ class FinancialStatementsService:
             sheet_name=options_schema.sheet_name,
             enforce_health_gate=options_schema.run_health_gate,
             allow_working_capital_plug=options_schema.allow_working_capital_plug,
+            gl_file_path=options_schema.gl_file_path,
         )
 
         try:
-            outcome: CompilationOutcome = run_compilation(input_file_path, options)
+            outcome: CompilationOutcome = await asyncio.to_thread(
+                run_compilation, input_file_path, options
+            )
         except UnprocessableDataError as err:
             raise CompilationException(
                 f"Data health pre-flight check rejected the workbook: {err.report.headline}"
@@ -97,6 +101,14 @@ class FinancialStatementsService:
         } if audit else None
 
         audit_trail_list = [entry.model_dump() for entry in result.audit_trail] if result.audit_trail else []
+
+        audit_analytics_dict = None
+        if getattr(result, "audit_risk_report", None):
+            report_obj = result.audit_risk_report
+            if hasattr(report_obj, "model_dump"):
+                audit_analytics_dict = report_obj.model_dump(mode="json")
+            elif isinstance(report_obj, dict):
+                audit_analytics_dict = report_obj
 
         run_record = StatementRun(
             project_id=project_id,
@@ -143,5 +155,6 @@ class FinancialStatementsService:
             data_health=data_health_dict,
             verification=verification_dict,
             workbook_audit=workbook_audit_dict,
+            audit_analytics=audit_analytics_dict,
             summary_message=result.message or f"Statements compilation completed with status: {result.status}",
         )

@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 from typing import AsyncGenerator
 import pytest
+from httpx import AsyncClient, ASGITransport
 
 BACKEND_DIR = str(Path(__file__).resolve().parent.parent)
 if BACKEND_DIR not in sys.path:
@@ -14,6 +15,7 @@ os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"
 os.environ["DEBUG"] = "False"
 os.environ["SECRET_KEY"] = "test_secret_key_for_testing_purposes_only_32_chars"
 
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from app.core.database import Base, get_db
 from app.main import app
 
@@ -29,15 +31,13 @@ TestAsyncSessionLocal = async_sessionmaker(
 )
 
 
-@pytest.fixture(scope="session")
-def event_loop():
-    loop = asyncio.new_event_loop()
-    yield loop
-    loop.close()
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
 
 
 @pytest.fixture(autouse=True)
-async def prepare_database():
+async def prepare_database(anyio_backend):
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     yield

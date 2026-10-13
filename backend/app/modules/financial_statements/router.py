@@ -24,6 +24,7 @@ router = APIRouter(prefix="/statements", tags=["Financial Statements"])
 @router.post("/compile", response_model=ApiResponse[CompilationResponse], status_code=status.HTTP_200_OK)
 async def compile_trial_balance(
     file: UploadFile = File(..., description="Trial Balance Excel workbook (.xlsx)"),
+    gl_file: Optional[UploadFile] = File(None, description="Optional General Ledger (.xlsx or .csv) for ISA 520 analytics"),
     entity_name: Optional[str] = Form(None),
     period_ended: Optional[str] = Form(None),
     sheet_name: Optional[str] = Form(None),
@@ -41,6 +42,9 @@ async def compile_trial_balance(
         )
 
     saved_input_path = await storage.save_upload(file, directory="inputs")
+    saved_gl_path = None
+    if gl_file is not None and gl_file.filename:
+        saved_gl_path = await storage.save_upload(gl_file, directory="inputs")
 
     options_schema = PipelineOptionsSchema(
         entity_name=entity_name,
@@ -49,6 +53,7 @@ async def compile_trial_balance(
         run_health_gate=run_health_gate,
         allow_working_capital_plug=allow_working_capital_plug,
         export_excel=True,
+        gl_file_path=saved_gl_path,
     )
 
     service = FinancialStatementsService(db, storage)
@@ -63,9 +68,39 @@ async def compile_trial_balance(
     return ApiResponse.ok(data=response, message="Statements successfully generated and audited")
 
 
+from app.modules.projects.models import Project
+
+
+async def _verify_statement_run_access(
+    run_record: StatementRun, current_user: Optional[User], db: AsyncSession
+) -> None:
+    if run_record.user_id is not None or run_record.project_id is not None:
+        if not current_user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Authentication required to access this statement run.",
+            )
+        if run_record.user_id and run_record.user_id != current_user.id:
+            if run_record.project_id:
+                stmt_p = select(Project).where(Project.id == run_record.project_id)
+                res_p = await db.execute(stmt_p)
+                proj = res_p.scalars().first()
+                if not proj or proj.organization_id != current_user.organization_id:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="You do not have permission to access this statement run.",
+                    )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="You do not have permission to access this statement run.",
+                )
+
+
 @router.get("/runs/{run_id}", response_model=ApiResponse[StatementRunResponse])
 async def get_statement_run(
     run_id: int,
+    current_user: Optional[User] = Depends(get_current_user_optional),
     db: AsyncSession = Depends(get_db),
 ):
     stmt = select(StatementRun).where(StatementRun.id == run_id)
@@ -73,12 +108,14 @@ async def get_statement_run(
     run_record = result.scalars().first()
     if not run_record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
+    await _verify_statement_run_access(run_record, current_user, db)
     return ApiResponse.ok(data=StatementRunResponse.model_validate(run_record))
 
 
 @router.get("/download/{run_id}")
 async def download_statement_workbook(
     run_id: int,
+    current_user: Optional[User] = Depends(get_current_user_optional),
     db: AsyncSession = Depends(get_db),
 ):
     stmt = select(StatementRun).where(StatementRun.id == run_id)
@@ -86,6 +123,7 @@ async def download_statement_workbook(
     run_record = result.scalars().first()
     if not run_record or not run_record.output_file_path:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Output file not found")
+    await _verify_statement_run_access(run_record, current_user, db)
 
     file_path = Path(run_record.output_file_path)
     if not file_path.exists():

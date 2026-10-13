@@ -12,6 +12,8 @@ from app.core.database import Base
 import app.modules.users.models  # noqa
 import app.modules.projects.models  # noqa
 import app.modules.financial_statements.models  # noqa
+import app.modules.audit_analytics.models  # noqa
+import app.modules.document_digitizer.models  # noqa
 
 config = context.config
 

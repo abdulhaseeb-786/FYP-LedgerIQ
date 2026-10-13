@@ -54,6 +54,11 @@ async def process_document_image(
     return ApiResponse.ok(data=result.model_dump(), message="Document processed and verified successfully.")
 
 
+from sqlalchemy import select
+from app.modules.projects.models import Project
+from app.modules.document_digitizer.models import DigitizationRunRecord
+
+
 @router.get("/hardware-profile", response_model=ApiResponse[HardwareProfileResponse], status_code=status.HTTP_200_OK)
 async def get_hardware_telemetry():
     """
@@ -68,4 +73,40 @@ async def get_hardware_telemetry():
         zero_cloud_exfiltration_guarantee=True,
     )
     return ApiResponse.ok(data=profile, message="Hardware profile telemetry active.")
+
+
+@router.get("/runs/{run_id}", response_model=ApiResponse[dict], status_code=status.HTTP_200_OK)
+async def get_digitization_run(
+    run_id: int,
+    current_user: Optional[User] = Depends(get_current_user_optional),
+    db: AsyncSession = Depends(get_db),
+):
+    """Retrieve verified results of a previous document digitization run."""
+    stmt = select(DigitizationRunRecord).where(DigitizationRunRecord.id == run_id)
+    result = await db.execute(stmt)
+    record = result.scalars().first()
+    if not record:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Digitization run not found.")
+
+    if record.user_id is not None or record.project_id is not None:
+        if not current_user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Authentication required to access this run record.",
+            )
+        if record.user_id and record.user_id != current_user.id:
+            if record.project_id:
+                proj = await db.get(Project, record.project_id)
+                if not proj or proj.organization_id != current_user.organization_id:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="You do not have permission to access this run record.",
+                    )
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="You do not have permission to access this run record.",
+                )
+
+    return ApiResponse.ok(data=record.result_payload, message="Digitization run retrieved successfully.")
 

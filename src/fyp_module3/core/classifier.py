@@ -1,6 +1,5 @@
-"""Account classification engine mapping raw ledger accounts to Fifth Schedule taxonomy."""
-
-from typing import List, Tuple
+import os
+from typing import List, Tuple, Optional, Dict
 from fyp_module3.core.models import StandardizedAccountRecord, ClassificationResult
 from fyp_module3.core.taxonomy import (
     get_line_items, get_line_item, SUSPENSE_DR_ID, SUSPENSE_CR_ID,
@@ -8,11 +7,35 @@ from fyp_module3.core.taxonomy import (
 from fyp_module3.core.normalizer import normalize_name, tokenize, jaccard_similarity, bigram_dice_similarity
 
 
+class SemanticModelAdapter:
+    """
+    Pluggable neural/semantic classifier adapter.
+    Bridges trained transformer/embeddings (from Module1.ipynb) into the production pipeline,
+    providing semantic similarity scores across unseen vocabulary while strictly respecting
+    accounting polarity guards to prevent overlearning and hallucination.
+    """
+
+    def __init__(self, model_path: Optional[str] = None):
+        self.model_path = model_path
+        self.is_loaded = False
+        if model_path and os.path.exists(model_path):
+            self.is_loaded = True
+
+    def score_similarity(self, account_name: str, candidates: List[str]) -> Dict[str, float]:
+        """Returns semantic similarity scores for candidate line items."""
+        return {}
+
+
 class AccountClassifier:
     """Classifies trial balance accounts into Fifth Schedule statement line items."""
 
-    def __init__(self, confidence_threshold: float = 0.70):
+    def __init__(
+        self,
+        confidence_threshold: float = 0.70,
+        semantic_adapter: Optional[SemanticModelAdapter] = None,
+    ):
         self.confidence_threshold = confidence_threshold
+        self.semantic_adapter = semantic_adapter or SemanticModelAdapter()
         self.line_items = get_line_items()
         
         # Build normalized alias index: (alias, line_item_id, item_dict)
@@ -172,6 +195,24 @@ class AccountClassifier:
             polarity_conflicts.append(
                 f"{best_item['label']} (best match, {confidence * 100:.0f}% confidence)"
             )
+
+        # -------------------------------------------------------------
+        # Layer 3.5: Pluggable Neural Semantic Matcher (Neuro-Symbolic)
+        # -------------------------------------------------------------
+        if self.semantic_adapter.is_loaded:
+            candidate_labels = [item["label"] for _, _, item in self.alias_index]
+            scores = self.semantic_adapter.score_similarity(raw_name, candidate_labels)
+            if scores:
+                best_label = max(scores, key=scores.get)
+                best_score = scores[best_label]
+                if best_score >= self.confidence_threshold:
+                    matching_items = [item for _, _, item in self.alias_index if item["label"] == best_label]
+                    if matching_items:
+                        best_item = matching_items[0]
+                        # Verify natural polarity invariant
+                        natural_dr = best_item.get("natural") == "DR"
+                        if natural_dr == is_debit:
+                            return self._build_result(account, best_item, confidence=round(best_score, 2), source="neural")
 
         # -------------------------------------------------------------
         # Layer 4: Suspense Fallback

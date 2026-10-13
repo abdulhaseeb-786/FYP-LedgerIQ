@@ -1,5 +1,6 @@
 """Service Layer for Document Digitization, Edge Vision, and Closed-Loop Verification (Module 7)."""
 
+import asyncio
 import time
 from typing import Optional, Dict, Any, List
 from PIL import Image
@@ -34,14 +35,20 @@ class DocumentDigitizerService:
         """Process image end-to-end and execute closed-loop verification."""
         t0 = time.perf_counter()
 
-        # 1. Vision perception
-        extracted_doc, latency_ms = self.vision_engine.process_image(image, document_id=document_id)
+        # 1. Vision perception (CPU-bound: image preprocessor, deskew, segmentation)
+        extracted_doc, latency_ms = await asyncio.to_thread(
+            self.vision_engine.process_image, image, document_id
+        )
 
-        # 2. Closed-loop symbolic verification
-        verification = self.verifier.verify_document(extracted_doc, auto_disambiguate=auto_disambiguate)
+        # 2. Closed-loop symbolic verification (CPU-bound: CSP solver)
+        verification = await asyncio.to_thread(
+            self.verifier.verify_document, extracted_doc, auto_disambiguate
+        )
 
         # 3. Generate upstream accounting payload
-        upstream_payload = self.adapter.to_upstream_payload(extracted_doc)
+        upstream_payload = await asyncio.to_thread(
+            self.adapter.to_upstream_payload, extracted_doc
+        )
 
         result = DigitizationResult(
             document=extracted_doc,
