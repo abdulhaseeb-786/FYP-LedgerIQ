@@ -1,0 +1,16 @@
+# Deep learning framework and the MiniLM model/tokenizer
+torch
+transformers
+
+# Train/test split, label encoding, classification report
+scikit-learn
+
+# Reading/writing CSV and Excel data
+pandas
+numpy
+
+# Excel engine used by pandas and for styling the output chart
+openpyxl
+
+# Language detection (used in the dataset-building script)
+langdetect
