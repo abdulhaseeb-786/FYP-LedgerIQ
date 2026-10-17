@@ -44,6 +44,8 @@ import time
 import os
 import json
 from datetime import datetime
+import matplotlib.pyplot as plt   
+
 
 # ---------------------------------------------------------
 # Config for this run — change these between experiments
@@ -64,35 +66,12 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device:", device)
 
 # ---------------------------------------------------------
-# Load the combined train/test CSVs saved from notebook 1
+# Early stopping setup
 # ---------------------------------------------------------
-train_df = pd.read_csv("data/train.csv")
-test_df = pd.read_csv("data/test.csv")
-
-type_encoder = LabelEncoder().fit(pd.concat([train_df["account_type"], test_df["account_type"]]))
-train_df["account_type_label"] = type_encoder.transform(train_df["account_type"])
-test_df["account_type_label"] = type_encoder.transform(test_df["account_type"])
-
-num_classes = len(type_encoder.classes_)
-print("Classes:", list(type_encoder.classes_))
-
-# ---------------------------------------------------------
-# Tokenizer + base model
-# ---------------------------------------------------------
-model_name = "sentence-transformers/all-MiniLM-L6-v2"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-base_model = AutoModel.from_pretrained(model_name).to(device)
-
-"""
-# Freeze embeddings
-for param in base_model.embeddings.parameters():
-    param.requires_grad = False
-
-# Freeze first of MiniLM's 6 encoder layers
-for layer in base_model.encoder.layer[:(NUM_FROZEN_LAYERS-1)]:
-    for param in layer.parameters():
-        param.requires_grad = False
-"""
+PATIENCE = 3              # how many epochs to wait for improvement before stopping
+best_test_acc = 0.0       # best accuracy seen so far (starts at 0 so epoch 1 always counts as an improvement)
+epochs_no_improve = 0     # counter: epochs in a row with no improvement
+best_state = None         # will hold a copy of the weights from the best epoch
 
 # ---------------------------------------------------------
 # Dataset — now uses account_type_label (int) instead of raw string labels
@@ -144,18 +123,8 @@ def mean_pool(last_hidden_state, attention_mask):
     return summed / counts
 
 # ---------------------------------------------------------
-# Training
+# Evaluation function
 # ---------------------------------------------------------
-train_dataset = AccountNameDataset(train_df, tokenizer)
-test_dataset = AccountNameDataset(test_df, tokenizer)
-
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-test_loader = DataLoader(test_dataset, batch_size=16)
-
-model = AccountTypeClassifier(base_model, num_classes=num_classes).to(device)
-optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
-loss_fn = nn.CrossEntropyLoss()
-
 
 def evaluate(model, loader):
     model.eval()
@@ -173,74 +142,6 @@ def evaluate(model, loader):
             all_preds.extend(preds.cpu().tolist())
             all_labels.extend(labels.cpu().tolist())
     return correct / total, all_preds, all_labels
-
-# ---------------------------------------------------------
-# Early stopping setup
-# ---------------------------------------------------------
-PATIENCE = 3              # how many epochs to wait for improvement before stopping
-best_test_acc = 0.0       # best accuracy seen so far (starts at 0 so epoch 1 always counts as an improvement)
-epochs_no_improve = 0     # counter: epochs in a row with no improvement
-best_state = None         # will hold a copy of the weights from the best epoch
-
-for epoch in range(1, EPOCHS + 1):
-    model.train()
-    total_loss = 0
-    for batch in train_loader:
-        input_ids = batch["input_ids"].to(device)
-        attention_mask = batch["attention_mask"].to(device)
-        labels = batch["label"].to(device)
-
-        optimizer.zero_grad()
-        logits = model(input_ids, attention_mask)
-        loss = loss_fn(logits, labels)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
-
-    train_acc, _, _ = evaluate(model, train_loader)
-    test_acc, _, _ = evaluate(model, test_loader)
-
-    # --- Early stopping check (runs once per epoch, after evaluation) ---
-    if test_acc > best_test_acc:
-        best_test_acc = test_acc          # new best score
-        epochs_no_improve = 0             # improvement happened, so reset the counter
-        # copy the weights to CPU memory; clone() makes a real copy, not a reference
-        best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
-    else:
-        epochs_no_improve += 1            # no improvement this epoch
-        if epochs_no_improve >= PATIENCE:
-            print(f"Early stopping at epoch {epoch} (best test_acc: {best_test_acc:.3f})")
-            break                         # exit the epoch loop
-    print(f"Epoch {epoch:2d} | loss: {total_loss/len(train_loader):.4f} | train_acc: {train_acc:.3f} | test_acc: {test_acc:.3f}")
-
-# ---------------------------------------------------------
-# Restore the best weights before final evaluation and saving
-# ---------------------------------------------------------
-if best_state is not None:                 # safety check: only restore if a best epoch was recorded
-    model.load_state_dict(best_state)      # copies the best epoch's weights back into the model
-    print(f"Restored best weights (test_acc: {best_test_acc:.3f})")
-# Re-measure train accuracy on the restored best weights, so the log matches the saved model
-best_train_acc, _, _ = evaluate(model, train_loader)   # evaluate() returns (accuracy, preds, labels); we only need accuracy
-
-# ---------------------------------------------------------
-# Final test report (per-class — worth checking given class imbalance)
-# ---------------------------------------------------------
-
-start_time = time.time()
-
-final_test_acc, test_preds, test_labels = evaluate(model, test_loader)
-
-end_time = time.time()
-duration = end_time - start_time
-
-print(f"Evaluation Duration: {duration:.2f} seconds")
-print(f"\nFinal test accuracy: {final_test_acc:.3f}\n")
-print(classification_report(
-    test_labels, test_preds,
-    labels=list(range(num_classes)),
-    target_names=type_encoder.classes_,
-    zero_division=0,
-))
 
 # ---------------------------------------------------------
 # Log this run's config + metrics to a persistent Excel file
@@ -301,6 +202,135 @@ def log_run_to_excel(
     combined_df.to_excel(excel_path, index=False)
     print(f"Logged run to {excel_path} (frozen_layers={frozen_layers}, dropout={dropout})")
     return combined_df
+
+# ---------------------------------------------------------
+# Load the combined train/test CSVs saved from notebook 1
+# ---------------------------------------------------------
+train_df = pd.read_csv("data/train.csv")
+test_df = pd.read_csv("data/test.csv")
+
+type_encoder = LabelEncoder().fit(pd.concat([train_df["account_type"], test_df["account_type"]]))
+train_df["account_type_label"] = type_encoder.transform(train_df["account_type"])
+test_df["account_type_label"] = type_encoder.transform(test_df["account_type"])
+
+num_classes = len(type_encoder.classes_)
+print("Classes:", list(type_encoder.classes_))
+
+# ---------------------------------------------------------
+# Tokenizer + base model
+# ---------------------------------------------------------
+# model_name = "sentence-transformers/all-MiniLM-L6-v2" # 68% acc, 22M parameters
+model_name = "BAAI/bge-small-en-v1.5" # 88% acc, 33.4M params
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+base_model = AutoModel.from_pretrained(model_name).to(device)
+
+"""
+# Freeze embeddings
+for param in base_model.embeddings.parameters():
+    param.requires_grad = False
+
+# Freeze first of MiniLM's 6 encoder layers
+for layer in base_model.encoder.layer[:(NUM_FROZEN_LAYERS-1)]:
+    for param in layer.parameters():
+        param.requires_grad = False
+"""
+
+# ---------------------------------------------------------
+# Training
+# ---------------------------------------------------------
+train_dataset = AccountNameDataset(train_df, tokenizer)
+test_dataset = AccountNameDataset(test_df, tokenizer)
+
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=16)
+
+model = AccountTypeClassifier(base_model, num_classes=num_classes).to(device)
+optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
+loss_fn = nn.CrossEntropyLoss()
+
+train_acc_history = []   # will hold train accuracy of each epoch
+test_acc_history = []    # will hold test accuracy of each epoch
+for epoch in range(1, EPOCHS + 1):
+    model.train()
+    total_loss = 0
+    for batch in train_loader:
+        input_ids = batch["input_ids"].to(device)
+        attention_mask = batch["attention_mask"].to(device)
+        labels = batch["label"].to(device)
+
+        optimizer.zero_grad()
+        logits = model(input_ids, attention_mask)
+        loss = loss_fn(logits, labels)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+
+    train_acc, _, _ = evaluate(model, train_loader)
+    test_acc, _, _ = evaluate(model, test_loader)
+    train_acc_history.append(train_acc)               # save this epoch's train accuracy
+    test_acc_history.append(test_acc) 
+
+    # --- Early stopping check (runs once per epoch, after evaluation) ---
+    if test_acc > best_test_acc:
+        best_test_acc = test_acc          # new best score
+        epochs_no_improve = 0             # improvement happened, so reset the counter
+        # copy the weights to CPU memory; clone() makes a real copy, not a reference
+        best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+    else:
+        epochs_no_improve += 1            # no improvement this epoch
+        if epochs_no_improve >= PATIENCE:
+            print(f"Early stopping at epoch {epoch} (best test_acc: {best_test_acc:.3f})")
+            break                         # exit the epoch loop
+    print(f"Epoch {epoch:2d} | loss: {total_loss/len(train_loader):.4f} | train_acc: {train_acc:.3f} | test_acc: {test_acc:.3f}")
+
+# ---------------------------------------------------------
+# Restore the best weights before final evaluation and saving
+# ---------------------------------------------------------
+if best_state is not None:                 # safety check: only restore if a best epoch was recorded
+    model.load_state_dict(best_state)      # copies the best epoch's weights back into the model
+    print(f"Restored best weights (test_acc: {best_test_acc:.3f})")
+# Re-measure train accuracy on the restored best weights, so the log matches the saved model
+best_train_acc, _, _ = evaluate(model, train_loader)   # evaluate() returns (accuracy, preds, labels); we only need accuracy
+
+# plotting
+# x-axis: epoch numbers 1, 2, 3, ... for however many epochs actually ran
+# (fewer than EPOCHS if early stopping triggered)
+epochs_ran = range(1, len(train_acc_history) + 1)
+
+# Epoch with the highest test accuracy (argmax gives a 0-based index, so +1)
+best_epoch = int(np.argmax(test_acc_history)) + 1
+
+plt.figure(figsize=(8, 5))                                   # width x height in inches
+plt.plot(epochs_ran, train_acc_history, marker="o", label="Train accuracy")   # blue line: train
+plt.plot(epochs_ran, test_acc_history, marker="o", label="Test accuracy")     # orange line: test
+plt.axvline(best_epoch, linestyle="--", color="gray", label=f"Best epoch ({best_epoch})")  # dashed line at the best epoch
+plt.xlabel("Epoch")                                          # label under the x-axis
+plt.ylabel("Accuracy")                                       # label beside the y-axis
+plt.title("Train vs Test accuracy per epoch")                # plot title
+plt.legend()                                                 # shows which line is which
+plt.grid(alpha=0.3)                                          # faint grid to make values easier to read
+plt.show()                                                   # displays the plot below the cell
+
+# ---------------------------------------------------------
+# Final test report (per-class — worth checking given class imbalance)
+# ---------------------------------------------------------
+
+start_time = time.time()
+
+final_test_acc, test_preds, test_labels = evaluate(model, test_loader)
+
+end_time = time.time()
+duration = end_time - start_time
+
+print(f"Evaluation Duration: {duration:.2f} seconds")
+print(f"\nFinal test accuracy: {final_test_acc:.3f}\n")
+print(classification_report(
+    test_labels, test_preds,
+    labels=list(range(num_classes)),
+    target_names=type_encoder.classes_,
+    zero_division=0,
+))
 
 log_run_to_excel(
     frozen_layers=NUM_FROZEN_LAYERS,
