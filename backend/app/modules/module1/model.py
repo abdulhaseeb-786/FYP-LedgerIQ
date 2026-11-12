@@ -220,7 +220,7 @@ print("Classes:", list(type_encoder.classes_))
 # Tokenizer + base model
 # ---------------------------------------------------------
 # model_name = "sentence-transformers/all-MiniLM-L6-v2" # 68% acc, 22M parameters
-model_name = "BAAI/bge-small-en-v1.5" # 88% acc, 33.4M params
+model_name = "BAAI/bge-small-en-v1.5" # 89% acc, 33.4M params
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 base_model = AutoModel.from_pretrained(model_name).to(device)

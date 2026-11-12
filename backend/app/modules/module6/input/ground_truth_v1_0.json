@@ -1,0 +1,387 @@
+{
+  "bundles": {
+    "bundle_clean_match_001": {
+      "bundle_id": "bundle_clean_match_001",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_001_a"
+        ],
+        "purchase_order_id": "po_001",
+        "receipt_ids": [
+          "rcpt_001"
+        ],
+        "supplier_id": "sup_001"
+      },
+      "expected_evidence": "PO, invoice, and receipt lines agree exactly.",
+      "expected_labels": [
+        "clean_match"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "clean_match",
+          "invoice_line_id": "inv_line_001_main_001",
+          "po_line_id": "po_line_001_001",
+          "receipt_line_id": "rcpt_line_001_001"
+        },
+        {
+          "expected_label": "clean_match",
+          "invoice_line_id": "inv_line_001_main_002",
+          "po_line_id": "po_line_001_002",
+          "receipt_line_id": "rcpt_line_001_002"
+        }
+      ],
+      "expected_route": "auto_accept",
+      "explanation": "All generated quantities, prices, suppliers, and receipt lines match.",
+      "scenario": "clean_match",
+      "severity_default": "none",
+      "simulated_extraction_issues": []
+    },
+    "bundle_duplicate_invoice_006": {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_006_a",
+          "inv_006_b"
+        ],
+        "purchase_order_id": "po_006",
+        "receipt_ids": [
+          "rcpt_006"
+        ],
+        "supplier_id": "sup_006"
+      },
+      "expected_evidence": "Two invoices share the same invoice number, supplier, totals, and lines.",
+      "expected_labels": [
+        "duplicate_invoice"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "duplicate_invoice",
+          "invoice_line_id": "inv_line_006_dup_001",
+          "po_line_id": "po_line_006_001",
+          "receipt_line_id": "rcpt_line_006_001"
+        },
+        {
+          "expected_label": "duplicate_invoice",
+          "invoice_line_id": "inv_line_006_dup_002",
+          "po_line_id": "po_line_006_002",
+          "receipt_line_id": "rcpt_line_006_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "A second invoice record intentionally duplicates the first invoice.",
+      "scenario": "duplicate_invoice",
+      "severity_default": "high",
+      "simulated_extraction_issues": []
+    },
+    "bundle_late_receipt_008": {
+      "bundle_id": "bundle_late_receipt_008",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_008_a"
+        ],
+        "purchase_order_id": "po_008",
+        "receipt_ids": [
+          "rcpt_008"
+        ],
+        "supplier_id": "sup_008"
+      },
+      "expected_evidence": "Receipt date is later than expected receipt date.",
+      "expected_labels": [
+        "late_receipt"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "late_receipt",
+          "invoice_line_id": "inv_line_008_main_001",
+          "po_line_id": "po_line_008_001",
+          "receipt_line_id": "rcpt_line_008_001"
+        },
+        {
+          "expected_label": "late_receipt",
+          "invoice_line_id": "inv_line_008_main_002",
+          "po_line_id": "po_line_008_002",
+          "receipt_line_id": "rcpt_line_008_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "The generated receipt date is intentionally later than the PO expected date.",
+      "scenario": "late_receipt",
+      "severity_default": "low",
+      "simulated_extraction_issues": []
+    },
+    "bundle_low_confidence_extraction_009": {
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_009_a"
+        ],
+        "purchase_order_id": "po_009",
+        "receipt_ids": [
+          "rcpt_009"
+        ],
+        "supplier_id": "sup_009"
+      },
+      "expected_evidence": "Synthetic extraction metadata marks invoice unit price as low confidence.",
+      "expected_labels": [
+        "low_confidence_extraction"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "low_confidence_extraction",
+          "invoice_line_id": "inv_line_009_main_001",
+          "po_line_id": "po_line_009_001",
+          "receipt_line_id": "rcpt_line_009_001"
+        },
+        {
+          "expected_label": "low_confidence_extraction",
+          "invoice_line_id": "inv_line_009_main_002",
+          "po_line_id": "po_line_009_002",
+          "receipt_line_id": "rcpt_line_009_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "Source records are valid, but ground truth marks one extracted field as low confidence.",
+      "scenario": "low_confidence_extraction",
+      "severity_default": "medium",
+      "simulated_extraction_issues": [
+        {
+          "expected_route": "needs_review",
+          "field_name": "unit_price",
+          "issue_type": "low_confidence_extraction",
+          "source_document_id": "inv_009_a"
+        }
+      ]
+    },
+    "bundle_missing_invoice_line_004": {
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_004_a"
+        ],
+        "purchase_order_id": "po_004",
+        "receipt_ids": [
+          "rcpt_004"
+        ],
+        "supplier_id": "sup_004"
+      },
+      "expected_evidence": "Second PO line has no corresponding invoice line.",
+      "expected_labels": [
+        "missing_invoice_line"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "missing_invoice_line",
+          "invoice_line_id": "inv_line_004_main_001",
+          "po_line_id": "po_line_004_001",
+          "receipt_line_id": "rcpt_line_004_001"
+        },
+        {
+          "expected_label": "missing_invoice_line",
+          "invoice_line_id": null,
+          "po_line_id": "po_line_004_002",
+          "receipt_line_id": "rcpt_line_004_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "The invoice intentionally omits the second ordered SKU.",
+      "scenario": "missing_invoice_line",
+      "severity_default": "medium",
+      "simulated_extraction_issues": []
+    },
+    "bundle_missing_receipt_line_005": {
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_005_a"
+        ],
+        "purchase_order_id": "po_005",
+        "receipt_ids": [
+          "rcpt_005"
+        ],
+        "supplier_id": "sup_005"
+      },
+      "expected_evidence": "Second PO and invoice line has no corresponding receipt line.",
+      "expected_labels": [
+        "missing_receipt_line"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "missing_receipt_line",
+          "invoice_line_id": "inv_line_005_main_001",
+          "po_line_id": "po_line_005_001",
+          "receipt_line_id": "rcpt_line_005_001"
+        },
+        {
+          "expected_label": "missing_receipt_line",
+          "invoice_line_id": "inv_line_005_main_002",
+          "po_line_id": "po_line_005_002",
+          "receipt_line_id": null
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "The receipt intentionally omits delivery confirmation for the second SKU.",
+      "scenario": "missing_receipt_line",
+      "severity_default": "high",
+      "simulated_extraction_issues": []
+    },
+    "bundle_quantity_mismatch_002": {
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_002_a"
+        ],
+        "purchase_order_id": "po_002",
+        "receipt_ids": [
+          "rcpt_002"
+        ],
+        "supplier_id": "sup_002"
+      },
+      "expected_evidence": "Invoice quantity differs from ordered and received quantity.",
+      "expected_labels": [
+        "quantity_mismatch"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "quantity_mismatch",
+          "invoice_line_id": "inv_line_002_main_001",
+          "po_line_id": "po_line_002_001",
+          "receipt_line_id": "rcpt_line_002_001"
+        },
+        {
+          "expected_label": "quantity_mismatch",
+          "invoice_line_id": "inv_line_002_main_002",
+          "po_line_id": "po_line_002_002",
+          "receipt_line_id": "rcpt_line_002_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "Invoice line 1 quantity is intentionally higher than PO and receipt.",
+      "scenario": "quantity_mismatch",
+      "severity_default": "medium",
+      "simulated_extraction_issues": []
+    },
+    "bundle_schema_validation_failure_010": {
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_010_a"
+        ],
+        "purchase_order_id": "po_010",
+        "receipt_ids": [
+          "rcpt_010"
+        ],
+        "supplier_id": "sup_010"
+      },
+      "expected_evidence": "Ground truth records an invalid extracted required field for later validation.",
+      "expected_labels": [
+        "schema_validation_failure"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "schema_validation_failure",
+          "invoice_line_id": "inv_line_010_main_001",
+          "po_line_id": "po_line_010_001",
+          "receipt_line_id": "rcpt_line_010_001"
+        },
+        {
+          "expected_label": "schema_validation_failure",
+          "invoice_line_id": "inv_line_010_main_002",
+          "po_line_id": "po_line_010_002",
+          "receipt_line_id": "rcpt_line_010_002"
+        }
+      ],
+      "expected_route": "blocked",
+      "explanation": "Source records remain valid; the simulated extraction contract is expected to block.",
+      "scenario": "schema_validation_failure",
+      "severity_default": "high",
+      "simulated_extraction_issues": [
+        {
+          "expected_route": "blocked",
+          "field_name": "invoice_number",
+          "issue_type": "schema_validation_failure",
+          "source_document_id": "inv_010_a"
+        }
+      ]
+    },
+    "bundle_supplier_alias_mismatch_007": {
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_007_a"
+        ],
+        "purchase_order_id": "po_007",
+        "receipt_ids": [
+          "rcpt_007"
+        ],
+        "supplier_id": "sup_007"
+      },
+      "expected_evidence": "Invoice supplier name uses a controlled synthetic alias.",
+      "expected_labels": [
+        "supplier_alias_mismatch"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "supplier_alias_mismatch",
+          "invoice_line_id": "inv_line_007_main_001",
+          "po_line_id": "po_line_007_001",
+          "receipt_line_id": "rcpt_line_007_001"
+        },
+        {
+          "expected_label": "supplier_alias_mismatch",
+          "invoice_line_id": "inv_line_007_main_002",
+          "po_line_id": "po_line_007_002",
+          "receipt_line_id": "rcpt_line_007_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "The invoice supplier name is an alias of the canonical supplier.",
+      "scenario": "supplier_alias_mismatch",
+      "severity_default": "low",
+      "simulated_extraction_issues": []
+    },
+    "bundle_unit_price_mismatch_003": {
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "expected_document_matches": {
+        "invoice_ids": [
+          "inv_003_a"
+        ],
+        "purchase_order_id": "po_003",
+        "receipt_ids": [
+          "rcpt_003"
+        ],
+        "supplier_id": "sup_003"
+      },
+      "expected_evidence": "Invoice unit price differs from purchase order unit price.",
+      "expected_labels": [
+        "unit_price_mismatch"
+      ],
+      "expected_line_matches": [
+        {
+          "expected_label": "unit_price_mismatch",
+          "invoice_line_id": "inv_line_003_main_001",
+          "po_line_id": "po_line_003_001",
+          "receipt_line_id": "rcpt_line_003_001"
+        },
+        {
+          "expected_label": "unit_price_mismatch",
+          "invoice_line_id": "inv_line_003_main_002",
+          "po_line_id": "po_line_003_002",
+          "receipt_line_id": "rcpt_line_003_002"
+        }
+      ],
+      "expected_route": "needs_review",
+      "explanation": "Invoice line 1 unit price is intentionally higher than PO.",
+      "scenario": "unit_price_mismatch",
+      "severity_default": "medium",
+      "simulated_extraction_issues": []
+    }
+  },
+  "metadata": {
+    "discrepancy_taxonomy_version": "v1.0",
+    "fixture_version": "v1.0",
+    "generator_version": "crosswise_synthetic_generator_v1",
+    "schema_contract_version": "slice_0_v1.0",
+    "seed": 42017,
+    "synthetic_only": true
+  }
+}

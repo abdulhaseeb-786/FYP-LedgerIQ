@@ -1,0 +1,1838 @@
+{
+  "discrepancy_labels": [
+    {
+      "affected_document_ids": [
+        "po_001",
+        "inv_001_a",
+        "rcpt_001"
+      ],
+      "affected_line_ids": [],
+      "bundle_id": "bundle_clean_match_001",
+      "expected_evidence": "PO, invoice, and receipt lines agree exactly.",
+      "label_id": "label_001_clean_match",
+      "label_type": "clean_match",
+      "severity_default": "none",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_002",
+        "inv_002_a",
+        "rcpt_002"
+      ],
+      "affected_line_ids": [
+        "po_line_002_001"
+      ],
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "expected_evidence": "Invoice quantity differs from ordered and received quantity.",
+      "label_id": "label_002_quantity_mismatch",
+      "label_type": "quantity_mismatch",
+      "severity_default": "medium",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_003",
+        "inv_003_a",
+        "rcpt_003"
+      ],
+      "affected_line_ids": [
+        "po_line_003_001"
+      ],
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "expected_evidence": "Invoice unit price differs from purchase order unit price.",
+      "label_id": "label_003_unit_price_mismatch",
+      "label_type": "unit_price_mismatch",
+      "severity_default": "medium",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_004",
+        "inv_004_a",
+        "rcpt_004"
+      ],
+      "affected_line_ids": [
+        "po_line_004_002"
+      ],
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "expected_evidence": "Second PO line has no corresponding invoice line.",
+      "label_id": "label_004_missing_invoice_line",
+      "label_type": "missing_invoice_line",
+      "severity_default": "medium",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_005",
+        "inv_005_a",
+        "rcpt_005"
+      ],
+      "affected_line_ids": [
+        "po_line_005_002"
+      ],
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "expected_evidence": "Second PO and invoice line has no corresponding receipt line.",
+      "label_id": "label_005_missing_receipt_line",
+      "label_type": "missing_receipt_line",
+      "severity_default": "high",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_006",
+        "inv_006_a",
+        "inv_006_b",
+        "rcpt_006"
+      ],
+      "affected_line_ids": [
+        "po_line_006_001"
+      ],
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "expected_evidence": "Two invoices share the same invoice number, supplier, totals, and lines.",
+      "label_id": "label_006_duplicate_invoice",
+      "label_type": "duplicate_invoice",
+      "severity_default": "high",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_007",
+        "inv_007_a",
+        "rcpt_007"
+      ],
+      "affected_line_ids": [
+        "po_line_007_001"
+      ],
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "expected_evidence": "Invoice supplier name uses a controlled synthetic alias.",
+      "label_id": "label_007_supplier_alias_mismatch",
+      "label_type": "supplier_alias_mismatch",
+      "severity_default": "low",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_008",
+        "inv_008_a",
+        "rcpt_008"
+      ],
+      "affected_line_ids": [
+        "po_line_008_001"
+      ],
+      "bundle_id": "bundle_late_receipt_008",
+      "expected_evidence": "Receipt date is later than expected receipt date.",
+      "label_id": "label_008_late_receipt",
+      "label_type": "late_receipt",
+      "severity_default": "low",
+      "v1_requirement": "optional_deferred"
+    },
+    {
+      "affected_document_ids": [
+        "po_009",
+        "inv_009_a",
+        "rcpt_009"
+      ],
+      "affected_line_ids": [
+        "po_line_009_001"
+      ],
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "expected_evidence": "Synthetic extraction metadata marks invoice unit price as low confidence.",
+      "label_id": "label_009_low_confidence_extraction",
+      "label_type": "low_confidence_extraction",
+      "severity_default": "medium",
+      "v1_requirement": "required_v1"
+    },
+    {
+      "affected_document_ids": [
+        "po_010",
+        "inv_010_a",
+        "rcpt_010"
+      ],
+      "affected_line_ids": [
+        "po_line_010_001"
+      ],
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "expected_evidence": "Ground truth records an invalid extracted required field for later validation.",
+      "label_id": "label_010_schema_validation_failure",
+      "label_type": "schema_validation_failure",
+      "severity_default": "high",
+      "v1_requirement": "required_v1"
+    }
+  ],
+  "document_bundles": [
+    {
+      "bundle_id": "bundle_clean_match_001",
+      "discrepancy_labels": [
+        "clean_match"
+      ],
+      "expected_route": "auto_accept",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_001_a"
+      ],
+      "purchase_order_id": "po_001",
+      "receipt_ids": [
+        "rcpt_001"
+      ],
+      "scenario_name": "clean match",
+      "seed": 42017,
+      "supplier_id": "sup_001"
+    },
+    {
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "discrepancy_labels": [
+        "quantity_mismatch"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_002_a"
+      ],
+      "purchase_order_id": "po_002",
+      "receipt_ids": [
+        "rcpt_002"
+      ],
+      "scenario_name": "quantity mismatch",
+      "seed": 42017,
+      "supplier_id": "sup_002"
+    },
+    {
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "discrepancy_labels": [
+        "unit_price_mismatch"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_003_a"
+      ],
+      "purchase_order_id": "po_003",
+      "receipt_ids": [
+        "rcpt_003"
+      ],
+      "scenario_name": "unit price mismatch",
+      "seed": 42017,
+      "supplier_id": "sup_003"
+    },
+    {
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "discrepancy_labels": [
+        "missing_invoice_line"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_004_a"
+      ],
+      "purchase_order_id": "po_004",
+      "receipt_ids": [
+        "rcpt_004"
+      ],
+      "scenario_name": "missing invoice line",
+      "seed": 42017,
+      "supplier_id": "sup_004"
+    },
+    {
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "discrepancy_labels": [
+        "missing_receipt_line"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_005_a"
+      ],
+      "purchase_order_id": "po_005",
+      "receipt_ids": [
+        "rcpt_005"
+      ],
+      "scenario_name": "missing receipt line",
+      "seed": 42017,
+      "supplier_id": "sup_005"
+    },
+    {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "discrepancy_labels": [
+        "duplicate_invoice"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_006_a",
+        "inv_006_b"
+      ],
+      "purchase_order_id": "po_006",
+      "receipt_ids": [
+        "rcpt_006"
+      ],
+      "scenario_name": "duplicate invoice",
+      "seed": 42017,
+      "supplier_id": "sup_006"
+    },
+    {
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "discrepancy_labels": [
+        "supplier_alias_mismatch"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_007_a"
+      ],
+      "purchase_order_id": "po_007",
+      "receipt_ids": [
+        "rcpt_007"
+      ],
+      "scenario_name": "supplier alias mismatch",
+      "seed": 42017,
+      "supplier_id": "sup_007"
+    },
+    {
+      "bundle_id": "bundle_late_receipt_008",
+      "discrepancy_labels": [
+        "late_receipt"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_008_a"
+      ],
+      "purchase_order_id": "po_008",
+      "receipt_ids": [
+        "rcpt_008"
+      ],
+      "scenario_name": "late receipt",
+      "seed": 42017,
+      "supplier_id": "sup_008"
+    },
+    {
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "discrepancy_labels": [
+        "low_confidence_extraction"
+      ],
+      "expected_route": "needs_review",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_009_a"
+      ],
+      "purchase_order_id": "po_009",
+      "receipt_ids": [
+        "rcpt_009"
+      ],
+      "scenario_name": "low confidence extraction",
+      "seed": 42017,
+      "supplier_id": "sup_009"
+    },
+    {
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "discrepancy_labels": [
+        "schema_validation_failure"
+      ],
+      "expected_route": "blocked",
+      "fixture_version": "v1.0",
+      "generator_version": "crosswise_synthetic_generator_v1",
+      "invoice_ids": [
+        "inv_010_a"
+      ],
+      "purchase_order_id": "po_010",
+      "receipt_ids": [
+        "rcpt_010"
+      ],
+      "scenario_name": "schema validation failure",
+      "seed": 42017,
+      "supplier_id": "sup_010"
+    }
+  ],
+  "invoice_lines": [
+    {
+      "description": "Synthetic Item 001 Alpha",
+      "invoice_id": "inv_001_a",
+      "invoice_line_id": "inv_line_001_main_001",
+      "line_number": 1,
+      "line_total": "120.00",
+      "quantity_billed": "8",
+      "sku_id": "sku_001_a",
+      "sku_raw": "Synthetic Item 001 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "15.00"
+    },
+    {
+      "description": "Synthetic Item 001 Beta",
+      "invoice_id": "inv_001_a",
+      "invoice_line_id": "inv_line_001_main_002",
+      "line_number": 2,
+      "line_total": "44.00",
+      "quantity_billed": "2",
+      "sku_id": "sku_001_b",
+      "sku_raw": "Synthetic Item 001 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "22.00"
+    },
+    {
+      "description": "Synthetic Item 002 Alpha",
+      "invoice_id": "inv_002_a",
+      "invoice_line_id": "inv_line_002_main_001",
+      "line_number": 1,
+      "line_total": "96.00",
+      "quantity_billed": "6",
+      "sku_id": "sku_002_a",
+      "sku_raw": "Synthetic Item 002 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "16.00"
+    },
+    {
+      "description": "Synthetic Item 002 Beta",
+      "invoice_id": "inv_002_a",
+      "invoice_line_id": "inv_line_002_main_002",
+      "line_number": 2,
+      "line_total": "96.00",
+      "quantity_billed": "4",
+      "sku_id": "sku_002_b",
+      "sku_raw": "Synthetic Item 002 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "24.00"
+    },
+    {
+      "description": "Synthetic Item 003 Alpha",
+      "invoice_id": "inv_003_a",
+      "invoice_line_id": "inv_line_003_main_001",
+      "line_number": 1,
+      "line_total": "75.00",
+      "quantity_billed": "5",
+      "sku_id": "sku_003_a",
+      "sku_raw": "Synthetic Item 003 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "15.00"
+    },
+    {
+      "description": "Synthetic Item 003 Beta",
+      "invoice_id": "inv_003_a",
+      "invoice_line_id": "inv_line_003_main_002",
+      "line_number": 2,
+      "line_total": "104.00",
+      "quantity_billed": "4",
+      "sku_id": "sku_003_b",
+      "sku_raw": "Synthetic Item 003 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "26.00"
+    },
+    {
+      "description": "Synthetic Item 004 Alpha",
+      "invoice_id": "inv_004_a",
+      "invoice_line_id": "inv_line_004_main_001",
+      "line_number": 1,
+      "line_total": "153.00",
+      "quantity_billed": "9",
+      "sku_id": "sku_004_a",
+      "sku_raw": "Synthetic Item 004 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "17.00"
+    },
+    {
+      "description": "Synthetic Item 005 Alpha",
+      "invoice_id": "inv_005_a",
+      "invoice_line_id": "inv_line_005_main_001",
+      "line_number": 1,
+      "line_total": "90.00",
+      "quantity_billed": "6",
+      "sku_id": "sku_005_a",
+      "sku_raw": "Synthetic Item 005 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "15.00"
+    },
+    {
+      "description": "Synthetic Item 005 Beta",
+      "invoice_id": "inv_005_a",
+      "invoice_line_id": "inv_line_005_main_002",
+      "line_number": 2,
+      "line_total": "96.00",
+      "quantity_billed": "4",
+      "sku_id": "sku_005_b",
+      "sku_raw": "Synthetic Item 005 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "24.00"
+    },
+    {
+      "description": "Synthetic Item 006 Alpha",
+      "invoice_id": "inv_006_a",
+      "invoice_line_id": "inv_line_006_main_001",
+      "line_number": 1,
+      "line_total": "153.00",
+      "quantity_billed": "9",
+      "sku_id": "sku_006_a",
+      "sku_raw": "Synthetic Item 006 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "17.00"
+    },
+    {
+      "description": "Synthetic Item 006 Beta",
+      "invoice_id": "inv_006_a",
+      "invoice_line_id": "inv_line_006_main_002",
+      "line_number": 2,
+      "line_total": "50.00",
+      "quantity_billed": "2",
+      "sku_id": "sku_006_b",
+      "sku_raw": "Synthetic Item 006 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "25.00"
+    },
+    {
+      "description": "Synthetic Item 006 Alpha",
+      "invoice_id": "inv_006_b",
+      "invoice_line_id": "inv_line_006_dup_001",
+      "line_number": 1,
+      "line_total": "153.00",
+      "quantity_billed": "9",
+      "sku_id": "sku_006_a",
+      "sku_raw": "Synthetic Item 006 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "17.00"
+    },
+    {
+      "description": "Synthetic Item 006 Beta",
+      "invoice_id": "inv_006_b",
+      "invoice_line_id": "inv_line_006_dup_002",
+      "line_number": 2,
+      "line_total": "50.00",
+      "quantity_billed": "2",
+      "sku_id": "sku_006_b",
+      "sku_raw": "Synthetic Item 006 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "25.00"
+    },
+    {
+      "description": "Synthetic Item 007 Alpha",
+      "invoice_id": "inv_007_a",
+      "invoice_line_id": "inv_line_007_main_001",
+      "line_number": 1,
+      "line_total": "126.00",
+      "quantity_billed": "6",
+      "sku_id": "sku_007_a",
+      "sku_raw": "Synthetic Item 007 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 007 Beta",
+      "invoice_id": "inv_007_a",
+      "invoice_line_id": "inv_line_007_main_002",
+      "line_number": 2,
+      "line_total": "60.00",
+      "quantity_billed": "2",
+      "sku_id": "sku_007_b",
+      "sku_raw": "Synthetic Item 007 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    },
+    {
+      "description": "Synthetic Item 008 Alpha",
+      "invoice_id": "inv_008_a",
+      "invoice_line_id": "inv_line_008_main_001",
+      "line_number": 1,
+      "line_total": "152.00",
+      "quantity_billed": "8",
+      "sku_id": "sku_008_a",
+      "sku_raw": "Synthetic Item 008 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "19.00"
+    },
+    {
+      "description": "Synthetic Item 008 Beta",
+      "invoice_id": "inv_008_a",
+      "invoice_line_id": "inv_line_008_main_002",
+      "line_number": 2,
+      "line_total": "130.00",
+      "quantity_billed": "5",
+      "sku_id": "sku_008_b",
+      "sku_raw": "Synthetic Item 008 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "26.00"
+    },
+    {
+      "description": "Synthetic Item 009 Alpha",
+      "invoice_id": "inv_009_a",
+      "invoice_line_id": "inv_line_009_main_001",
+      "line_number": 1,
+      "line_total": "105.00",
+      "quantity_billed": "5",
+      "sku_id": "sku_009_a",
+      "sku_raw": "Synthetic Item 009 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 009 Beta",
+      "invoice_id": "inv_009_a",
+      "invoice_line_id": "inv_line_009_main_002",
+      "line_number": 2,
+      "line_total": "150.00",
+      "quantity_billed": "5",
+      "sku_id": "sku_009_b",
+      "sku_raw": "Synthetic Item 009 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    },
+    {
+      "description": "Synthetic Item 010 Alpha",
+      "invoice_id": "inv_010_a",
+      "invoice_line_id": "inv_line_010_main_001",
+      "line_number": 1,
+      "line_total": "126.00",
+      "quantity_billed": "6",
+      "sku_id": "sku_010_a",
+      "sku_raw": "Synthetic Item 010 Alpha",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 010 Beta",
+      "invoice_id": "inv_010_a",
+      "invoice_line_id": "inv_line_010_main_002",
+      "line_number": 2,
+      "line_total": "120.00",
+      "quantity_billed": "4",
+      "sku_id": "sku_010_b",
+      "sku_raw": "Synthetic Item 010 Beta",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    }
+  ],
+  "invoices": [
+    {
+      "bundle_id": "bundle_clean_match_001",
+      "currency": "EUR",
+      "due_date": "2026-02-10",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-11",
+      "invoice_id": "inv_001_a",
+      "invoice_number": "SYN-INV-0001",
+      "line_ids": [
+        "inv_line_001_main_001",
+        "inv_line_001_main_002"
+      ],
+      "subtotal": "164.00",
+      "supplier_id": "sup_001",
+      "supplier_name_raw": "Synthetic Supplier 001",
+      "tax_amount": "0.00",
+      "total_amount": "164.00"
+    },
+    {
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "currency": "EUR",
+      "due_date": "2026-02-11",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-12",
+      "invoice_id": "inv_002_a",
+      "invoice_number": "SYN-INV-0002",
+      "line_ids": [
+        "inv_line_002_main_001",
+        "inv_line_002_main_002"
+      ],
+      "subtotal": "192.00",
+      "supplier_id": "sup_002",
+      "supplier_name_raw": "Synthetic Supplier 002",
+      "tax_amount": "0.00",
+      "total_amount": "192.00"
+    },
+    {
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "currency": "EUR",
+      "due_date": "2026-02-12",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-13",
+      "invoice_id": "inv_003_a",
+      "invoice_number": "SYN-INV-0003",
+      "line_ids": [
+        "inv_line_003_main_001",
+        "inv_line_003_main_002"
+      ],
+      "subtotal": "179.00",
+      "supplier_id": "sup_003",
+      "supplier_name_raw": "Synthetic Supplier 003",
+      "tax_amount": "0.00",
+      "total_amount": "179.00"
+    },
+    {
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "currency": "EUR",
+      "due_date": "2026-02-13",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-14",
+      "invoice_id": "inv_004_a",
+      "invoice_number": "SYN-INV-0004",
+      "line_ids": [
+        "inv_line_004_main_001"
+      ],
+      "subtotal": "153.00",
+      "supplier_id": "sup_004",
+      "supplier_name_raw": "Synthetic Supplier 004",
+      "tax_amount": "0.00",
+      "total_amount": "153.00"
+    },
+    {
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "currency": "EUR",
+      "due_date": "2026-02-14",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-15",
+      "invoice_id": "inv_005_a",
+      "invoice_number": "SYN-INV-0005",
+      "line_ids": [
+        "inv_line_005_main_001",
+        "inv_line_005_main_002"
+      ],
+      "subtotal": "186.00",
+      "supplier_id": "sup_005",
+      "supplier_name_raw": "Synthetic Supplier 005",
+      "tax_amount": "0.00",
+      "total_amount": "186.00"
+    },
+    {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "currency": "EUR",
+      "due_date": "2026-02-15",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-16",
+      "invoice_id": "inv_006_a",
+      "invoice_number": "SYN-INV-0006",
+      "line_ids": [
+        "inv_line_006_main_001",
+        "inv_line_006_main_002"
+      ],
+      "subtotal": "203.00",
+      "supplier_id": "sup_006",
+      "supplier_name_raw": "Synthetic Supplier 006",
+      "tax_amount": "0.00",
+      "total_amount": "203.00"
+    },
+    {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "currency": "EUR",
+      "due_date": "2026-02-15",
+      "duplicate_of_invoice_id": "inv_006_a",
+      "invoice_date": "2026-01-16",
+      "invoice_id": "inv_006_b",
+      "invoice_number": "SYN-INV-0006",
+      "line_ids": [
+        "inv_line_006_dup_001",
+        "inv_line_006_dup_002"
+      ],
+      "subtotal": "203.00",
+      "supplier_id": "sup_006",
+      "supplier_name_raw": "Synthetic Supplier 006",
+      "tax_amount": "0.00",
+      "total_amount": "203.00"
+    },
+    {
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "currency": "EUR",
+      "due_date": "2026-02-16",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-17",
+      "invoice_id": "inv_007_a",
+      "invoice_number": "SYN-INV-0007",
+      "line_ids": [
+        "inv_line_007_main_001",
+        "inv_line_007_main_002"
+      ],
+      "subtotal": "186.00",
+      "supplier_id": "sup_007",
+      "supplier_name_raw": "Synth Vendor 007",
+      "tax_amount": "0.00",
+      "total_amount": "186.00"
+    },
+    {
+      "bundle_id": "bundle_late_receipt_008",
+      "currency": "EUR",
+      "due_date": "2026-02-17",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-18",
+      "invoice_id": "inv_008_a",
+      "invoice_number": "SYN-INV-0008",
+      "line_ids": [
+        "inv_line_008_main_001",
+        "inv_line_008_main_002"
+      ],
+      "subtotal": "282.00",
+      "supplier_id": "sup_008",
+      "supplier_name_raw": "Synthetic Supplier 008",
+      "tax_amount": "0.00",
+      "total_amount": "282.00"
+    },
+    {
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "currency": "EUR",
+      "due_date": "2026-02-18",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-19",
+      "invoice_id": "inv_009_a",
+      "invoice_number": "SYN-INV-0009",
+      "line_ids": [
+        "inv_line_009_main_001",
+        "inv_line_009_main_002"
+      ],
+      "subtotal": "255.00",
+      "supplier_id": "sup_009",
+      "supplier_name_raw": "Synthetic Supplier 009",
+      "tax_amount": "0.00",
+      "total_amount": "255.00"
+    },
+    {
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "currency": "EUR",
+      "due_date": "2026-02-19",
+      "duplicate_of_invoice_id": null,
+      "invoice_date": "2026-01-20",
+      "invoice_id": "inv_010_a",
+      "invoice_number": "SYN-INV-0010",
+      "line_ids": [
+        "inv_line_010_main_001",
+        "inv_line_010_main_002"
+      ],
+      "subtotal": "246.00",
+      "supplier_id": "sup_010",
+      "supplier_name_raw": "Synthetic Supplier 010",
+      "tax_amount": "0.00",
+      "total_amount": "246.00"
+    }
+  ],
+  "metadata": {
+    "discrepancy_taxonomy_version": "v1.0",
+    "fixture_version": "v1.0",
+    "generator_version": "crosswise_synthetic_generator_v1",
+    "schema_contract_version": "slice_0_v1.0",
+    "seed": 42017,
+    "synthetic_only": true
+  },
+  "purchase_order_lines": [
+    {
+      "description": "Synthetic Item 001 Alpha",
+      "line_number": 1,
+      "line_total": "120.00",
+      "po_line_id": "po_line_001_001",
+      "purchase_order_id": "po_001",
+      "quantity_ordered": "8",
+      "sku_id": "sku_001_a",
+      "unit_of_measure": "each",
+      "unit_price": "15.00"
+    },
+    {
+      "description": "Synthetic Item 001 Beta",
+      "line_number": 2,
+      "line_total": "44.00",
+      "po_line_id": "po_line_001_002",
+      "purchase_order_id": "po_001",
+      "quantity_ordered": "2",
+      "sku_id": "sku_001_b",
+      "unit_of_measure": "each",
+      "unit_price": "22.00"
+    },
+    {
+      "description": "Synthetic Item 002 Alpha",
+      "line_number": 1,
+      "line_total": "80.00",
+      "po_line_id": "po_line_002_001",
+      "purchase_order_id": "po_002",
+      "quantity_ordered": "5",
+      "sku_id": "sku_002_a",
+      "unit_of_measure": "each",
+      "unit_price": "16.00"
+    },
+    {
+      "description": "Synthetic Item 002 Beta",
+      "line_number": 2,
+      "line_total": "96.00",
+      "po_line_id": "po_line_002_002",
+      "purchase_order_id": "po_002",
+      "quantity_ordered": "4",
+      "sku_id": "sku_002_b",
+      "unit_of_measure": "each",
+      "unit_price": "24.00"
+    },
+    {
+      "description": "Synthetic Item 003 Alpha",
+      "line_number": 1,
+      "line_total": "65.00",
+      "po_line_id": "po_line_003_001",
+      "purchase_order_id": "po_003",
+      "quantity_ordered": "5",
+      "sku_id": "sku_003_a",
+      "unit_of_measure": "each",
+      "unit_price": "13.00"
+    },
+    {
+      "description": "Synthetic Item 003 Beta",
+      "line_number": 2,
+      "line_total": "104.00",
+      "po_line_id": "po_line_003_002",
+      "purchase_order_id": "po_003",
+      "quantity_ordered": "4",
+      "sku_id": "sku_003_b",
+      "unit_of_measure": "each",
+      "unit_price": "26.00"
+    },
+    {
+      "description": "Synthetic Item 004 Alpha",
+      "line_number": 1,
+      "line_total": "153.00",
+      "po_line_id": "po_line_004_001",
+      "purchase_order_id": "po_004",
+      "quantity_ordered": "9",
+      "sku_id": "sku_004_a",
+      "unit_of_measure": "each",
+      "unit_price": "17.00"
+    },
+    {
+      "description": "Synthetic Item 004 Beta",
+      "line_number": 2,
+      "line_total": "66.00",
+      "po_line_id": "po_line_004_002",
+      "purchase_order_id": "po_004",
+      "quantity_ordered": "3",
+      "sku_id": "sku_004_b",
+      "unit_of_measure": "each",
+      "unit_price": "22.00"
+    },
+    {
+      "description": "Synthetic Item 005 Alpha",
+      "line_number": 1,
+      "line_total": "90.00",
+      "po_line_id": "po_line_005_001",
+      "purchase_order_id": "po_005",
+      "quantity_ordered": "6",
+      "sku_id": "sku_005_a",
+      "unit_of_measure": "each",
+      "unit_price": "15.00"
+    },
+    {
+      "description": "Synthetic Item 005 Beta",
+      "line_number": 2,
+      "line_total": "96.00",
+      "po_line_id": "po_line_005_002",
+      "purchase_order_id": "po_005",
+      "quantity_ordered": "4",
+      "sku_id": "sku_005_b",
+      "unit_of_measure": "each",
+      "unit_price": "24.00"
+    },
+    {
+      "description": "Synthetic Item 006 Alpha",
+      "line_number": 1,
+      "line_total": "153.00",
+      "po_line_id": "po_line_006_001",
+      "purchase_order_id": "po_006",
+      "quantity_ordered": "9",
+      "sku_id": "sku_006_a",
+      "unit_of_measure": "each",
+      "unit_price": "17.00"
+    },
+    {
+      "description": "Synthetic Item 006 Beta",
+      "line_number": 2,
+      "line_total": "50.00",
+      "po_line_id": "po_line_006_002",
+      "purchase_order_id": "po_006",
+      "quantity_ordered": "2",
+      "sku_id": "sku_006_b",
+      "unit_of_measure": "each",
+      "unit_price": "25.00"
+    },
+    {
+      "description": "Synthetic Item 007 Alpha",
+      "line_number": 1,
+      "line_total": "126.00",
+      "po_line_id": "po_line_007_001",
+      "purchase_order_id": "po_007",
+      "quantity_ordered": "6",
+      "sku_id": "sku_007_a",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 007 Beta",
+      "line_number": 2,
+      "line_total": "60.00",
+      "po_line_id": "po_line_007_002",
+      "purchase_order_id": "po_007",
+      "quantity_ordered": "2",
+      "sku_id": "sku_007_b",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    },
+    {
+      "description": "Synthetic Item 008 Alpha",
+      "line_number": 1,
+      "line_total": "152.00",
+      "po_line_id": "po_line_008_001",
+      "purchase_order_id": "po_008",
+      "quantity_ordered": "8",
+      "sku_id": "sku_008_a",
+      "unit_of_measure": "each",
+      "unit_price": "19.00"
+    },
+    {
+      "description": "Synthetic Item 008 Beta",
+      "line_number": 2,
+      "line_total": "130.00",
+      "po_line_id": "po_line_008_002",
+      "purchase_order_id": "po_008",
+      "quantity_ordered": "5",
+      "sku_id": "sku_008_b",
+      "unit_of_measure": "each",
+      "unit_price": "26.00"
+    },
+    {
+      "description": "Synthetic Item 009 Alpha",
+      "line_number": 1,
+      "line_total": "105.00",
+      "po_line_id": "po_line_009_001",
+      "purchase_order_id": "po_009",
+      "quantity_ordered": "5",
+      "sku_id": "sku_009_a",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 009 Beta",
+      "line_number": 2,
+      "line_total": "150.00",
+      "po_line_id": "po_line_009_002",
+      "purchase_order_id": "po_009",
+      "quantity_ordered": "5",
+      "sku_id": "sku_009_b",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    },
+    {
+      "description": "Synthetic Item 010 Alpha",
+      "line_number": 1,
+      "line_total": "126.00",
+      "po_line_id": "po_line_010_001",
+      "purchase_order_id": "po_010",
+      "quantity_ordered": "6",
+      "sku_id": "sku_010_a",
+      "unit_of_measure": "each",
+      "unit_price": "21.00"
+    },
+    {
+      "description": "Synthetic Item 010 Beta",
+      "line_number": 2,
+      "line_total": "120.00",
+      "po_line_id": "po_line_010_002",
+      "purchase_order_id": "po_010",
+      "quantity_ordered": "4",
+      "sku_id": "sku_010_b",
+      "unit_of_measure": "each",
+      "unit_price": "30.00"
+    }
+  ],
+  "purchase_orders": [
+    {
+      "bundle_id": "bundle_clean_match_001",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-17",
+      "issue_date": "2026-01-10",
+      "line_ids": [
+        "po_line_001_001",
+        "po_line_001_002"
+      ],
+      "purchase_order_id": "po_001",
+      "status": "issued",
+      "subtotal": "164.00",
+      "supplier_id": "sup_001",
+      "tax_amount": "0.00",
+      "total_amount": "164.00"
+    },
+    {
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-18",
+      "issue_date": "2026-01-11",
+      "line_ids": [
+        "po_line_002_001",
+        "po_line_002_002"
+      ],
+      "purchase_order_id": "po_002",
+      "status": "issued",
+      "subtotal": "176.00",
+      "supplier_id": "sup_002",
+      "tax_amount": "0.00",
+      "total_amount": "176.00"
+    },
+    {
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-19",
+      "issue_date": "2026-01-12",
+      "line_ids": [
+        "po_line_003_001",
+        "po_line_003_002"
+      ],
+      "purchase_order_id": "po_003",
+      "status": "issued",
+      "subtotal": "169.00",
+      "supplier_id": "sup_003",
+      "tax_amount": "0.00",
+      "total_amount": "169.00"
+    },
+    {
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-20",
+      "issue_date": "2026-01-13",
+      "line_ids": [
+        "po_line_004_001",
+        "po_line_004_002"
+      ],
+      "purchase_order_id": "po_004",
+      "status": "issued",
+      "subtotal": "219.00",
+      "supplier_id": "sup_004",
+      "tax_amount": "0.00",
+      "total_amount": "219.00"
+    },
+    {
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-21",
+      "issue_date": "2026-01-14",
+      "line_ids": [
+        "po_line_005_001",
+        "po_line_005_002"
+      ],
+      "purchase_order_id": "po_005",
+      "status": "issued",
+      "subtotal": "186.00",
+      "supplier_id": "sup_005",
+      "tax_amount": "0.00",
+      "total_amount": "186.00"
+    },
+    {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-22",
+      "issue_date": "2026-01-15",
+      "line_ids": [
+        "po_line_006_001",
+        "po_line_006_002"
+      ],
+      "purchase_order_id": "po_006",
+      "status": "issued",
+      "subtotal": "203.00",
+      "supplier_id": "sup_006",
+      "tax_amount": "0.00",
+      "total_amount": "203.00"
+    },
+    {
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-23",
+      "issue_date": "2026-01-16",
+      "line_ids": [
+        "po_line_007_001",
+        "po_line_007_002"
+      ],
+      "purchase_order_id": "po_007",
+      "status": "issued",
+      "subtotal": "186.00",
+      "supplier_id": "sup_007",
+      "tax_amount": "0.00",
+      "total_amount": "186.00"
+    },
+    {
+      "bundle_id": "bundle_late_receipt_008",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-24",
+      "issue_date": "2026-01-17",
+      "line_ids": [
+        "po_line_008_001",
+        "po_line_008_002"
+      ],
+      "purchase_order_id": "po_008",
+      "status": "issued",
+      "subtotal": "282.00",
+      "supplier_id": "sup_008",
+      "tax_amount": "0.00",
+      "total_amount": "282.00"
+    },
+    {
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-25",
+      "issue_date": "2026-01-18",
+      "line_ids": [
+        "po_line_009_001",
+        "po_line_009_002"
+      ],
+      "purchase_order_id": "po_009",
+      "status": "issued",
+      "subtotal": "255.00",
+      "supplier_id": "sup_009",
+      "tax_amount": "0.00",
+      "total_amount": "255.00"
+    },
+    {
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "currency": "EUR",
+      "expected_receipt_date": "2026-01-26",
+      "issue_date": "2026-01-19",
+      "line_ids": [
+        "po_line_010_001",
+        "po_line_010_002"
+      ],
+      "purchase_order_id": "po_010",
+      "status": "issued",
+      "subtotal": "246.00",
+      "supplier_id": "sup_010",
+      "tax_amount": "0.00",
+      "total_amount": "246.00"
+    }
+  ],
+  "receipt_lines": [
+    {
+      "line_number": 1,
+      "quantity_received": "8",
+      "receipt_id": "rcpt_001",
+      "receipt_line_id": "rcpt_line_001_001",
+      "received_date": "2026-01-15",
+      "sku_id": "sku_001_a",
+      "sku_raw": "Synthetic Item 001 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "2",
+      "receipt_id": "rcpt_001",
+      "receipt_line_id": "rcpt_line_001_002",
+      "received_date": "2026-01-15",
+      "sku_id": "sku_001_b",
+      "sku_raw": "Synthetic Item 001 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "5",
+      "receipt_id": "rcpt_002",
+      "receipt_line_id": "rcpt_line_002_001",
+      "received_date": "2026-01-16",
+      "sku_id": "sku_002_a",
+      "sku_raw": "Synthetic Item 002 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "4",
+      "receipt_id": "rcpt_002",
+      "receipt_line_id": "rcpt_line_002_002",
+      "received_date": "2026-01-16",
+      "sku_id": "sku_002_b",
+      "sku_raw": "Synthetic Item 002 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "5",
+      "receipt_id": "rcpt_003",
+      "receipt_line_id": "rcpt_line_003_001",
+      "received_date": "2026-01-17",
+      "sku_id": "sku_003_a",
+      "sku_raw": "Synthetic Item 003 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "4",
+      "receipt_id": "rcpt_003",
+      "receipt_line_id": "rcpt_line_003_002",
+      "received_date": "2026-01-17",
+      "sku_id": "sku_003_b",
+      "sku_raw": "Synthetic Item 003 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "9",
+      "receipt_id": "rcpt_004",
+      "receipt_line_id": "rcpt_line_004_001",
+      "received_date": "2026-01-18",
+      "sku_id": "sku_004_a",
+      "sku_raw": "Synthetic Item 004 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "3",
+      "receipt_id": "rcpt_004",
+      "receipt_line_id": "rcpt_line_004_002",
+      "received_date": "2026-01-18",
+      "sku_id": "sku_004_b",
+      "sku_raw": "Synthetic Item 004 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "6",
+      "receipt_id": "rcpt_005",
+      "receipt_line_id": "rcpt_line_005_001",
+      "received_date": "2026-01-19",
+      "sku_id": "sku_005_a",
+      "sku_raw": "Synthetic Item 005 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "9",
+      "receipt_id": "rcpt_006",
+      "receipt_line_id": "rcpt_line_006_001",
+      "received_date": "2026-01-20",
+      "sku_id": "sku_006_a",
+      "sku_raw": "Synthetic Item 006 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "2",
+      "receipt_id": "rcpt_006",
+      "receipt_line_id": "rcpt_line_006_002",
+      "received_date": "2026-01-20",
+      "sku_id": "sku_006_b",
+      "sku_raw": "Synthetic Item 006 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "6",
+      "receipt_id": "rcpt_007",
+      "receipt_line_id": "rcpt_line_007_001",
+      "received_date": "2026-01-21",
+      "sku_id": "sku_007_a",
+      "sku_raw": "Synthetic Item 007 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "2",
+      "receipt_id": "rcpt_007",
+      "receipt_line_id": "rcpt_line_007_002",
+      "received_date": "2026-01-21",
+      "sku_id": "sku_007_b",
+      "sku_raw": "Synthetic Item 007 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "8",
+      "receipt_id": "rcpt_008",
+      "receipt_line_id": "rcpt_line_008_001",
+      "received_date": "2026-01-28",
+      "sku_id": "sku_008_a",
+      "sku_raw": "Synthetic Item 008 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "5",
+      "receipt_id": "rcpt_008",
+      "receipt_line_id": "rcpt_line_008_002",
+      "received_date": "2026-01-28",
+      "sku_id": "sku_008_b",
+      "sku_raw": "Synthetic Item 008 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "5",
+      "receipt_id": "rcpt_009",
+      "receipt_line_id": "rcpt_line_009_001",
+      "received_date": "2026-01-23",
+      "sku_id": "sku_009_a",
+      "sku_raw": "Synthetic Item 009 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "5",
+      "receipt_id": "rcpt_009",
+      "receipt_line_id": "rcpt_line_009_002",
+      "received_date": "2026-01-23",
+      "sku_id": "sku_009_b",
+      "sku_raw": "Synthetic Item 009 Beta",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 1,
+      "quantity_received": "6",
+      "receipt_id": "rcpt_010",
+      "receipt_line_id": "rcpt_line_010_001",
+      "received_date": "2026-01-24",
+      "sku_id": "sku_010_a",
+      "sku_raw": "Synthetic Item 010 Alpha",
+      "unit_of_measure": "each"
+    },
+    {
+      "line_number": 2,
+      "quantity_received": "4",
+      "receipt_id": "rcpt_010",
+      "receipt_line_id": "rcpt_line_010_002",
+      "received_date": "2026-01-24",
+      "sku_id": "sku_010_b",
+      "sku_raw": "Synthetic Item 010 Beta",
+      "unit_of_measure": "each"
+    }
+  ],
+  "receipts": [
+    {
+      "bundle_id": "bundle_clean_match_001",
+      "line_ids": [
+        "rcpt_line_001_001",
+        "rcpt_line_001_002"
+      ],
+      "receipt_date": "2026-01-15",
+      "receipt_id": "rcpt_001",
+      "receipt_number": "SYN-RCPT-0001",
+      "related_purchase_order_id": "po_001",
+      "supplier_id": "sup_001",
+      "supplier_name_raw": "Synthetic Supplier 001"
+    },
+    {
+      "bundle_id": "bundle_quantity_mismatch_002",
+      "line_ids": [
+        "rcpt_line_002_001",
+        "rcpt_line_002_002"
+      ],
+      "receipt_date": "2026-01-16",
+      "receipt_id": "rcpt_002",
+      "receipt_number": "SYN-RCPT-0002",
+      "related_purchase_order_id": "po_002",
+      "supplier_id": "sup_002",
+      "supplier_name_raw": "Synthetic Supplier 002"
+    },
+    {
+      "bundle_id": "bundle_unit_price_mismatch_003",
+      "line_ids": [
+        "rcpt_line_003_001",
+        "rcpt_line_003_002"
+      ],
+      "receipt_date": "2026-01-17",
+      "receipt_id": "rcpt_003",
+      "receipt_number": "SYN-RCPT-0003",
+      "related_purchase_order_id": "po_003",
+      "supplier_id": "sup_003",
+      "supplier_name_raw": "Synthetic Supplier 003"
+    },
+    {
+      "bundle_id": "bundle_missing_invoice_line_004",
+      "line_ids": [
+        "rcpt_line_004_001",
+        "rcpt_line_004_002"
+      ],
+      "receipt_date": "2026-01-18",
+      "receipt_id": "rcpt_004",
+      "receipt_number": "SYN-RCPT-0004",
+      "related_purchase_order_id": "po_004",
+      "supplier_id": "sup_004",
+      "supplier_name_raw": "Synthetic Supplier 004"
+    },
+    {
+      "bundle_id": "bundle_missing_receipt_line_005",
+      "line_ids": [
+        "rcpt_line_005_001"
+      ],
+      "receipt_date": "2026-01-19",
+      "receipt_id": "rcpt_005",
+      "receipt_number": "SYN-RCPT-0005",
+      "related_purchase_order_id": "po_005",
+      "supplier_id": "sup_005",
+      "supplier_name_raw": "Synthetic Supplier 005"
+    },
+    {
+      "bundle_id": "bundle_duplicate_invoice_006",
+      "line_ids": [
+        "rcpt_line_006_001",
+        "rcpt_line_006_002"
+      ],
+      "receipt_date": "2026-01-20",
+      "receipt_id": "rcpt_006",
+      "receipt_number": "SYN-RCPT-0006",
+      "related_purchase_order_id": "po_006",
+      "supplier_id": "sup_006",
+      "supplier_name_raw": "Synthetic Supplier 006"
+    },
+    {
+      "bundle_id": "bundle_supplier_alias_mismatch_007",
+      "line_ids": [
+        "rcpt_line_007_001",
+        "rcpt_line_007_002"
+      ],
+      "receipt_date": "2026-01-21",
+      "receipt_id": "rcpt_007",
+      "receipt_number": "SYN-RCPT-0007",
+      "related_purchase_order_id": "po_007",
+      "supplier_id": "sup_007",
+      "supplier_name_raw": "Synthetic Supplier 007"
+    },
+    {
+      "bundle_id": "bundle_late_receipt_008",
+      "line_ids": [
+        "rcpt_line_008_001",
+        "rcpt_line_008_002"
+      ],
+      "receipt_date": "2026-01-28",
+      "receipt_id": "rcpt_008",
+      "receipt_number": "SYN-RCPT-0008",
+      "related_purchase_order_id": "po_008",
+      "supplier_id": "sup_008",
+      "supplier_name_raw": "Synthetic Supplier 008"
+    },
+    {
+      "bundle_id": "bundle_low_confidence_extraction_009",
+      "line_ids": [
+        "rcpt_line_009_001",
+        "rcpt_line_009_002"
+      ],
+      "receipt_date": "2026-01-23",
+      "receipt_id": "rcpt_009",
+      "receipt_number": "SYN-RCPT-0009",
+      "related_purchase_order_id": "po_009",
+      "supplier_id": "sup_009",
+      "supplier_name_raw": "Synthetic Supplier 009"
+    },
+    {
+      "bundle_id": "bundle_schema_validation_failure_010",
+      "line_ids": [
+        "rcpt_line_010_001",
+        "rcpt_line_010_002"
+      ],
+      "receipt_date": "2026-01-24",
+      "receipt_id": "rcpt_010",
+      "receipt_number": "SYN-RCPT-0010",
+      "related_purchase_order_id": "po_010",
+      "supplier_id": "sup_010",
+      "supplier_name_raw": "Synthetic Supplier 010"
+    }
+  ],
+  "skus": [
+    {
+      "aliases": [
+        "Item 001 A"
+      ],
+      "canonical_name": "Synthetic Item 001 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_001_a",
+      "standard_unit_price": "15.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 001 B"
+      ],
+      "canonical_name": "Synthetic Item 001 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_001_b",
+      "standard_unit_price": "22.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 002 A"
+      ],
+      "canonical_name": "Synthetic Item 002 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_002_a",
+      "standard_unit_price": "16.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 002 B"
+      ],
+      "canonical_name": "Synthetic Item 002 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_002_b",
+      "standard_unit_price": "24.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 003 A"
+      ],
+      "canonical_name": "Synthetic Item 003 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_003_a",
+      "standard_unit_price": "13.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 003 B"
+      ],
+      "canonical_name": "Synthetic Item 003 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_003_b",
+      "standard_unit_price": "26.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 004 A"
+      ],
+      "canonical_name": "Synthetic Item 004 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_004_a",
+      "standard_unit_price": "17.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 004 B"
+      ],
+      "canonical_name": "Synthetic Item 004 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_004_b",
+      "standard_unit_price": "22.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 005 A"
+      ],
+      "canonical_name": "Synthetic Item 005 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_005_a",
+      "standard_unit_price": "15.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 005 B"
+      ],
+      "canonical_name": "Synthetic Item 005 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_005_b",
+      "standard_unit_price": "24.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 006 A"
+      ],
+      "canonical_name": "Synthetic Item 006 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_006_a",
+      "standard_unit_price": "17.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 006 B"
+      ],
+      "canonical_name": "Synthetic Item 006 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_006_b",
+      "standard_unit_price": "25.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 007 A"
+      ],
+      "canonical_name": "Synthetic Item 007 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_007_a",
+      "standard_unit_price": "21.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 007 B"
+      ],
+      "canonical_name": "Synthetic Item 007 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_007_b",
+      "standard_unit_price": "30.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 008 A"
+      ],
+      "canonical_name": "Synthetic Item 008 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_008_a",
+      "standard_unit_price": "19.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 008 B"
+      ],
+      "canonical_name": "Synthetic Item 008 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_008_b",
+      "standard_unit_price": "26.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 009 A"
+      ],
+      "canonical_name": "Synthetic Item 009 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_009_a",
+      "standard_unit_price": "21.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 009 B"
+      ],
+      "canonical_name": "Synthetic Item 009 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_009_b",
+      "standard_unit_price": "30.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 010 A"
+      ],
+      "canonical_name": "Synthetic Item 010 Alpha",
+      "category": "synthetic_parts",
+      "sku_id": "sku_010_a",
+      "standard_unit_price": "21.00",
+      "unit_of_measure": "each"
+    },
+    {
+      "aliases": [
+        "Item 010 B"
+      ],
+      "canonical_name": "Synthetic Item 010 Beta",
+      "category": "synthetic_parts",
+      "sku_id": "sku_010_b",
+      "standard_unit_price": "30.00",
+      "unit_of_measure": "each"
+    }
+  ],
+  "suppliers": [
+    {
+      "aliases": [
+        "Syn Supplier 001",
+        "Synth Vendor 001"
+      ],
+      "canonical_name": "Synthetic Supplier 001",
+      "country_code": "DE",
+      "metadata": "clean_match_scenario",
+      "supplier_id": "sup_001",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 002",
+        "Synth Vendor 002"
+      ],
+      "canonical_name": "Synthetic Supplier 002",
+      "country_code": "DE",
+      "metadata": "quantity_mismatch_scenario",
+      "supplier_id": "sup_002",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 003",
+        "Synth Vendor 003"
+      ],
+      "canonical_name": "Synthetic Supplier 003",
+      "country_code": "DE",
+      "metadata": "unit_price_mismatch_scenario",
+      "supplier_id": "sup_003",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 004",
+        "Synth Vendor 004"
+      ],
+      "canonical_name": "Synthetic Supplier 004",
+      "country_code": "DE",
+      "metadata": "missing_invoice_line_scenario",
+      "supplier_id": "sup_004",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 005",
+        "Synth Vendor 005"
+      ],
+      "canonical_name": "Synthetic Supplier 005",
+      "country_code": "DE",
+      "metadata": "missing_receipt_line_scenario",
+      "supplier_id": "sup_005",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 006",
+        "Synth Vendor 006"
+      ],
+      "canonical_name": "Synthetic Supplier 006",
+      "country_code": "DE",
+      "metadata": "duplicate_invoice_scenario",
+      "supplier_id": "sup_006",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 007",
+        "Synth Vendor 007"
+      ],
+      "canonical_name": "Synthetic Supplier 007",
+      "country_code": "DE",
+      "metadata": "supplier_alias_mismatch_scenario",
+      "supplier_id": "sup_007",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 008",
+        "Synth Vendor 008"
+      ],
+      "canonical_name": "Synthetic Supplier 008",
+      "country_code": "DE",
+      "metadata": "late_receipt_scenario",
+      "supplier_id": "sup_008",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 009",
+        "Synth Vendor 009"
+      ],
+      "canonical_name": "Synthetic Supplier 009",
+      "country_code": "DE",
+      "metadata": "low_confidence_extraction_scenario",
+      "supplier_id": "sup_009",
+      "tax_region": "SYNTHETIC"
+    },
+    {
+      "aliases": [
+        "Syn Supplier 010",
+        "Synth Vendor 010"
+      ],
+      "canonical_name": "Synthetic Supplier 010",
+      "country_code": "DE",
+      "metadata": "schema_validation_failure_scenario",
+      "supplier_id": "sup_010",
+      "tax_region": "SYNTHETIC"
+    }
+  ]
+}
