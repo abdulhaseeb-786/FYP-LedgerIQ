@@ -27,7 +27,8 @@ Settings (top of file): NUM_FROZEN_LAYERS, DROPOUT, EPOCHS.
 
 Note: the test set is used to pick the best epoch
 
-Requirements: torch, transformers, scikit-learn, pandas, numpy, openpyxl.
+Requirements: torch, transformers, scikit-learn, pandas, numpy, openpyxl,
+    matplotlib.                                     
     A GPU is recommended, but it also runs on CPU.
 """
 
@@ -42,9 +43,11 @@ import numpy as np
 import random
 import time
 import os
+import sys
 import json
 from datetime import datetime
-import matplotlib.pyplot as plt   
+import matplotlib
+import matplotlib.pyplot as plt
 
 
 # ---------------------------------------------------------
@@ -53,6 +56,7 @@ import matplotlib.pyplot as plt
 NUM_FROZEN_LAYERS = 0
 DROPOUT = 0.1
 EPOCHS = 20
+MAX_LEN = 32 
 
 # ---------------------------------------------------------
 # Reproducibility + device
@@ -77,7 +81,7 @@ best_state = None         # will hold a copy of the weights from the best epoch
 # Dataset — now uses account_type_label (int) instead of raw string labels
 # ---------------------------------------------------------
 class AccountNameDataset(Dataset):
-    def __init__(self, df, tokenizer, max_len=32):
+    def __init__(self, df, tokenizer, max_len=MAX_LEN):  
         self.names = df["account_name"].tolist()
         self.labels = df["account_type_label"].tolist()
         self.tokenizer = tokenizer
@@ -87,8 +91,9 @@ class AccountNameDataset(Dataset):
         return len(self.names)
 
     def __getitem__(self, idx):
+        name = str(self.names[idx])
         enc = self.tokenizer(
-            self.names[idx],
+            name,
             padding="max_length",
             truncation=True,
             max_length=self.max_len,
@@ -104,9 +109,12 @@ class AccountNameDataset(Dataset):
 # Model: MiniLM encoder + classification head (mean pooling)
 # ---------------------------------------------------------
 class AccountTypeClassifier(nn.Module):
-    def __init__(self, base_model, hidden_size=384, num_classes=5):
+    def __init__(self, base_model, hidden_size=None, num_classes=5):
         super().__init__()
         self.base_model = base_model
+        # If no hidden_size passed, read it from the base model config
+        if hidden_size is None:
+            hidden_size = base_model.config.hidden_size
         self.dropout = nn.Dropout(DROPOUT)
         self.classifier = nn.Linear(hidden_size, num_classes)
 
@@ -141,6 +149,8 @@ def evaluate(model, loader):
             total += labels.size(0)
             all_preds.extend(preds.cpu().tolist())
             all_labels.extend(labels.cpu().tolist())
+    if total == 0:
+        return 0.0, [], []
     return correct / total, all_preds, all_labels
 
 # ---------------------------------------------------------
@@ -160,7 +170,7 @@ def log_run_to_excel(
     # Create the folder part of the path ("output") if it doesn't exist yet.
     # exist_ok=True means no error if the folder is already there.
     os.makedirs(os.path.dirname(excel_path), exist_ok=True)
-    
+
     report_dict = classification_report(
         test_labels, test_preds,
         labels=list(range(len(type_encoder.classes_))),
@@ -199,163 +209,225 @@ def log_run_to_excel(
     else:
         combined_df = new_row_df
 
-    combined_df.to_excel(excel_path, index=False)
-    print(f"Logged run to {excel_path} (frozen_layers={frozen_layers}, dropout={dropout})")
+    try:
+        combined_df.to_excel(excel_path, index=False)
+        print(f"Logged run to {excel_path} (frozen_layers={frozen_layers}, dropout={dropout})")
+    except PermissionError:
+        fallback = excel_path.replace(".xlsx", f"_{int(time.time())}.xlsx")
+        combined_df.to_excel(fallback, index=False)
+        print(f"Warning: {excel_path} is locked. Saved to {fallback} instead.")
     return combined_df
 
-# ---------------------------------------------------------
-# Load the combined train/test CSVs saved from notebook 1
-# ---------------------------------------------------------
-train_df = pd.read_csv("data/train.csv")
-test_df = pd.read_csv("data/test.csv")
 
-type_encoder = LabelEncoder().fit(pd.concat([train_df["account_type"], test_df["account_type"]]))
-train_df["account_type_label"] = type_encoder.transform(train_df["account_type"])
-test_df["account_type_label"] = type_encoder.transform(test_df["account_type"])
+if __name__ == "__main__":
 
-num_classes = len(type_encoder.classes_)
-print("Classes:", list(type_encoder.classes_))
+    # ---------------------------------------------------------
+    # Load the combined train/test CSVs saved from notebook 1
+    # ---------------------------------------------------------
 
-# ---------------------------------------------------------
-# Tokenizer + base model
-# ---------------------------------------------------------
-# model_name = "sentence-transformers/all-MiniLM-L6-v2" # 68% acc, 22M parameters
-model_name = "BAAI/bge-small-en-v1.5" # 89% acc, 33.4M params
+    for required_file in ("data/train.csv", "data/test.csv"):
+        if not os.path.exists(required_file):
+            sys.exit(
+                f"Error: '{required_file}' not found. "
+                "Run dataset.py first to generate the training data."
+            )
 
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-base_model = AutoModel.from_pretrained(model_name).to(device)
+    try:
+        train_df = pd.read_csv("data/train.csv")
+        test_df = pd.read_csv("data/test.csv")
+    except Exception as e:
+        sys.exit(f"Error: failed to read data files: {e}")
 
-"""
-# Freeze embeddings
-for param in base_model.embeddings.parameters():
-    param.requires_grad = False
+    for label, df in [("train.csv", train_df), ("test.csv", test_df)]:
+        for col in ("account_name", "account_type"):
+            if col not in df.columns:
+                sys.exit(f"Error: '{col}' column missing from {label}.")
 
-# Freeze first of MiniLM's 6 encoder layers
-for layer in base_model.encoder.layer[:(NUM_FROZEN_LAYERS-1)]:
-    for param in layer.parameters():
+    train_df = train_df.dropna(subset=["account_name", "account_type"])
+    test_df = test_df.dropna(subset=["account_name", "account_type"])
+
+    if train_df.empty or test_df.empty:
+        sys.exit("Error: train or test data is empty after dropping NaN rows.")
+
+    type_encoder = LabelEncoder().fit(pd.concat([train_df["account_type"], test_df["account_type"]]))
+    train_df["account_type_label"] = type_encoder.transform(train_df["account_type"])
+    test_df["account_type_label"] = type_encoder.transform(test_df["account_type"])
+
+    num_classes = len(type_encoder.classes_)
+    print("Classes:", list(type_encoder.classes_))
+
+    # ---------------------------------------------------------
+    # Tokenizer + base model
+    # ---------------------------------------------------------
+    # model_name = "sentence-transformers/all-MiniLM-L6-v2" # 68% acc, 22M parameters
+    model_name = "BAAI/bge-small-en-v1.5" # 89% acc, 33.4M params
+
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        base_model = AutoModel.from_pretrained(model_name).to(device)
+    except OSError as e:
+        sys.exit(
+            f"Error: failed to load model '{model_name}'.\n"
+            f"Check your internet connection or that the model name is correct.\n"
+            f"Details: {e}"
+        )
+    except Exception as e:
+        sys.exit(f"Error: unexpected failure loading model '{model_name}': {e}")
+
+    hidden_size = base_model.config.hidden_size
+
+    """
+    # Freeze embeddings
+    for param in base_model.embeddings.parameters():
         param.requires_grad = False
-"""
 
-# ---------------------------------------------------------
-# Training
-# ---------------------------------------------------------
-train_dataset = AccountNameDataset(train_df, tokenizer)
-test_dataset = AccountNameDataset(test_df, tokenizer)
+    # Freeze first of MiniLM's 6 encoder layers
+    for layer in base_model.encoder.layer[:(NUM_FROZEN_LAYERS-1)]:
+        for param in layer.parameters():
+            param.requires_grad = False
+    """
 
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-test_loader = DataLoader(test_dataset, batch_size=16)
+    # ---------------------------------------------------------
+    # Training
+    # ---------------------------------------------------------
+    train_dataset = AccountNameDataset(train_df, tokenizer)
+    test_dataset = AccountNameDataset(test_df, tokenizer)
 
-model = AccountTypeClassifier(base_model, num_classes=num_classes).to(device)
-optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
-loss_fn = nn.CrossEntropyLoss()
+    train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=16)
 
-train_acc_history = []   # will hold train accuracy of each epoch
-test_acc_history = []    # will hold test accuracy of each epoch
-for epoch in range(1, EPOCHS + 1):
-    model.train()
-    total_loss = 0
-    for batch in train_loader:
-        input_ids = batch["input_ids"].to(device)
-        attention_mask = batch["attention_mask"].to(device)
-        labels = batch["label"].to(device)
+    model = AccountTypeClassifier(base_model, hidden_size=hidden_size, num_classes=num_classes).to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
+    loss_fn = nn.CrossEntropyLoss()
 
-        optimizer.zero_grad()
-        logits = model(input_ids, attention_mask)
-        loss = loss_fn(logits, labels)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
+    train_acc_history = []   # will hold train accuracy of each epoch
+    test_acc_history = []    # will hold test accuracy of each epoch
 
-    train_acc, _, _ = evaluate(model, train_loader)
-    test_acc, _, _ = evaluate(model, test_loader)
-    train_acc_history.append(train_acc)               # save this epoch's train accuracy
-    test_acc_history.append(test_acc) 
+    try:
+        for epoch in range(1, EPOCHS + 1):
+            model.train()
+            total_loss = 0
+            for batch in train_loader:
+                input_ids = batch["input_ids"].to(device)
+                attention_mask = batch["attention_mask"].to(device)
+                labels = batch["label"].to(device)
 
-    # --- Early stopping check (runs once per epoch, after evaluation) ---
-    if test_acc > best_test_acc:
-        best_test_acc = test_acc          # new best score
-        epochs_no_improve = 0             # improvement happened, so reset the counter
-        # copy the weights to CPU memory; clone() makes a real copy, not a reference
-        best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
-    else:
-        epochs_no_improve += 1            # no improvement this epoch
-        if epochs_no_improve >= PATIENCE:
-            print(f"Early stopping at epoch {epoch} (best test_acc: {best_test_acc:.3f})")
-            break                         # exit the epoch loop
-    print(f"Epoch {epoch:2d} | loss: {total_loss/len(train_loader):.4f} | train_acc: {train_acc:.3f} | test_acc: {test_acc:.3f}")
+                optimizer.zero_grad()
+                logits = model(input_ids, attention_mask)
+                loss = loss_fn(logits, labels)
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
 
-# ---------------------------------------------------------
-# Restore the best weights before final evaluation and saving
-# ---------------------------------------------------------
-if best_state is not None:                 # safety check: only restore if a best epoch was recorded
-    model.load_state_dict(best_state)      # copies the best epoch's weights back into the model
-    print(f"Restored best weights (test_acc: {best_test_acc:.3f})")
-# Re-measure train accuracy on the restored best weights, so the log matches the saved model
-best_train_acc, _, _ = evaluate(model, train_loader)   # evaluate() returns (accuracy, preds, labels); we only need accuracy
+            train_acc, _, _ = evaluate(model, train_loader)
+            test_acc, _, _ = evaluate(model, test_loader)
+            train_acc_history.append(train_acc)               # save this epoch's train accuracy
+            test_acc_history.append(test_acc)
 
-# plotting
-# x-axis: epoch numbers 1, 2, 3, ... for however many epochs actually ran
-# (fewer than EPOCHS if early stopping triggered)
-epochs_ran = range(1, len(train_acc_history) + 1)
+            print(f"Epoch {epoch:2d} | loss: {total_loss/len(train_loader):.4f} | train_acc: {train_acc:.3f} | test_acc: {test_acc:.3f}")
 
-# Epoch with the highest test accuracy (argmax gives a 0-based index, so +1)
-best_epoch = int(np.argmax(test_acc_history)) + 1
+            # --- Early stopping check (runs once per epoch, after evaluation) ---
+            if test_acc > best_test_acc:
+                best_test_acc = test_acc          # new best score
+                epochs_no_improve = 0             # improvement happened, so reset the counter
+                # copy the weights to CPU memory; clone() makes a real copy, not a reference
+                best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+            else:
+                epochs_no_improve += 1            # no improvement this epoch
+                if epochs_no_improve >= PATIENCE:
+                    print(f"Early stopping at epoch {epoch} (best test_acc: {best_test_acc:.3f})")
+                    break                         # exit the epoch loop
 
-plt.figure(figsize=(8, 5))                                   # width x height in inches
-plt.plot(epochs_ran, train_acc_history, marker="o", label="Train accuracy")   # blue line: train
-plt.plot(epochs_ran, test_acc_history, marker="o", label="Test accuracy")     # orange line: test
-plt.axvline(best_epoch, linestyle="--", color="gray", label=f"Best epoch ({best_epoch})")  # dashed line at the best epoch
-plt.xlabel("Epoch")                                          # label under the x-axis
-plt.ylabel("Accuracy")                                       # label beside the y-axis
-plt.title("Train vs Test accuracy per epoch")                # plot title
-plt.legend()                                                 # shows which line is which
-plt.grid(alpha=0.3)                                          # faint grid to make values easier to read
-plt.show()                                                   # displays the plot below the cell
+    except RuntimeError as e:
+        if "out of memory" in str(e).lower():
+            print(f"\nError: CUDA out of memory at epoch {epoch}.")
+            if best_state is not None:
+                print("Saving best checkpoint so far before exiting...")
+                save_dir = "account_type_classifier"
+                os.makedirs(save_dir, exist_ok=True)
+                torch.save(best_state, os.path.join(save_dir, "model_state_dict_oom_recovery.pt"))
+                print(f"Recovery checkpoint saved to {save_dir}/model_state_dict_oom_recovery.pt")
+            sys.exit("Reduce batch size or model size and try again.")
+        else:
+            raise  # re-raise non-OOM RuntimeErrors
 
-# ---------------------------------------------------------
-# Final test report (per-class — worth checking given class imbalance)
-# ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # Restore the best weights before final evaluation and saving
+    # ---------------------------------------------------------
+    if best_state is not None:                 # safety check: only restore if a best epoch was recorded
+        model.load_state_dict(best_state)      # copies the best epoch's weights back into the model
+        print(f"Restored best weights (test_acc: {best_test_acc:.3f})")
+    # Re-measure train accuracy on the restored best weights, so the log matches the saved model
+    best_train_acc, _, _ = evaluate(model, train_loader)   # evaluate() returns (accuracy, preds, labels); we only need accuracy
 
-start_time = time.time()
+    # plotting
+    # x-axis: epoch numbers 1, 2, 3, ... for however many epochs actually ran
+    # (fewer than EPOCHS if early stopping triggered)
+    epochs_ran = range(1, len(train_acc_history) + 1)
 
-final_test_acc, test_preds, test_labels = evaluate(model, test_loader)
+    # Epoch with the highest test accuracy (argmax gives a 0-based index, so +1)
+    best_epoch = int(np.argmax(test_acc_history)) + 1
 
-end_time = time.time()
-duration = end_time - start_time
+    try:
+        plt.figure(figsize=(8, 5))                                   # width x height in inches
+        plt.plot(epochs_ran, train_acc_history, marker="o", label="Train accuracy")   # blue line: train
+        plt.plot(epochs_ran, test_acc_history, marker="o", label="Test accuracy")     # orange line: test
+        plt.axvline(best_epoch, linestyle="--", color="gray", label=f"Best epoch ({best_epoch})")  # dashed line at the best epoch
+        plt.xlabel("Epoch")                                          # label under the x-axis
+        plt.ylabel("Accuracy")                                       # label beside the y-axis
+        plt.title("Train vs Test accuracy per epoch")                # plot title
+        plt.legend()                                                 # shows which line is which
+        plt.grid(alpha=0.3)                                          # faint grid to make values easier to read
+        os.makedirs("output", exist_ok=True)
+        plt.savefig("output/training_curve.png", dpi=150, bbox_inches="tight")
+        print("Training curve saved to output/training_curve.png")
+        plt.show()                                                   # displays the plot below the cell
+    except Exception:
+        print("Warning: could not display plot (headless environment?). Curve saved to output/training_curve.png.")
 
-print(f"Evaluation Duration: {duration:.2f} seconds")
-print(f"\nFinal test accuracy: {final_test_acc:.3f}\n")
-print(classification_report(
-    test_labels, test_preds,
-    labels=list(range(num_classes)),
-    target_names=type_encoder.classes_,
-    zero_division=0,
-))
+    # ---------------------------------------------------------
+    # Final test report (per-class — worth checking given class imbalance)
+    # ---------------------------------------------------------
 
-log_run_to_excel(
-    frozen_layers=NUM_FROZEN_LAYERS,
-    dropout=DROPOUT,
-    final_test_acc=final_test_acc,
-    test_preds=test_preds,
-    test_labels=test_labels,
-    type_encoder=type_encoder,
-    # min_instances=MIN_INSTANCES,   # set this to match the cutoff used when building train.csv/test.csv for this run
-    extra_info={"epochs": EPOCHS, "lr": 2e-5, "train_acc_final": best_train_acc},
-)
+    start_time = time.time()
 
-# ---------------------------------------------------------
-# Save fine-tuned model + tokenizer + label encoder
-# ---------------------------------------------------------
-save_dir = "account_type_classifier"
-os.makedirs(save_dir, exist_ok=True)
+    final_test_acc, test_preds, test_labels = evaluate(model, test_loader)
 
-torch.save(model.state_dict(), os.path.join(save_dir, "model_state_dict.pt"))
-tokenizer.save_pretrained(save_dir)
+    end_time = time.time()
+    duration = end_time - start_time
 
-with open(os.path.join(save_dir, "label_classes.json"), "w") as f:
-    json.dump(list(type_encoder.classes_), f)
+    print(f"Evaluation Duration: {duration:.2f} seconds")
+    print(f"\nFinal test accuracy: {final_test_acc:.3f}\n")
+    print(classification_report(
+        test_labels, test_preds,
+        labels=list(range(num_classes)),
+        target_names=type_encoder.classes_,
+        zero_division=0,
+    ))
 
-with open(os.path.join(save_dir, "config.json"), "w") as f:
-    json.dump({"base_model": model_name, "hidden_size": 384, "num_classes": num_classes, "max_len": 32}, f)
+    log_run_to_excel(
+        frozen_layers=NUM_FROZEN_LAYERS,
+        dropout=DROPOUT,
+        final_test_acc=final_test_acc,
+        test_preds=test_preds,
+        test_labels=test_labels,
+        type_encoder=type_encoder,
+        extra_info={"epochs": EPOCHS, "lr": 2e-5, "train_acc_final": best_train_acc},
+    )
 
-print(f"\nSaved model, tokenizer, and label classes to {save_dir}")
+    # ---------------------------------------------------------
+    # Save fine-tuned model + tokenizer + label encoder
+    # ---------------------------------------------------------
+    save_dir = "account_type_classifier"
+    os.makedirs(save_dir, exist_ok=True)
+
+    torch.save(model.state_dict(), os.path.join(save_dir, "model_state_dict.pt"))
+    tokenizer.save_pretrained(save_dir)
+
+    with open(os.path.join(save_dir, "label_classes.json"), "w") as f:
+        json.dump(list(type_encoder.classes_), f)
+
+    with open(os.path.join(save_dir, "config.json"), "w") as f:
+        json.dump({"base_model": model_name, "hidden_size": hidden_size, "num_classes": num_classes, "max_len": MAX_LEN}, f)
+
+    print(f"\nSaved model, tokenizer, and label classes to {save_dir}")

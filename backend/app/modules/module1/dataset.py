@@ -25,25 +25,13 @@ Run on Google Colab, then download the data/ folder for training.
 """
 
 import unicodedata
-import os, subprocess, io, re
+import os, subprocess, io, re, sys   
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import train_test_split
-import time
+from sklearn.model_selection import train_test_split  
+from langdetect import detect_langs 
 
-os.makedirs("data", exist_ok=True)
-
-# ---------------------------------------------------------
-# 1. Shallow, blob-less clone — metadata only, no bulk downloads.
-#    Also sidesteps the old bug: blob URLs return HTML, not CSV.
-# ---------------------------------------------------------
 REPO_DIR = "odoo_repo"
-if not os.path.exists(REPO_DIR):
-    subprocess.run(
-        ["git", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout",
-         "-b", "17.0", "https://github.com/odoo/odoo.git", REPO_DIR],
-        check=True
-    )
+
 
 def git(*args):
     return subprocess.run(
@@ -54,152 +42,11 @@ def git(*args):
         errors="replace"    # a bad byte becomes "?" instead of crashing the reader thread
     )
 
-# ---------------------------------------------------------
-# 2. Discover ALL l10n_XX modules and locate their
-#    Chart-of-Accounts CSV files regardless of folder layout.
-# ---------------------------------------------------------
-
-folders = git(
-    "ls-tree", "-d", "--name-only", "HEAD:addons"
-).stdout.splitlines()
-
-two_letter_codes = sorted(
-    m.group(1)
-    for f in folders
-    if (m := re.match(r"^l10n_([a-z]{2})$", f))
-)
-
-print(f"Total l10n_XX modules: {len(two_letter_codes)}")
-
-
-# ---------------------------------------------------------
-# 3. Search each localization module recursively for CSVs
-#    that appear to contain Chart-of-Accounts data.
-# ---------------------------------------------------------
-
-country_files = {}
-no_coa = []
-
-for code in two_letter_codes:
-
-    module = f"addons/l10n_{code}"
-
-    # Get every file in this localization module
-    result = git("ls-tree", "-r", "--name-only", f"HEAD:{module}")
-
-    if result.returncode != 0:
-        no_coa.append(code)
-        continue
-
-    files = result.stdout.splitlines()
-
-    # Find CSV files that look like account / COA files
-    csv_candidates = [
-        f for f in files
-        if f.lower().endswith(".csv")
-        and (
-            "account" in os.path.basename(f).lower()
-            or "coa" in os.path.basename(f).lower()
-        )
-    ]
-
-    found = False
-
-    for relative_path in csv_candidates:
-
-        full_path = f"{module}/{relative_path}"
-
-        result = git("show", f"HEAD:{full_path}")
-
-        if result.returncode != 0:
-            continue
-
-        try:
-            df = pd.read_csv(io.StringIO(result.stdout), nrows=5)
-        except Exception:
-            continue
-
-        # Accept files containing the basic COA fields
-        columns_lower = {c.lower(): c for c in df.columns}
-
-        has_name = "name" in columns_lower
-        has_type = "account_type" in columns_lower
-
-        if has_name and has_type:
-            country_files[code] = relative_path
-            found = True
-            break
-
-    if not found:
-        no_coa.append(code)
-
-
-# ---------------------------------------------------------
-# 4. Report exactly what was discovered
-# ---------------------------------------------------------
-
-print(f"\nCountries with usable COA CSV: {len(country_files)}")
-print(f"Countries without usable COA CSV: {len(no_coa)}")
-
-"""
-print("\nCOA files found:")
-for code, path in country_files.items():
-    print(f"{code}: {path}")
-"""
-
-print("\nNo usable COA CSV found:")
-print(no_coa)
-
-# ---------------------------------------------------------
-# 5.. Load + validate each candidate (required columns + usable rows),
-# ---------------------------------------------------------
-REQUIRED_COLS = ["id", "name", "account_type"]
-#TARGET_COUNTRIES = 80
-
-country_dfs = {}
-
-for code, relative_path in country_files.items():
-
-    path = f"addons/l10n_{code}/{relative_path}"
-
-    result = git("show", f"HEAD:{path}")
-
-    if result.returncode != 0:
-        print(f"{code}: FAILED to fetch {relative_path}")
-        continue
-
-    try:
-        df = pd.read_csv(io.StringIO(result.stdout))
-    except Exception as e:
-        print(f"{code}: FAILED to parse ({e})")
-        continue
-
-    # Handle column names
-    if not all(c in df.columns for c in ["id", "name", "account_type"]):
-        print(f"{code}: missing required columns")
-        continue
-
-    df = df[["id", "name", "account_type"]].rename(
-        columns={
-            "id": "account_id",
-            "name": "account_name"
-        }
-    )
-
-    df = df.dropna(subset=["account_name", "account_type"])
-
-    if df.empty:
-        continue
-
-    df["country"] = code
-    country_dfs[code] = df
-
-print(f"\nUsing {len(country_dfs)} countries: {list(country_dfs.keys())}")
-
-combined_df = pd.concat(country_dfs.values(), ignore_index=True)
-print(f"Combined (pre-cutoff): {len(combined_df)} rows")
 
 def is_english(text):
+    if not text or str(text).strip() == "":
+        return False
+
     for ch in str(text):
         if 32 <= ord(ch) <= 126:
             continue                          # normal printable ASCII: always allowed
@@ -208,13 +55,14 @@ def is_english(text):
         # the first letter is the group (L = letter, M = accent mark, N = number,
         # P = punctuation, S = symbol, Z = space, C = invisible/control),
         # the second letter is the subtype (e.g. "Pd" = dash, "Lu" = uppercase letter).
-        cat = unicodedata.category(ch)        
+        cat = unicodedata.category(ch)
         if cat[0] in ("L", "M") or cat == "Nd":
             return False                      # real foreign text: reject the name
 
         # Anything else (dashes, fancy quotes, symbols, odd spaces, invisible characters)
         # is not a foreign word, so we let it pass and check the next character.
     return True
+
 
 # Remember every translation so a repeated name is only sent to Google once
 """
@@ -242,56 +90,241 @@ def translate_account_name(name, retries=5):
     return name
 """
 
-# duplicate data remove
-before = len(combined_df)
-combined_df = combined_df.drop_duplicates(subset=["account_name", "account_type"]).reset_index(drop=True)
-print(f"\nDropped {before - len(combined_df)} duplicate rows from dataset.")
+if __name__ == "__main__":
 
-print("\nCounts per class after original duplicate removal:")
-print(combined_df["account_type"].value_counts().sort_index())
+    os.makedirs("data", exist_ok=True)
 
-# run right after building combined_df from Odoo
-combined_df["account_name_original"] = combined_df["account_name"]
-non_en_mask = combined_df["account_name"].astype(str).apply(lambda x: not is_english(x))
+    # ---------------------------------------------------------
+    # 1. Shallow, blob-less clone — metadata only, no bulk downloads.
+    #    Also sidesteps the old bug: blob URLs return HTML, not CSV.
+    # ---------------------------------------------------------
+    if not os.path.exists(REPO_DIR):
+        try:
+            subprocess.run(
+                ["git", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout",
+                 "-b", "17.0", "https://github.com/odoo/odoo.git", REPO_DIR],
+                check=True
+            )
+        except FileNotFoundError:
+            sys.exit("Error: 'git' is not installed or not on PATH.")
+        except subprocess.CalledProcessError as e:
+            sys.exit(
+                f"Error: git clone failed (exit code {e.returncode}). "
+                "Check your network connection and try again."
+            )
 
-# TEMPORARY CHECK: show 40 random flagged names with the language langdetect guessed
-flagged = combined_df[non_en_mask]["account_name"].astype(str)
-for name in flagged.sample(40, random_state=1):
-    print(f"{detect_langs(name)[0]}  ->  {name}")   # e.g. "nl:0.99  ->  Main Safe"
+    # ---------------------------------------------------------
+    # 2. Discover ALL l10n_XX modules and locate their
+    #    Chart-of-Accounts CSV files regardless of folder layout.
+    # ---------------------------------------------------------
 
-# Keep only the rows NOT flagged (~ flips the mask: True becomes False and vice versa)
-print(f"Removing {non_en_mask.sum()} non-English account names.")
-combined_df = combined_df[~non_en_mask].reset_index(drop=True)
-print(f"Rows remaining: {len(combined_df)}")
+    result = git("ls-tree", "-d", "--name-only", "HEAD:addons")
+    if result.returncode != 0:
+        sys.exit(
+            f"Error: could not list addons/ in the Odoo repo.\n"
+            f"git stderr: {result.stderr.strip()}"
+        )
 
-# remove classes with less than or equal to 100 instances only
-# Count how many rows each account_type has
-class_counts = combined_df["account_type"].value_counts()
-print("Removing classes:", list(class_counts[class_counts <= 100].index))
+    folders = result.stdout.splitlines()
 
-# Class names that have MORE than 100 rows: these are the ones we keep
-keep_classes = class_counts[class_counts > 100].index
-combined_df = combined_df[combined_df["account_type"].isin(keep_classes)].reset_index(drop=True)
+    two_letter_codes = sorted(
+        m.group(1)
+        for f in folders
+        if (m := re.match(r"^l10n_([a-z]{2})$", f))
+    )
 
-# Check: the remaining classes and their counts
-print(f"Rows remaining: {len(combined_df)}")
-print(combined_df["account_type"].value_counts())
+    print(f"Total l10n_XX modules: {len(two_letter_codes)}")
 
-# Stratified split: every account_type appears in both train and test
-# in roughly the same proportion as in the full dataset.
-train_df, test_df = train_test_split(
-    combined_df,
-    test_size=0.2,                         # 20% of rows go to test
-    stratify=combined_df["account_type"],  # keep class proportions equal in both splits
-    random_state=42                        # makes the split reproducible
-)
+    # ---------------------------------------------------------
+    # 3. Search each localization module recursively for CSVs
+    #    that appear to contain Chart-of-Accounts data.
+    # ---------------------------------------------------------
 
-# Check: class proportions should be nearly identical in both splits
-print("Train class share:")
-print(train_df["account_type"].value_counts(normalize=True).sort_index())
-print("\nTest class share:")
-print(test_df["account_type"].value_counts(normalize=True).sort_index())
+    country_files = {}
+    no_coa = []
 
-# Save to CSV (your existing lines)
-train_df.to_csv("data/train.csv", index=False)
-test_df.to_csv("data/test.csv", index=False)
+    for code in two_letter_codes:
+
+        module = f"addons/l10n_{code}"
+
+        # Get every file in this localization module
+        result = git("ls-tree", "-r", "--name-only", f"HEAD:{module}")
+
+        if result.returncode != 0:
+            no_coa.append(code)
+            continue
+
+        files = result.stdout.splitlines()
+
+        csv_candidates = [
+            fname for fname in files
+            if fname.lower().endswith(".csv")
+            and (
+                "account" in os.path.basename(fname).lower()
+                or "coa" in os.path.basename(fname).lower()
+            )
+        ]
+
+        found = False
+
+        for relative_path in csv_candidates:
+
+            full_path = f"{module}/{relative_path}"
+
+            result = git("show", f"HEAD:{full_path}")
+
+            if result.returncode != 0:
+                continue
+
+            try:
+                df = pd.read_csv(io.StringIO(result.stdout), nrows=5)
+            except Exception:
+                continue
+
+            # Accept files containing the basic COA fields
+            columns_lower = {c.lower(): c for c in df.columns}
+
+            has_name = "name" in columns_lower
+            has_type = "account_type" in columns_lower
+
+            if has_name and has_type:
+                country_files[code] = relative_path
+                found = True
+                break
+
+        if not found:
+            no_coa.append(code)
+
+    # ---------------------------------------------------------
+    # 4. Report exactly what was discovered
+    # ---------------------------------------------------------
+
+    print(f"\nCountries with usable COA CSV: {len(country_files)}")
+    print(f"Countries without usable COA CSV: {len(no_coa)}")
+
+    """
+    print("\nCOA files found:")
+    for code, path in country_files.items():
+        print(f"{code}: {path}")
+    """
+
+    print("\nNo usable COA CSV found:")
+    print(no_coa)
+
+    # ---------------------------------------------------------
+    # 5. Load + validate each candidate (required columns + usable rows)
+    # ---------------------------------------------------------
+    REQUIRED_COLS = ["id", "name", "account_type"]
+
+    country_dfs = {}
+
+    for code, relative_path in country_files.items():
+
+        path = f"addons/l10n_{code}/{relative_path}"
+
+        result = git("show", f"HEAD:{path}")
+
+        if result.returncode != 0:
+            print(f"{code}: FAILED to fetch {relative_path}")
+            continue
+
+        try:
+            df = pd.read_csv(io.StringIO(result.stdout), on_bad_lines="skip")
+        except Exception as e:
+            print(f"{code}: FAILED to parse ({e})")
+            continue
+
+        # Handle column names
+        if not all(c in df.columns for c in ["id", "name", "account_type"]):
+            print(f"{code}: missing required columns")
+            continue
+
+        df = df[["id", "name", "account_type"]].rename(
+            columns={
+                "id": "account_id",
+                "name": "account_name"
+            }
+        )
+
+        df = df.dropna(subset=["account_name", "account_type"])
+
+        if df.empty:
+            continue
+
+        df["country"] = code
+        country_dfs[code] = df
+
+    if not country_dfs:
+        sys.exit("Error: no usable country data found. Cannot build dataset.")
+
+    print(f"\nUsing {len(country_dfs)} countries: {list(country_dfs.keys())}")
+
+    combined_df = pd.concat(country_dfs.values(), ignore_index=True)
+    print(f"Combined (pre-cutoff): {len(combined_df)} rows")
+
+    # duplicate data remove
+    before = len(combined_df)
+    combined_df = combined_df.drop_duplicates(subset=["account_name", "account_type"]).reset_index(drop=True)
+    print(f"\nDropped {before - len(combined_df)} duplicate rows from dataset.")
+
+    print("\nCounts per class after original duplicate removal:")
+    print(combined_df["account_type"].value_counts().sort_index())
+
+    # run right after building combined_df from Odoo
+    combined_df["account_name_original"] = combined_df["account_name"]
+    non_en_mask = combined_df["account_name"].astype(str).apply(lambda x: not is_english(x))
+
+    # TEMPORARY CHECK: show up to 40 random flagged names with the language langdetect guessed
+    flagged = combined_df[non_en_mask]["account_name"].astype(str)
+    sample_size = min(40, len(flagged))
+    if sample_size > 0:
+        for name in flagged.sample(sample_size, random_state=1):
+            print(f"{detect_langs(name)[0]}  ->  {name}")   # e.g. "nl:0.99  ->  Main Safe"
+
+    # Keep only the rows NOT flagged (~ flips the mask: True becomes False and vice versa)
+    print(f"Removing {non_en_mask.sum()} non-English account names.")
+    combined_df = combined_df[~non_en_mask].reset_index(drop=True)
+    print(f"Rows remaining: {len(combined_df)}")
+
+    # remove classes with less than or equal to 100 instances only
+    # Count how many rows each account_type has
+    class_counts = combined_df["account_type"].value_counts()
+    print("Removing classes:", list(class_counts[class_counts <= 100].index))
+
+    # Class names that have MORE than 100 rows: these are the ones we keep
+    keep_classes = class_counts[class_counts > 100].index
+    combined_df = combined_df[combined_df["account_type"].isin(keep_classes)].reset_index(drop=True)
+
+    class_counts = combined_df["account_type"].value_counts()
+    tiny_classes = class_counts[class_counts < 2].index
+    if len(tiny_classes) > 0:
+        print(f"Dropping classes with <2 rows (cannot stratify): {list(tiny_classes)}")
+        combined_df = combined_df[~combined_df["account_type"].isin(tiny_classes)].reset_index(drop=True)
+
+    # Check: the remaining classes and their counts
+    print(f"Rows remaining: {len(combined_df)}")
+    print(combined_df["account_type"].value_counts())
+
+    if combined_df.empty:
+        sys.exit("Error: no data remaining after filtering. Cannot split.")
+
+    # Stratified split: every account_type appears in both train and test
+    # in roughly the same proportion as in the full dataset.
+    train_df, test_df = train_test_split(
+        combined_df,
+        test_size=0.2,                         # 20% of rows go to test
+        stratify=combined_df["account_type"],  # keep class proportions equal in both splits
+        random_state=42                        # makes the split reproducible
+    )
+
+    # Check: class proportions should be nearly identical in both splits
+    print("Train class share:")
+    print(train_df["account_type"].value_counts(normalize=True).sort_index())
+    print("\nTest class share:")
+    print(test_df["account_type"].value_counts(normalize=True).sort_index())
+
+    os.makedirs("data", exist_ok=True)
+    train_df.to_csv("data/train.csv", index=False)
+    test_df.to_csv("data/test.csv", index=False)
+
+    print(f"\nSaved {len(train_df)} train rows and {len(test_df)} test rows to data/.")
